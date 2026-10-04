@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="App de estudio de Housekeeping: rutinas, limpieza profunda, Áreas Públicas y control.">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>HK Planner Hotel Monserrat</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: una columna de estudio de 720px; barra de cuatro pestañas fija arriba, cada una con el color de un paño del código de colores. */
+:root{
+  --bg:#f2f5f6; --surface:#ffffff; --sunk:#e7edef; --ink:#11303a; --muted:#56707a; --line:#d3dde0;
+  --accent:#0d6f73; --on-accent:#ffffff;
+  --p-azul:#2f6fd0; --p-verde:#2f8f5b; --p-ambar:#c48a12; --p-rojo:#c8463f;
+  --ok:#23805a; --ok-bg:#def3e8; --bad:#b83a34; --bad-bg:#fbe3e1; --warn-bg:#fff1d1; --warn:#8a5d00;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e1b20; --surface:#16272e; --sunk:#1d323a; --ink:#e6f0f2; --muted:#9ab1b9; --line:#2b444d;
+  --accent:#4cc3c1; --on-accent:#06262a;
+  --p-azul:#6fa3f2; --p-verde:#5fc48d; --p-ambar:#e6b043; --p-rojo:#ef7f78;
+  --ok:#6fd3a5; --ok-bg:#173a2c; --bad:#f29089; --bad-bg:#43201e; --warn-bg:#3d3113; --warn:#f0cc7a;
+  color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0e1b20; --surface:#16272e; --sunk:#1d323a; --ink:#e6f0f2; --muted:#9ab1b9; --line:#2b444d;
+  --accent:#4cc3c1; --on-accent:#06262a;
+  --p-azul:#6fa3f2; --p-verde:#5fc48d; --p-ambar:#e6b043; --p-rojo:#ef7f78;
+  --ok:#6fd3a5; --ok-bg:#173a2c; --bad:#f29089; --bad-bg:#43201e; --warn-bg:#3d3113; --warn:#f0cc7a;
+  color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:0 56px}
+header.top{padding-block:22px 12px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1.1;margin:0;letter-spacing:-.01em}
+.brand small{display:block;font-family:var(--body);font-weight:500;font-size:.9rem;color:var(--muted);letter-spacing:0;margin-top:6px}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:1px solid var(--line)}
+nav.tabs button{font:600 .82rem var(--body);color:var(--muted);background:transparent;border:1px solid transparent;border-radius:var(--r);padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+nav.tabs button .ic{display:block;width:24px;height:24px}
+nav.tabs button .ic svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button[aria-selected="true"] .ic{color:var(--accent)}
+nav.tabs button[aria-selected="true"]{color:var(--ink);background:var(--surface);border-color:var(--line)}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h2{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.2;margin:26px 0 4px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:26px 0 8px;text-wrap:balance}
+p{margin:0 0 10px;max-width:65ch}
+.lead{color:var(--muted)}
+.ref{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.seg{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px;margin:14px 0 4px}
+.seg button{font:600 .9rem var(--body);border:0;background:transparent;color:var(--muted);padding:7px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{font:600 .85rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+ol.steps{list-style:none;margin:10px 0;padding:0;display:flex;flex-direction:column;gap:6px;counter-reset:s}
+ol.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:start}
+ol.steps li.done{background:var(--sunk)}
+ol.steps li.done .t{color:var(--muted);text-decoration:line-through}
+ol.steps input{width:22px;height:22px;margin-top:2px;accent-color:var(--accent)}
+ol.steps .t::before{content:counter(s) ". ";font-weight:700;font-variant-numeric:tabular-nums}
+ol.steps .t{font-weight:500;min-width:0}
+ol.steps .w{grid-column:2;font-size:.9rem;color:var(--muted)}
+ol.steps .w b{color:var(--accent);font-weight:600}
+.bar{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:600 .9rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:var(--r);cursor:pointer}
+.btn.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.box h4{margin:0 0 6px;font:700 .95rem var(--body)}
+.box ul,.box ol{margin:0;padding-left:18px}
+.box li{margin-bottom:3px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.code{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.note{background:var(--warn-bg);color:var(--warn);border-radius:var(--r);padding:10px 12px;font-size:.92rem;margin:10px 0}
+.tag{display:inline-block;font:600 .7rem var(--body);letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.tag.sector{background:var(--warn-bg);color:var(--warn)}
+.panos{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.pano{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem}
+.pano i{width:26px;height:18px;border-radius:3px;background:var(--c);transform:rotate(-6deg);flex:none}
+/* plano del hotel */
+.floor{display:grid;grid-template-columns:auto repeat(8,1fr);gap:5px;align-items:center;margin-bottom:5px}
+.floor span{font:600 .75rem var(--body);color:var(--muted);width:44px}
+.room{font:700 .78rem var(--body);font-variant-numeric:tabular-nums;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:9px 0;cursor:pointer;min-width:0}
+.room.b{background:var(--p-rojo);border-color:var(--p-rojo);color:#fff}
+.room.sel{outline:2px solid var(--accent);outline-offset:1px}
+.kpi{display:flex;flex-wrap:wrap;gap:18px;margin:10px 0}
+.kpi div{font-size:.85rem;color:var(--muted)}
+.kpi b{display:block;font:700 1.5rem var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.msg{border-radius:var(--r);padding:9px 12px;font-size:.92rem;margin:8px 0}
+.msg.ok{background:var(--ok-bg);color:var(--ok)} .msg.bad{background:var(--bad-bg);color:var(--bad)}
+label.ck{display:flex;gap:9px;align-items:flex-start;padding:5px 0}
+label.ck input{width:20px;height:20px;accent-color:var(--accent);flex:none;margin-top:2px}
+/* formularios */
+.form{display:grid;gap:10px}
+.form label{display:grid;gap:4px;font-weight:600;font-size:.88rem}
+input[type=text],input[type=date],select,textarea{font:400 1rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+.ot{display:grid;grid-template-columns:1fr auto;gap:4px 10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:6px}
+.ot .d{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.ot .m{font-size:.85rem;color:var(--muted);grid-column:1}
+.imp{font:700 .72rem var(--body);text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:99px;background:var(--sunk);color:var(--muted);height:fit-content}
+.imp.urgente{background:var(--bad-bg);color:var(--bad)}
+.srdf{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}
+.srdf .o{display:flex;gap:4px}
+.srdf .o button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:700 .85rem var(--body);cursor:pointer}
+.srdf .o button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* práctica */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:10px 0}
+.q .n{font-size:.78rem;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.q p.pq{font-weight:600;font-size:1.05rem;margin:4px 0 10px}
+.opt{display:block;width:100%;text-align:left;font:500 .95rem var(--body);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:6px;cursor:pointer}
+.opt.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.placed{list-style:decimal;padding-left:26px;margin:8px 0}
+.placed li{padding:3px 0}
+.pool{display:flex;flex-direction:column;gap:6px}
+.pool .opt.shake{animation:sh .25s}
+@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){.pool .opt.shake{animation:none}.bar i{transition:none}}
+.calwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(118px,1fr));min-width:830px}
+.cal .hd{font:600 .72rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 8px;border-bottom:1px solid var(--line)}
+.cal .day{padding:7px 8px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+.cal .day:nth-child(7n){border-right:0}
+.cal .day.last{border-bottom:0}
+.cal .day.today{background:var(--sunk)}
+.cal .dt{font:700 .85rem var(--body);font-variant-numeric:tabular-nums;margin-bottom:5px;display:flex;gap:6px;align-items:baseline}
+.cal .dt em{font:600 .65rem var(--body);font-style:normal;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+.cal ul{list-style:none;margin:0;padding:0;font-size:.72rem;line-height:1.3;display:flex;flex-direction:column;gap:3px}
+.cal li{color:var(--muted);overflow-wrap:anywhere}
+.cal li.w,.cal li.q{color:var(--ink);font-weight:600;border-radius:4px;padding:2px 5px}
+.cal li.w{background:var(--ok-bg)} .cal li.q{background:var(--warn-bg)}
+.cal li small{display:block;font:600 .6rem var(--body);letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);margin:8px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1px solid var(--line)}
+.sheet{background:var(--surface);border:1.5px solid var(--ink);border-radius:6px;padding:14px;margin-top:10px}
+.sh-top{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted)}
+.sh-title{font:700 1.15rem var(--display);margin:6px 0 8px;text-transform:uppercase;letter-spacing:.03em}
+.sh-meta{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.88rem;margin-bottom:10px}
+.sh-meta span{border-bottom:1px dotted var(--muted);min-width:120px;padding-bottom:2px}
+table.sh td,table.sh th{border:1px solid var(--line)}
+table.sh td{height:38px}
+table.sh td.mk{text-align:center;font-weight:700}
+.sh-foot{font-size:.85rem;color:var(--muted);margin:10px 0 0}
+.box .btn{margin-top:4px}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;margin-bottom:6px}
+summary{cursor:pointer;font-weight:600;padding:10px 0}
+details p{font-size:.93rem}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="brand">HK Planner<small>Hotel Monserrat · hotel ficticio de práctica, 24 habitaciones · Housekeeping según Simón y Olmo Garre</small></h1>
+  </header>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <main id="main"></main>
+  <footer>
+    Material de estudio de la cátedra Departamento de Front Office y Housekeeping. Contenido basado en el Cuadernillo 2 de la materia, que sistematiza a Simón, M. A. (2004), <i>Housekeeping ama de llaves</i>, y Olmo Garre, <i>Departamento de Gobernanta</i>. Lo marcado como «práctica del sector» no proviene de esa bibliografía. Tu avance se guarda solo en este dispositivo.
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- utilidades ---------- */
+function h(tag, attrs){
+  var el=document.createElement(tag), i, k;
+  if(attrs) for(k in attrs){ var v=attrs[k];
+    if(v==null||v===false) continue;
+    if(k==="class") el.className=v; else if(k==="text") el.textContent=v; else if(k==="html") el.innerHTML=v;
+    else if(k.slice(0,2)==="on") el.addEventListener(k.slice(2),v); else el.setAttribute(k,v===true?"":v); }
+  for(i=2;i<arguments.length;i++){ var c=arguments[i]; if(c==null||c===false) continue;
+    if(Array.isArray(c)) c.forEach(function(x){ if(x) el.appendChild(typeof x==="string"?document.createTextNode(x):x); });
+    else el.appendChild(typeof c==="string"?document.createTextNode(c):c); }
+  return el;
+}
+var KEY="hkplanner.v1", S={mode:{},done:{},best:{},blocked:{},ocup:"alta",ots:null};
+try{ var raw=localStorage.getItem(KEY); if(raw){ var o=JSON.parse(raw); for(var k in o) S[k]=o[k]; } }catch(e){}
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function today(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2); }
+
+/* ---------- contenido ---------- */
+var TABS=[
+ {id:"rutina",label:"Rutina",ic:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 15h18"/><path d="M5 10V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M8 10V9h3v1"/><path d="M3 18v2M21 18v2"/>'},
+ {id:"fondo",label:"A fondo",ic:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 12.5l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z"/>'},
+ {id:"frecuencias",label:"Frecuencias",ic:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'},
+ {id:"control",label:"Control",ic:'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.5h6v1"/><path d="M8.5 12.5l2.3 2.3 4.7-4.8"/>'}
+];
+var RUT={
+ salida:{n:"Habitación de salida",ref:"§ 6.14 · 15 pasos",intro:"Para una habitación vacía y sucia o de check out. El sentido es siempre de arriba hacia abajo y de atrás hacia adelante: lo que cae se limpia después y nunca se vuelve a pasar por lo ya limpio.",steps:[
+  ["Tocar la puerta tres veces anunciándose «Housekeeping» y esperar respuesta.","Una habitación que figura libre puede estar ocupada: el ingreso siempre se anuncia."],
+  ["Abrir con la llave maestra de piso y dejar la puerta abierta con el carro cruzado en el vano.","Seguridad y señalización: se ve que hay personal trabajando y nadie entra sin ser visto."],
+  ["Abrir cortinas; apagar luces y artefactos encendidos. Reportar desperfectos.","Las averías (perchas, luces, TV, aire) se reportan a medida que se detectan, no al final."],
+  ["Retirar la basura de la habitación y del baño. Sacar la vajilla de Room service y avisar al sector.","Solo se descarta lo que está dentro del cesto; antes se revisa su contenido."],
+  ["Abrir ventanas para ventilar.","La habitación se ventila mientras se hace el resto del trabajo."],
+  ["Desmantelar las camas y retirar los blancos del baño, contando la ropa y revisando daños y objetos olvidados.","La ropa va a la bolsa del carro, nunca al piso. En un check out se retiran incluso las toallas que parecen sin usar."],
+  ["Rociar el baño con los productos químicos y dejarlos actuar.","El desinfectante necesita minutos de contacto: actúa mientras se sigue trabajando."],
+  ["Armar la cama con la ropa limpia del carro.","Se aprovecha el tiempo de acción del químico que quedó en el baño."],
+  ["Limpiar el baño y reponer amenities y blancos.","Tiene su propia secuencia de ocho pasos: mirá la rutina «Baño»."],
+  ["Limpiar los vidrios; cerrar las ventanas y acomodar las cortinas.","La ventilación termina antes de limpiar muebles y piso."],
+  ["Limpiar paredes, cuadros, muebles por dentro y por fuera, y espejos. Revisar la papelería y reponer suministros.","De arriba hacia abajo: el polvo que cae se levanta después con el piso."],
+  ["Revisión final de la habitación: aspecto general y estandarización.","Todas las habitaciones del mismo tipo deben verse iguales."],
+  ["Limpiar el piso desde el fondo hacia la salida, reacomodando los muebles.","Recibe todo lo que cayó durante la rutina y así no se pisa lo ya limpio."],
+  ["Rociar con perfumina, con moderación.","Sobre una habitación ya ventilada. No se usa si el huésped pidió una habitación sin aromas."],
+  ["Cerrar la puerta.","Afuera: avisar que está limpia, completar el reporte de piso con hora de entrada y salida, e informar averías."]]},
+ bano:{n:"Baño",ref:"§ 6.17 · 8 pasos",intro:"Es el paso 9 de la habitación. El orden va de lo más limpio a lo más sucio y de arriba hacia abajo.",steps:[
+  ["Colocar los productos químicos en la bacha y dejar actuar.","Tiempo de acción: el desinfectante trabaja mientras se limpia el resto."],
+  ["Limpiar la mampara o bañera y la cortina de baño.","Se empieza por lo más alto y más limpio."],
+  ["Limpiar vasos, lavabo y jabonera.","Son superficies que el huésped toca con las manos y la boca: se limpian antes que el inodoro."],
+  ["Limpiar el espejo.","Sin papel, que deja pelusa: paño de algodón."],
+  ["Limpiar el inodoro y el bidet, por dentro y por fuera, con su paño exclusivo.","Siempre al final: es el foco de mayor carga microbiana. Su paño no toca ninguna otra superficie."],
+  ["Colocar amenities y blancos.","Se reponen con el baño ya higienizado."],
+  ["Controlar que no hayan quedado pelos y que esté todo acomodado.","La estética general es parte del estándar."],
+  ["Limpiar el piso, saliendo hacia la puerta.","Recibe lo que cae durante toda la rutina y no se vuelve a pisar."]]},
+ cama:{n:"Armado de cama",ref:"§ 6.16",intro:"Una secuencia estándar garantiza el mismo resultado en todas las habitaciones. Regla ergonómica: flexionar las piernas, no la espalda.",steps:[
+  ["Colchón centrado y cubrecolchón firme.","La base define cómo queda todo lo demás."],
+  ["Sábana bajera bien tensa, con esquinas hospitalarias.","Simón recomienda no usar sábanas ajustables: el elástico cede con los lavados."],
+  ["Sábana encimera.","Con triple sheeting, una tercera sábana envuelve la frazada para proteger a personas alérgicas."],
+  ["Frazada o duvet.","Según el estándar del hotel."],
+  ["Alinear todo, sin arrugas.","Se cuida la blancura y el planchado de la ropa de cama."],
+  ["Almohadas con sus fundas, con la abertura orientada según el estándar.","Lo que importa es que la abertura no quede a la vista."],
+  ["Pie de cama o cubrecama, según el estándar.","Con triple sheeting el cubrecamas se retira por completo."]]},
+ norentada:{n:"Habitación no rentada",ref:"§ 6.15 · 8 pasos",intro:"Las habitaciones que llevan varios días sin ocuparse también se asignan para repaso.",steps:[
+  ["Ventilar.","El aire encerrado es lo primero que nota el próximo huésped."],
+  ["Limpiar muebles y vidrios de ventanas.","El polvo se acumula aunque nadie la use."],
+  ["Verificar los artefactos del baño (pérdidas, grifos) y asearlos si corresponde.","Es mantenimiento preventivo: se detecta la falla antes que el huésped."],
+  ["Cambiar el agua del inodoro.","El agua estancada marca y huele."],
+  ["Limpiar piso del baño, mesada y espejo.",""],
+  ["Revisar luces, TV, aire y agua.","Todo debe funcionar el día que se venda."],
+  ["Revisar suministros y reponer si es necesario.",""],
+  ["Reportar el estado como VL (vacía y limpia).","El reporte es lo que le permite a Recepción venderla."]]}
+};
+var CODES=[["V / VL","Vacía y limpia desde el día anterior"],["O / OC 01, 02…","Ocupada; el número indica cuántos huéspedes"],["S","Sucia por arrastre: quedó así desde ayer, no es salida del día"],["SNA","Salida no arreglada: hizo check out hoy y aún no se limpió"],["L","Lista: fue salida del día y ya está preparada"],["IS","Chequeada: limpia e inspeccionada por gobernanta o supervisora"],["PS","Posible salida: check out no confirmado"],["PE / SE","Poco equipaje o sin equipaje: alerta a Seguridad y Recepción"],["NM","No molestar"],["RS","Rechazó servicio"],["FS (OOS)","Fuera de servicio: problema menor; sigue contando en el inventario"],["B (OOO)","Bloqueada: sale del inventario vendible"],["R","Reservada"],["A","Asignada a un huésped que ingresa hoy"]];
+var QUIZ={
+ rutina:[
+  {q:"¿Por qué el inodoro y el bidet se limpian al final?",o:["Porque es la tarea más rápida","Para evitar contaminación cruzada y dar tiempo de acción al desinfectante","Porque lo indica Recepción","Para no mojar el piso antes de tiempo"],a:1,e:"Es el foco de mayor carga microbiana y el químico aplicado al principio necesita minutos de contacto (§ 6.17)."},
+  {q:"¿Qué estado saca una habitación del inventario vendible?",o:["FS / OOS","NM","B / OOO","IS"],a:2,e:"La bloqueada (out of order) sale del inventario. La fuera de servicio no se asigna momentáneamente pero sigue contando."},
+  {q:"En un hotel con alta ocupación, ¿qué se hace primero?",o:["Las salidas no arregladas","Las ocupadas que continúan","Controlar las vacías y limpias contra el reporte de Recepción","Las habitaciones VIP"],a:2,e:"Orden de Simón: control de VL, sucias por arrastre, salidas, preferencias, ocupadas que continúan, ocupadas con salida prevista (§ 6.6)."},
+  {q:"La mucama va a almorzar. ¿Dónde deja el carro?",o:["En el pasillo, contra la pared","En el office o dentro de una habitación vacía y sucia","En el ascensor de servicio","Junto a la puerta de la última habitación"],a:1,e:"Por ningún motivo se lo deja abandonado en el pasillo: los robos de materiales son frecuentes (§ 6.12)."},
+  {q:"¿Qué significa SNA?",o:["Sucia no asignada","Salida no arreglada","Sin novedad aparente","Servicio no aceptado"],a:1,e:"Hizo check out en la fecha pero todavía no se limpió."},
+  {q:"¿Cuál de estas acciones con productos químicos está prohibida?",o:["Dosificar con dispenser","Usar guantes","Trasvasarlos a botellas de bebidas","Llevarlos en el canasto del carro"],a:2,e:"Nunca se trasvasan a botellas de bebidas. Tampoco se usan envases sin identificar, se mezclan productos ni se dejan en la habitación (§ 6.12)."},
+  {q:"El huésped dejó la toalla colgada en el toallero. ¿Qué indica?",o:["Que pide toalla nueva","Que va a usarla otra vez","Que rechazó el servicio","Que hizo check out"],a:1,e:"Toalla colgada: la reutiliza. Toalla en la pileta: pide cambio. Es parte del programa ambiental del hotel (§ 6.13)."},
+  {q:"Una habitación mantiene el cartel de No molestar. ¿Qué hace la mucama a las 13 hs?",o:["Entra igual a limpiar","Golpea hasta que respondan","Reporta la habitación al Ama de Llaves","La marca como vacía"],a:2,e:"No se golpea ni se llama; a las 13 hs se reportan las que mantienen el cartel (§ 6.13)."}],
+ fondo:[
+  {q:"¿Con qué frecuencia mínima recibe limpieza profunda cada habitación?",o:["Una vez por mes","Cada seis meses","Al menos una vez al año","Cada dos años"],a:2,e:"Al menos una vez al año, aprovechando para reparaciones y mantenimiento (§ 6.29)."},
+  {q:"Con ocupación excelente, ¿cómo se bloquea para limpieza profunda?",o:["Un piso completo","De a una o dos habitaciones por vez","Los tres últimos pisos","No se bloquea"],a:1,e:"Con ocupación oscilante se bloquea por pisos; con ocupación excelente, de a una o dos habitaciones."},
+  {q:"¿Quién define cuáles habitaciones y en qué orden pueden bloquearse?",o:["La mucama del piso","Mantenimiento","El gerente de Recepción","Reservas"],a:2,e:"El bloqueo se planifica junto a Recepción, que fija las fechas de bloqueo y desbloqueo y hace el seguimiento."},
+  {q:"¿Cuál es el primer paso de un bloqueo por reparación?",o:["Retirar cortinas y cubrir muebles","Avisar a Recepción para que deje de venderla","Limpiar la habitación","Pedir presupuesto"],a:1,e:"Tres pasos: aviso a Recepción, preparación de la zona, y al terminar limpieza y desbloqueo con aviso de disponibilidad."},
+  {q:"¿Cuál NO es una precaución del bloqueo?",o:["Retirar toda la ropa blanca","Cerrar las llaves de paso del agua","Dejar el frigobar enchufado","Descolgar los cuadros"],a:2,e:"Se desconectan aire acondicionado y frigobar, y se retiran televisor y teléfono."},
+  {q:"Según el ejemplo de la bibliografía, ¿cómo se rota un colchón?",o:["Una vez al año se da vuelta","Cada 15 días giro de 180° y una vez al mes cambio cabeza-pies","Todas las semanas se cambia de habitación","Solo cuando se hunde"],a:1,e:"Se numeran las esquinas para llevar el control. Colaboran valets y peones (§ 6.15)."}],
+ frecuencias:[
+  {q:"¿Qué turno concentra los trabajos más profundos en áreas públicas?",o:["Mañana","Tarde","Noche","Se reparten por igual"],a:2,e:"De noche no hay huéspedes circulando por las zonas de alto tránsito. Mañana y tarde hacen repasos."},
+  {q:"En la matriz del vestíbulo, ¿qué tarea es quincenal?",o:["Aspirado de alfombras","Espejos","Lámparas de techo y correr sillones para limpiar detrás","Rejillas de aire"],a:2,e:"Diario: espejos, mobiliario, puertas, aspirado. Semanal: rejillas de aire. Quincenal: madera, lámparas de techo, detrás de los sillones."},
+  {q:"¿Cómo se limpian los ascensores?",o:["Todos a la vez, de madrugada","De a uno, detenido en una planta poco concurrida","Solo una vez por semana","Con huéspedes adentro"],a:1,e:"Nunca varios a la vez, para mantener la disponibilidad."},
+  {q:"¿Por qué en el restaurante no se barre?",o:["Porque hace ruido","Para no contaminar al levantar el polvo","Porque el piso es de alfombra","Porque lo hace Cocina"],a:1,e:"El suelo se aspira o se mopea, por higiene."},
+  {q:"La hoja firmada en la puerta del baño público, ¿qué planilla es?",o:["Planilla de rutinas","Check-list de control","Planilla de áreas públicas","Reporte de pisos"],a:2,e:"Registro diario de tareas por zona, con horario y responsable. Le informa al huésped cuándo se limpió y quién lo hizo."},
+  {q:"¿Cuál es una tarea especial y no rutinaria?",o:["Aspirado de alfombras","Limpieza de espejos","Lavado de alfombras","Vidrios bajos"],a:2,e:"Las especiales tienen periodicidad y pueden exigir maquinaria: techos, lavado de alfombras, vidrios altos, pulido de pisos."},
+  {q:"Llueve y el lobby se moja. ¿Qué corresponde?",o:["Esperar al fregado nocturno","Fregar en el momento y colocar el avisador de suelo mojado","Cerrar el lobby","Pasar mopa seca al final del turno"],a:1,e:"El fregado profundo es nocturno, salvo cuando llueve: se friega al momento para evitar resbalones."}],
+ control:[
+  {q:"¿Qué dato NO es obligatorio en un parte de avería?",o:["Ubicación exacta","Importancia","Costo estimado","Nombre de quien lo emite"],a:2,e:"Los cinco datos: descripción, importancia, ubicación exacta, fecha y nombre de quien lo emite (Unidad 5)."},
+  {q:"En el control de calidad, ¿qué significa D?",o:["Desinfectado","Deteriorado","Disponible","Duplicado"],a:1,e:"S = sucio, R = roto, D = deteriorado, F = faltante (§ 6.30)."},
+  {q:"¿Cada cuánto se recomienda el control de calidad de habitaciones?",o:["Todos los días","Una vez por mes","Al menos dos veces al año","Solo antes de una auditoría"],a:2,e:"Preferentemente en temporada baja, sin chequear más de dos habitaciones por día por persona."},
+  {q:"El pedido de reparación se emite por duplicado. ¿Adónde va cada copia?",o:["Las dos a Recepción","Original a Mantenimiento; duplicado archivado en «Trabajos pendientes»","Original al huésped; duplicado a Gerencia","Las dos a Mantenimiento"],a:1,e:"El duplicado lleva constancia de hora y fecha de recepción (§ 6.9)."},
+  {q:"¿Cuál es una medida de mantenimiento preventivo del personal de pisos?",o:["Desenchufar tirando de la ficha, nunca del cable","Usar esponjas abrasivas en la grifería","Dejar las ventanas entreabiertas","Tapar las células del montacargas"],a:0,e:"También: no rayar la grifería, cerrar bien las ventanas y no trabar los montacargas."},
+  {q:"El huésped dejó la tarjeta sobre la almohada. ¿Qué pide?",o:["Almohada extra","Que no se cambien las sábanas ese día","Servicio de apertura","Limpieza urgente"],a:1,e:"Es la tarjeta de sostenibilidad de ropa de cama."}]
+};
+
+/* ---------- componentes ---------- */
+function seg(tab){
+  var m=S.mode[tab]||"estudiar";
+  function b(id,l){ return h("button",{type:"button","aria-pressed":String(m===id),text:l,onclick:function(){S.mode[tab]=id;save();render();window.scrollTo(0,0);}}); }
+  return h("div",{class:"seg",role:"group","aria-label":"Modo"},b("estudiar","Estudiar"),b("practicar","Practicar"));
+}
+function table(head,rows,codeCol){
+  return h("div",{class:"tbl"},h("table",null,
+    h("thead",null,h("tr",null,head.map(function(x){return h("th",{text:x});}))),
+    h("tbody",null,rows.map(function(r){return h("tr",null,r.map(function(c,i){return h("td",{class:(codeCol&&i===0)?"code":null,text:c});}));}))));
+}
+function box(title,items,ordered){
+  return h("div",{class:"box"},h("h4",{text:title}),h(ordered?"ol":"ul",null,items.map(function(x){return h("li",{text:x});})));
+}
+function quiz(tab){
+  var qs=shuffle(QUIZ[tab]), i=0, score=0, root=h("div");
+  function show(){
+    root.textContent="";
+    if(i>=qs.length){
+      var best=Math.max(S.best[tab]||0,score); S.best[tab]=best; save();
+      root.appendChild(h("div",{class:"q"},h("p",{class:"pq",text:"Resultado: "+score+" de "+qs.length}),
+        h("p",{class:"lead",text:"Tu mejor marca en esta sección: "+best+" de "+qs.length+"."}),
+        h("button",{class:"btn pri",type:"button",text:"Volver a intentar",onclick:function(){qs=shuffle(QUIZ[tab]);i=0;score=0;show();}})));
+      return;
+    }
+    var q=qs[i], answered=false, fb=h("div"), opts=q.o.map(function(t,ix){
+      var b=h("button",{class:"opt",type:"button",text:t,onclick:function(){
+        if(answered) return; answered=true;
+        if(ix===q.a){ b.classList.add("right"); score++; } else { b.classList.add("wrong"); opts[q.a].classList.add("right"); }
+        fb.appendChild(h("p",{class:"lead",text:q.e}));
+        fb.appendChild(h("button",{class:"btn pri",type:"button",text:i+1<qs.length?"Siguiente":"Ver resultado",onclick:function(){i++;show();}}));
+      }}); return b; });
+    root.appendChild(h("div",{class:"q"},h("div",{class:"n",text:"Pregunta "+(i+1)+" de "+qs.length}),h("p",{class:"pq",text:q.q}),opts,fb));
+  }
+  show(); return root;
+}
+function orderGame(key){
+  var r=RUT[key], root=h("div",{class:"q"}), placed=[], errors=0, pool;
+  function draw(){
+    root.textContent="";
+    root.appendChild(h("div",{class:"n",text:"Ordená: "+r.n}));
+    root.appendChild(h("p",{class:"lead",text:"Tocá el paso que sigue. Colocados "+placed.length+" de "+r.steps.length+" · errores: "+errors}));
+    if(placed.length) root.appendChild(h("ol",{class:"placed"},placed.map(function(ix){return h("li",{text:r.steps[ix][0]});})));
+    if(placed.length===r.steps.length){
+      root.appendChild(h("div",{class:"msg ok",text:errors===0?"Secuencia completa sin errores.":"Secuencia completa con "+errors+" error"+(errors===1?"":"es")+"."}));
+      root.appendChild(h("button",{class:"btn",type:"button",text:"Mezclar de nuevo",onclick:start})); return;
+    }
+    root.appendChild(h("div",{class:"pool"},pool.map(function(ix){
+      var b=h("button",{class:"opt",type:"button",text:r.steps[ix][0],onclick:function(){
+        if(ix===placed.length){ placed.push(ix); pool=pool.filter(function(x){return x!==ix;}); draw(); }
+        else { errors++; b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); b.classList.add("wrong");
+          root.querySelector(".lead").textContent="Tocá el paso que sigue. Colocados "+placed.length+" de "+r.steps.length+" · errores: "+errors; }
+      }}); return b; })));
+  }
+  function start(){ placed=[]; errors=0; pool=shuffle(r.steps.map(function(_,i){return i;})); draw(); }
+  start(); return root;
+}
+
+/* ---------- pestaña 1: rutina ---------- */
+var curRut="salida";
+function vRutina(){
+  var f=h("div");
+  f.appendChild(h("h2",{text:"Rutina de limpieza de la habitación"}));
+  f.appendChild(h("p",{class:"lead",text:"Los procedimientos paso a paso de la mucama, cada uno con su porqué."}));
+  f.appendChild(seg("rutina"));
+  if((S.mode.rutina||"estudiar")==="practicar"){
+    f.appendChild(h("h3",{text:"Ordená los pasos"}));
+    var pick=h("div",{class:"chips"}), holder=h("div"), gk=(curRut==="cama"||curRut==="norentada")?"salida":curRut;
+    ["salida","bano"].forEach(function(k){ pick.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(k===gk),text:RUT[k].n,onclick:function(){curRut=k;render();}})); });
+    holder.appendChild(orderGame(gk)); f.appendChild(pick); f.appendChild(holder);
+    f.appendChild(h("h3",{text:"Preguntas de repaso"})); f.appendChild(quiz("rutina"));
+    return f;
+  }
+  var chips=h("div",{class:"chips"});
+  Object.keys(RUT).forEach(function(k){ chips.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(k===curRut),text:RUT[k].n,onclick:function(){curRut=k;render();}})); });
+  f.appendChild(chips);
+  var r=RUT[curRut], done=S.done[curRut]||[], bar=h("i"), count=h("span",{class:"ref"});
+  function upd(){ var n=done.filter(Boolean).length; bar.style.width=(100*n/r.steps.length)+"%"; count.textContent=r.ref+" · "+n+" de "+r.steps.length+" hechos"; }
+  f.appendChild(h("p",{text:r.intro}));
+  f.appendChild(count); f.appendChild(h("div",{class:"bar"},bar));
+  var ol=h("ol",{class:"steps"});
+  r.steps.forEach(function(s,i){
+    var li=h("li",{class:done[i]?"done":null}), cb=h("input",{type:"checkbox",id:"st-"+curRut+"-"+i,"aria-label":"Paso "+(i+1)+" hecho"});
+    cb.checked=!!done[i];
+    cb.addEventListener("change",function(){ done[i]=cb.checked; S.done[curRut]=done; save(); li.className=cb.checked?"done":""; upd(); });
+    li.appendChild(cb); li.appendChild(h("label",{class:"t",for:cb.id,text:s[0]}));
+    if(s[1]) li.appendChild(h("div",{class:"w"},h("b",{text:"Por qué: "}),s[1]));
+    ol.appendChild(li);
+  });
+  f.appendChild(ol); upd();
+  f.appendChild(h("div",{class:"row"},h("button",{class:"btn",type:"button",text:"Reiniciar esta rutina",onclick:function(){S.done[curRut]=[];save();render();}})));
+
+  f.appendChild(h("h3",{text:"Paños y productos"}));
+  f.appendChild(h("p",{text:"Se usa un color de paño para cada área y no se confunden: el código evita la contaminación cruzada entre el sanitario y las superficies que toca el huésped. Cada hotel define sus colores; este es el del Hotel Monserrat."}));
+  var pn=h("div",{class:"box panos"});
+  [["var(--p-rojo)","Inodoro y bidet"],["var(--p-ambar)","Resto del baño"],["var(--p-azul)","Superficies de la habitación"],["var(--p-verde)","Vasos"]].forEach(function(p){
+    var el=h("div",{class:"pano"},h("i"),p[1]); el.firstChild.style.setProperty("--c",p[0]); pn.appendChild(el); });
+  f.appendChild(pn);
+  f.appendChild(h("div",{class:"grid2",style:"margin-top:10px"},
+    box("Los siete productos básicos",["Desinfectante","Antigrasa","Limpiavidrios","Limpiador de piso / secuestrante de polvo","Desodorante de ambientes / perfumina","Antihongos","Antisarro"],true),
+    box("Los SÍ",["Guantes y, según el producto, barbijo y antiparras","Productos en el canasto del carro","Envases etiquetados y dosificación con dispenser","Lavarse las manos después de manipularlos"]),
+    box("Los No",["Nunca tocar los productos sin guantes","Jamás usar envases sin identificar","Nunca trasvasar productos a botellas de bebidas","Jamás mezclar productos: hay riesgo químico","Nunca dejar productos o trapos dentro de la habitación del huésped"])));
+
+  f.appendChild(h("h3",{text:"Estados de habitación"}));
+  f.appendChild(table(["Código","Significado"],CODES,true));
+  f.appendChild(h("h3",{text:"Prioridades según la ocupación"}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Alta ocupación",["Control de vacías y limpias (VL) contra el reporte de Recepción","Vacías y sucias por arrastre (S)","Salidas no arregladas (SNA)","Habitaciones con preferencia: VIP, pedidos especiales","Ocupadas que continúan","Ocupadas con salida prevista en el día"],true),
+    box("Baja ocupación",["Control de vacías y limpias (VL)","Ocupadas con preferencia y las que continúan","Vacías sucias y salidas del día: no hay presión por reponer inventario vendible"],true)));
+  return f;
+}
+
+/* ---------- pestaña 2: a fondo ---------- */
+var PREC=["Retirar toda la ropa blanca","Cubrir los muebles con sábanas viejas","Descolgar cuadros","Desconectar aire acondicionado y frigobar","Retirar televisor y teléfono","Retirar cortinados","Retirar o cubrir colchones y objetos decorativos","Cerrar las llaves de paso del agua","Marcar en el reporte «habitación bloqueada»"];
+var selRoom=null;
+function vFondo(){
+  var f=h("div");
+  f.appendChild(h("h2",{text:"Limpieza profunda y bloqueo"}));
+  f.appendChild(h("p",{class:"lead",text:"El plan anual de cada habitación y cómo sacarla de la venta sin perjudicar al hotel."}));
+  f.appendChild(seg("fondo"));
+  if((S.mode.fondo||"estudiar")==="practicar"){ f.appendChild(h("h3",{text:"Preguntas de repaso"})); f.appendChild(quiz("fondo")); return f; }
+  f.appendChild(h("span",{class:"ref",text:"§ 6.29 · Simón"}));
+  f.appendChild(h("p",{text:"Todas las habitaciones reciben al menos una vez al año una limpieza profunda: lavado de alfombras, paredes, techos, lámparas, espejos y marcos. Se aprovecha para reparaciones, mantenimiento y desinfección. Se planifica por pronósticos, en el período de baja."}));
+  f.appendChild(h("h3",{text:"Plano de bloqueos del Hotel Monserrat"}));
+  f.appendChild(h("p",{text:"Elegí el nivel de ocupación y tocá una habitación para bloquearla. El plano aplica la regla de la bibliografía para cada caso."}));
+  var oc=h("div",{class:"chips"});
+  [["alta","Ocupación excelente"],["oscilante","Ocupación oscilante"],["baja","Temporada baja"]].forEach(function(o){
+    oc.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(S.ocup===o[0]),text:o[1],onclick:function(){S.ocup=o[0];selRoom=null;save();render();}})); });
+  f.appendChild(oc);
+  var rule={alta:"Con ocupación excelente se bloquea de a una o dos habitaciones por vez.",oscilante:"Con ocupación oscilante se bloquea por bloques de pisos: todas las bloqueadas deben estar en el mismo piso.",baja:"En temporada baja de un hotel de temporada se puede avanzar con todo el plan."}[S.ocup];
+  f.appendChild(h("div",{class:"note",text:rule}));
+  var blocked=Object.keys(S.blocked).filter(function(k){return S.blocked[k];});
+  f.appendChild(h("div",{class:"kpi"},h("div",null,h("b",{text:String(24-blocked.length)}),"en inventario vendible"),h("div",null,h("b",{text:String(blocked.length)}),"bloqueadas (B / OOO)")));
+  var plan=h("div",{class:"box"});
+  [3,2,1].forEach(function(fl){
+    var row=h("div",{class:"floor"},h("span",{text:"Piso "+fl}));
+    for(var n=1;n<=8;n++){ (function(id){
+      row.appendChild(h("button",{class:"room"+(S.blocked[id]?" b":"")+(selRoom===id?" sel":""),type:"button",text:id,"aria-label":"Habitación "+id+(S.blocked[id]?", bloqueada":", disponible"),onclick:function(){selRoom=id;render();var p=document.getElementById("panel");if(p)p.scrollIntoView({block:"nearest"});}}));
+    })(String(fl*100+n)); }
+    plan.appendChild(row);
+  });
+  f.appendChild(plan);
+  if(selRoom){
+    var p=h("div",{class:"box",id:"panel",style:"margin-top:10px"});
+    if(S.blocked[selRoom]){
+      p.appendChild(h("h4",{text:"Habitación "+selRoom+" · bloqueada"}));
+      p.appendChild(h("p",{text:"El desbloqueo vuelve todo a su estado y demanda tiempo: suele hacerse entre dos mucamas con ayuda de valets o personal de Áreas Públicas. La habitación vuelve a la venta limpia y revisada, con aviso de disponibilidad a Recepción."}));
+      var c1=h("input",{type:"checkbox",id:"unb-ok"}), bt=h("button",{class:"btn pri",type:"button",text:"Desbloquear",disabled:true,onclick:function(){delete S.blocked[selRoom];selRoom=null;save();render();}});
+      c1.addEventListener("change",function(){bt.disabled=!c1.checked;});
+      p.appendChild(h("label",{class:"ck"},c1,"Limpia, revisada y Recepción avisada")); p.appendChild(bt);
+    } else {
+      var why=null, floor=selRoom.charAt(0);
+      if(S.ocup==="alta"&&blocked.length>=2) why="Ya hay dos habitaciones bloqueadas. Con ocupación excelente no se bloquean más de dos a la vez: desbloqueá una primero.";
+      if(S.ocup==="oscilante"&&blocked.some(function(b){return b.charAt(0)!==floor;})) why="Hay habitaciones bloqueadas en otro piso. Con ocupación oscilante se trabaja por bloques de pisos: terminá ese piso antes de abrir otro.";
+      p.appendChild(h("h4",{text:"Bloquear la habitación "+selRoom}));
+      if(why){ p.appendChild(h("div",{class:"msg bad",text:why})); }
+      else {
+        p.appendChild(h("p",{text:"Tres pasos coordinados: aviso a Recepción, preparación de la zona y, al terminar los trabajos, limpieza y desbloqueo."}));
+        var all=[], go=h("button",{class:"btn pri",type:"button",text:"Bloquear (B / OOO)",disabled:true,onclick:function(){S.blocked[selRoom]=true;selRoom=null;save();render();}});
+        function chk(){ go.disabled=!all.every(function(x){return x.checked;}); }
+        ["Recepción avisada: definió que puede bloquearse y fijó fechas de bloqueo y desbloqueo"].concat(PREC).forEach(function(t,i){
+          var c=h("input",{type:"checkbox",id:"prec-"+i}); c.addEventListener("change",chk); all.push(c);
+          p.appendChild(h("label",{class:"ck"},c,t)); });
+        p.appendChild(go);
+      }
+    }
+    f.appendChild(p);
+  }
+  f.appendChild(h("h3",{text:"Rotación de colchones"}));
+  f.appendChild(h("p",{text:"Para evitar el deterioro desparejo se rota de manera periódica. Ejemplo de la bibliografía: cada 15 días un giro de 180° y una vez al mes el cambio cabeza-pies. Se numeran las esquinas para llevar el control; en habitaciones de dos camas los colchones pueden intercambiarse. Colaboran valets y peones."}));
+  f.appendChild(h("h3",{text:"Habitación que no se rentó"}));
+  f.appendChild(h("p",{text:"Si lleva varios días vacía se asigna para un repaso de ocho pasos. Está en la pestaña Rutina, como «Habitación no rentada»."}));
+  return f;
+}
+
+/* ---------- pestaña 3: frecuencias ---------- */
+var FREQ=[["Varias veces al día","Baños públicos (cada hora); entrada (cada dos horas); vidrios (mañana y tarde); puertas de acceso; mostrador de recepción; estaciones de carga, kioscos de self check-in, pantallas táctiles y dispensadores de alcohol en gel"],
+ ["Diaria","Espejos, mobiliario, puertas, aspirado de alfombras"],["Días alternos","En la bibliografía: revisteros y cabinas de teléfono, que ya no existen en el lobby actual"],
+ ["Semanal","Plantas artificiales, rejillas de aire"],["Quincenal","Revestimientos de madera, lámparas de techo, correr los sillones para limpiar detrás"],
+ ["Según plan","Techos altos, lavado de alfombras, vidrios altos, pulido de pisos: tareas especiales, a veces tercerizadas"]];
+var BRIG=[["05:00","Recepción, lobby, entrada principal, escaleras y ascensores"],["06:00","Restaurante, para el servicio de desayunos"],["07:00","Repaso a salones, bar y terrazas"],["08:00","Oficinas y repaso a Recepción y lobby"],["09:00","Escalera de servicio y vestuarios"],["10:00","Comedor de personal y repaso a Recepción y lobby"],["11:00","Restaurante, para el servicio de almuerzos"],["12:00","Repaso a Recepción, lobby y accesos"],["13:00","Fin del turno"]];
+var NOBLES=[["Instalaciones altas y paredes","Techos, rejillas de aire y lámparas se limpian con la frecuencia del plan. Los techos suelen ser muy altos: lo hacen especialistas con andamios, aspiradores de mochila o máquinas de vapor."],
+ ["Mobiliario","Suele haber piezas de valor, cada una con un tratamiento específico que la gobernanta debe conocer y el personal seguir con instrucciones concretas."],
+ ["Mostradores de recepción","Se limpian con mucha frecuencia y discreción."],
+ ["Suelos","Primero se aspira o se barre con máquinas, para no desplazar el polvo. El fregado profundo es nocturno, con repasos de mopa durante el día; si llueve se friega al momento. El avisador de suelo mojado es obligatorio. Las superficies grandes se friegan en dos direcciones, empezando cada día por un lado distinto."],
+ ["Alfombras","Son lo que más cuidado necesita. Las de calidad suelen exigir limpieza en seco y deben retirarse: su sustitución tiene que estar prevista."],
+ ["Ascensores","Se paran de a uno en una planta poco concurrida, nunca varios a la vez. Se repasan huellas en paredes y puertas tantas veces como haga falta."],
+ ["Cristales","Los de las puertas de acceso se repasan continuamente. El resto se limpia a primera hora de la mañana."],
+ ["Aseos públicos","Productos bactericidas y guantes. Dispensadores de jabón y toallas siempre llenos; repasos muy frecuentes."],
+ ["Instalaciones deportivas","Equipos de gimnasio, espejos, paredes y suelos; se cambian las toallas usadas."],
+ ["Restaurantes y bares","Después de cada servicio y a fondo durante la noche. Las sillas se desmanchan cada día. El suelo se aspira o se mopea: no se barre."]];
+var CAL_D=["Repasos de baños, entrada y vidrios","Espejos, mobiliario y puertas","Aspirado de alfombras","Noche: fregado profundo de pisos"];
+var CAL_W={0:["Plantas artificiales","Rejillas de aire"],7:["Plantas artificiales","Rejillas de aire"]};
+var CAL_Q={2:["Revestimientos de madera","Lámparas de techo"],4:["Rotación de colchones: giro de 180°"],10:["Correr los sillones y limpiar detrás"]};
+function calendar(){
+  var MES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  var t=new Date(); t.setHours(0,0,0,0);
+  var start=new Date(t); start.setDate(t.getDate()-((t.getDay()+6)%7));
+  var g=h("div",{class:"cal"});
+  ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"].forEach(function(d){ g.appendChild(h("div",{class:"hd",text:d})); });
+  for(var i=0;i<14;i++){
+    var d=new Date(start); d.setDate(start.getDate()+i);
+    var isT=d.getTime()===t.getTime(), ul=h("ul");
+    (CAL_Q[i]||[]).forEach(function(x){ ul.appendChild(h("li",{class:"q"},h("small",{text:"Quincenal"}),x)); });
+    (CAL_W[i]||[]).forEach(function(x){ ul.appendChild(h("li",{class:"w"},h("small",{text:"Semanal"}),x)); });
+    CAL_D.forEach(function(x){ ul.appendChild(h("li",{text:x})); });
+    g.appendChild(h("div",{class:"day"+(isT?" today":"")+(i>=7?" last":"")},
+      h("div",{class:"dt"},d.getDate()+" "+MES[d.getMonth()],isT?h("em",{text:"Hoy"}):null),ul));
+  }
+  return h("div",{class:"calwrap",tabindex:"0",role:"region","aria-label":"Proyección quincenal del lobby"},g);
+}
+var curSheet=null;
+var PLAN={
+ ap:{t:"Planilla de áreas públicas",meta:[["Zona","Baño público del lobby"],["Fecha",""],["Turno","Mañana"],["Frecuencia","cada hora"]],
+  head:["Hora","Tareas realizadas","Responsable","Firma"],
+  rows:[["07:00","Limpieza completa; reposición de jabón, toallas y papel","M. Ríos","M. Ríos"],["08:00","Repaso de lavabos, espejos y piso; control de dispensadores","M. Ríos","M. Ríos"],["09:00","Repaso; retiro de residuos","M. Ríos","M. Ríos"],["10:00","Repaso; reposición de papel","L. Paz","L. Paz"],["11:00","Repaso de lavabos, espejos y piso","L. Paz","L. Paz"],["12:00","","",""],["13:00","","",""]],
+  foot:"Queda a la vista en la puerta del baño: le informa al huésped cuándo se limpió y quién lo hizo. Las filas vacías se completan a medida que avanza el turno."},
+ ck:{t:"Check-list de control",meta:[["Área","Lobby"],["Fecha y hora",""],["Supervisor/a","A. Gómez"]],
+  head:["Ítem","Estándar del área","Cumple","Observaciones"],
+  rows:[["Iluminación","Todas las luminarias encendidas y limpias","✗","Lámpara quemada junto al ascensor: se emite parte a Mantenimiento"],["Olores","Ambiente neutro, sin olor a humedad ni a producto","✓",""],["Pisos","Secos, sin marcas; avisador colocado si se fregó","✓",""],["Vidrios","Puertas de acceso sin huellas","✗","Huellas en la puerta principal: repasar"],["Mobiliario","Ordenado, sin polvo ni manchas","✓",""],["Reposición de insumos","Dispensadores de alcohol en gel llenos","✓",""]],
+  foot:"Lo completa el supervisor en cada recorrido. Lo que no cumple se corrige en el momento o genera un parte de avería."},
+ ru:{t:"Planilla de rutinas",meta:[["Sector","Áreas Públicas"],["Período","mes en curso"]],
+  head:["Tarea","Varias veces al día","Diaria","Semanal","Quincenal","Mensual"],
+  rows:[["Baños públicos","●","","","",""],["Entrada y puertas de acceso","●","","","",""],["Vidrios bajos","●","","","",""],["Espejos, mobiliario y puertas","","●","","",""],["Aspirado de alfombras","","●","","",""],["Fregado profundo de pisos (noche)","","●","","",""],["Rejillas de aire","","","●","",""],["Plantas artificiales","","","●","",""],["Lámparas de techo","","","","●",""],["Revestimientos de madera","","","","●",""],["Arañas","","","","","●"],["Alfombras a fondo","","","","","●"],["Vidrios altos","","","","","●"]],
+  foot:"De esta programación sale la planilla mensual de actividades, que marca los días y horarios en que debe cumplirse cada tarea."}
+};
+function vFrec(){
+  var f=h("div");
+  f.appendChild(h("h2",{text:"Áreas Públicas por frecuencias"}));
+  f.appendChild(h("p",{class:"lead",text:"Qué se limpia, cada cuánto y en qué recorrido, fuera de las habitaciones."}));
+  f.appendChild(seg("frecuencias"));
+  if((S.mode.frecuencias||"estudiar")==="practicar"){ f.appendChild(h("h3",{text:"Preguntas de repaso"})); f.appendChild(quiz("frecuencias")); return f; }
+  f.appendChild(h("span",{class:"ref",text:"§ 7.1 a 7.3 · Simón y Olmo Garre"}));
+  f.appendChild(h("p",{text:"A diferencia de la mucama, que termina una habitación y pasa a la siguiente, la limpiadora vuelve sobre su trabajo para repasos continuos. Por eso opera con un itinerario fijo y frecuencias por tarea. El turno noche concentra los trabajos profundos; mañana y tarde hacen repasos."}));
+  f.appendChild(h("h3",{text:"Matriz del lobby del Hotel Monserrat"}));
+  f.appendChild(table(["Frecuencia","Tareas"],FREQ,true));
+  f.appendChild(h("h3",{text:"Proyección quincenal del lobby"}));
+  f.appendChild(h("p",{text:"La misma matriz volcada en las dos semanas en curso, como la vería la supervisora. La bibliografía fija la frecuencia de cada tarea; el día de la semana lo asigna cada hotel, y estos son los del Hotel Monserrat."}));
+  var lg=h("div",{class:"legend"}); [["var(--warn-bg)","Quincenal"],["var(--ok-bg)","Semanal"],["var(--surface)","Todos los días"]].forEach(function(l){ var sp=h("span",null,h("i"),l[1]); sp.firstChild.style.background=l[0]; lg.appendChild(sp); });
+  f.appendChild(lg); f.appendChild(calendar());
+  f.appendChild(h("h3",{text:"Recorrido de la brigada, turno mañana"}));
+  f.appendChild(h("p",{text:"Ejemplo de Olmo Garre. En todas las zonas se incluyen los sanitarios. Recepción y lobby llevan la mayor frecuencia por ser lo más transitado."}));
+  f.appendChild(table(["Hora","Zona"],BRIG,true));
+  f.appendChild(h("h3",{text:"Zonas nobles, proceso por proceso"}));
+  NOBLES.forEach(function(n){ f.appendChild(h("details",null,h("summary",{text:n[0]}),h("p",{text:n[1]}))); });
+  f.appendChild(h("h3",{text:"Las tres planillas del sector"}));
+  f.appendChild(h("p",{text:"Tocá «Ver planilla tipo» para abrir un modelo completado de cada una. La bibliografía define qué registra cada planilla; el diseño y los datos son un ejemplo del Hotel Monserrat."}));
+  var sheet=h("div",{id:"planilla"}), btns=[];
+  function openSheet(k){
+    sheet.textContent=""; btns.forEach(function(b){ b.setAttribute("aria-expanded",String(b.dataset.k===k)); b.textContent=b.dataset.k===k?"Ocultar planilla":"Ver planilla tipo"; });
+    if(!k){ curSheet=null; return; } curSheet=k;
+    var P=PLAN[k], box=h("div",{class:"sheet"});
+    box.appendChild(h("div",{class:"sh-top"},h("strong",{text:"Hotel Monserrat · Housekeeping"}),h("span",{class:"tag",text:"Modelo de ejemplo"})));
+    box.appendChild(h("div",{class:"sh-title",text:P.t}));
+    box.appendChild(h("div",{class:"sh-meta"},P.meta.map(function(m){return h("span",null,h("b",{text:m[0]+": "}),m[1]);})));
+    box.appendChild(h("div",{class:"tbl"},h("table",{class:"sh"},
+      h("thead",null,h("tr",null,P.head.map(function(x){return h("th",{text:x});}))),
+      h("tbody",null,P.rows.map(function(r){return h("tr",null,r.map(function(c){return h("td",{class:(c==="●"||c==="✓"||c==="✗")?"mk":null,text:c});}));})))));
+    box.appendChild(h("p",{class:"sh-foot",text:P.foot}));
+    sheet.appendChild(box);
+  }
+  function card(k,title,txt){
+    var b=h("button",{class:"btn",type:"button","aria-expanded":"false","aria-controls":"planilla",text:"Ver planilla tipo",onclick:function(){openSheet(curSheet===k?null:k); if(curSheet) sheet.scrollIntoView({block:"nearest"});}});
+    b.dataset.k=k; btns.push(b);
+    return h("div",{class:"box"},h("h4",{text:title}),h("p",{text:txt}),b);
+  }
+  f.appendChild(h("div",{class:"grid2"},
+    card("ap","Planilla de áreas públicas","Registro diario de las tareas hechas en cada zona, con horario y responsable. El ejemplo clásico es la hoja firmada del baño público."),
+    card("ck","Check-list de control","La herramienta del supervisor para revisar cada área contra su estándar: iluminación, olores, pisos, vidrios, mobiliario, reposición de insumos."),
+    card("ru","Planilla de rutinas","La programación de frecuencias: qué va varias veces por día, qué a diario y qué por semana o por mes. Es la base de la planilla mensual de actividades.")));
+  f.appendChild(sheet); if(curSheet) openSheet(curSheet);
+  return f;
+}
+
+/* ---------- pestaña 4: control ---------- */
+var QC=["Puerta","Placard","Espejo","Escritorio","Sillón","Cama","Mesitas de luz","Cortinas","Ventana","Aire acondicionado","Baño"];
+var ACC={S:"Limpiar",R:"Reparar",D:"Corregir",F:"Reponer"}, LBL={S:"sucio",R:"roto",D:"deteriorado",F:"faltante"};
+var qcState={};
+if(!S.ots) S.ots=[
+ {d:"Pérdida en la grifería del lavabo",imp:"Urgente",u:"Hab. 204, baño",f:today(),e:"Ejemplo: mucama piso 2",ej:true},
+ {d:"Lámpara de mesa de luz quemada",imp:"Normal",u:"Hab. 107, mesa de luz izquierda",f:today(),e:"Ejemplo: supervisora",ej:true}];
+function vControl(){
+  var f=h("div");
+  f.appendChild(h("h2",{text:"Averías, control de calidad y ambiente"}));
+  f.appendChild(h("p",{class:"lead",text:"De la falla detectada a la reparación, sin perder pendientes."}));
+  f.appendChild(seg("control"));
+  if((S.mode.control||"estudiar")==="practicar"){ f.appendChild(h("h3",{text:"Preguntas de repaso"})); f.appendChild(quiz("control")); return f; }
+  f.appendChild(h("span",{class:"ref",text:"Unidad 5 y § 6.9 · Housekeeping–Mantenimiento"}));
+  f.appendChild(h("p",{text:"Los desperfectos dan al cliente imagen de abandono e inseguridad, así que el ciclo detección-reparación debe ser lo más rápido posible. Todo parte de avería lleva cinco datos. Probá emitir uno: si falta un dato, no se guarda."}));
+  var msg=h("div"), list=h("div");
+  var fd=h("textarea",{id:"ot-desc",rows:"2",placeholder:"Qué falla, con el nombre que usa el hotel"}),
+      fi=h("select",{id:"ot-imp"},["","Urgente","Alta","Normal"].map(function(x){return h("option",{value:x,text:x||"Elegir…"});})),
+      fu=h("input",{type:"text",id:"ot-ubi",placeholder:"Hab. 305, baño, flor de la ducha"}),
+      ff=h("input",{type:"date",id:"ot-fecha",value:today()}),
+      fe=h("input",{type:"text",id:"ot-emisor",placeholder:"Nombre y puesto"});
+  function drawList(){
+    list.textContent="";
+    if(!S.ots.length) list.appendChild(h("p",{class:"lead",text:"No hay trabajos pendientes."}));
+    S.ots.forEach(function(o,ix){
+      list.appendChild(h("div",{class:"ot"},h("div",{class:"d",text:o.d}),h("span",{class:"imp "+o.imp.toLowerCase(),text:o.imp}),
+        h("div",{class:"m",text:o.u+" · "+o.f+" · "+o.e}),
+        h("button",{class:"btn",type:"button",text:"Resuelto",onclick:function(){S.ots.splice(ix,1);save();drawList();}})));
+    });
+  }
+  f.appendChild(h("form",{class:"box form",onsubmit:function(ev){
+    ev.preventDefault(); msg.textContent="";
+    var miss=[]; if(!fd.value.trim())miss.push("descripción"); if(!fi.value)miss.push("importancia"); if(!fu.value.trim())miss.push("ubicación exacta"); if(!ff.value)miss.push("fecha"); if(!fe.value.trim())miss.push("emisor");
+    if(miss.length){ msg.appendChild(h("div",{class:"msg bad",text:"El parte no se guardó. Falta: "+miss.join(", ")+"."})); return; }
+    S.ots.unshift({d:fd.value.trim(),imp:fi.value,u:fu.value.trim(),f:ff.value,e:fe.value.trim()}); save();
+    fd.value="";fu.value="";fi.value=""; msg.appendChild(h("div",{class:"msg ok",text:"Parte emitido. Original a Mantenimiento; duplicado en Trabajos pendientes."})); drawList();
+  }},
+    h("label",{for:"ot-desc"},"Descripción",fd),h("label",{for:"ot-imp"},"Importancia (fija la prioridad)",fi),h("label",{for:"ot-ubi"},"Ubicación exacta",fu),
+    h("label",{for:"ot-fecha"},"Fecha",ff),h("label",{for:"ot-emisor"},"Quién lo emite",fe),
+    h("div",null,h("button",{class:"btn pri",type:"submit",text:"Emitir parte"})),msg));
+  f.appendChild(h("h3",{text:"Trabajos pendientes"})); drawList(); f.appendChild(list);
+
+  f.appendChild(h("h3",{text:"Control de calidad de una habitación"}));
+  f.appendChild(h("span",{class:"ref",text:"§ 6.30 · Simón"}));
+  f.appendChild(h("p",{text:"Se recorre ítem por ítem con la consigna S = sucio, R = roto, D = deteriorado, F = faltante. Se hace al menos dos veces al año, sin chequear más de dos habitaciones por día por persona. Cada hallazgo origina una orden de trabajo: lo sucio se limpia, lo roto se repara, lo faltante se repone, lo deteriorado se corrige."}));
+  var qb=h("div",{class:"box"}), qm=h("div");
+  QC.forEach(function(it){
+    var o=h("div",{class:"o",role:"group","aria-label":it});
+    ["S","R","D","F"].forEach(function(c){
+      var b=h("button",{type:"button",text:c,"aria-pressed":String(qcState[it]===c),"aria-label":it+": "+LBL[c],onclick:function(){
+        qcState[it]=(qcState[it]===c)?null:c; Array.prototype.forEach.call(o.children,function(x){x.setAttribute("aria-pressed",String(x.textContent===qcState[it]));}); }});
+      o.appendChild(b); });
+    qb.appendChild(h("div",{class:"srdf"},h("span",{text:it}),o));
+  });
+  qb.appendChild(h("div",{class:"row",style:"margin-top:10px"},h("button",{class:"btn pri",type:"button",text:"Generar órdenes de trabajo",onclick:function(){
+    var n=0; qm.textContent="";
+    QC.forEach(function(it){ var c=qcState[it]; if(!c) return; n++;
+      S.ots.unshift({d:ACC[c]+": "+it.toLowerCase()+" ("+LBL[c]+")",imp:"Normal",u:"Hab. 101",f:today(),e:"Control de calidad"}); });
+    qcState={}; save();
+    qm.appendChild(h("div",{class:n?"msg ok":"msg bad",text:n?("Se generaron "+n+" órdenes. Están arriba, en Trabajos pendientes."):"Marcá al menos un ítem con S, R, D o F."}));
+    if(n){ drawList(); Array.prototype.forEach.call(qb.querySelectorAll(".o button"),function(x){x.setAttribute("aria-pressed","false");}); }
+  }})));
+  qb.appendChild(qm); f.appendChild(qb);
+
+  f.appendChild(h("h3",{text:"Mantenimiento preventivo que cumple el personal"}));
+  f.appendChild(box("Medidas que comunica Mantenimiento",["No usar esponjas que rayen la grifería","Cerrar bien las ventanas para no forzar los mecanismos","No trabar los montacargas tapando las células con papeles","Desenchufar los aparatos tirando de la ficha, nunca del cable"]));
+
+  f.appendChild(h("h3",{text:"Prácticas ambientales"}));
+  var env=[["Reuso de toallas y cambio de sábanas a pedido, con tarjetas que la mucama debe respetar",0],["Dosificadores rellenables en lugar de amenities descartables",0],["Químicos biodegradables y dosificación con dispenser",0],["Medición del consumo de agua de lavandería por habitación",0],["Mopas de microfibra prehumedecidas: menos agua y menos químicos",0],
+    ["Las pérdidas de agua se cargan como urgentes",1],["Limpieza periódica de filtros de aire acondicionado",1],["Apagar luces y climatización al terminar la habitación",1]];
+  f.appendChild(h("div",{class:"box"},h("ul",{style:"list-style:none;padding:0;margin:0"},env.map(function(e){
+    return h("li",{style:"display:flex;gap:8px;align-items:flex-start;justify-content:space-between;padding:5px 0"},h("span",{text:e[0]}),h("span",{class:"tag"+(e[1]?" sector":""),text:e[1]?"Práctica del sector":"Cuadernillo"})); }))));
+  return f;
+}
+
+/* ---------- navegación ---------- */
+var VIEWS={rutina:vRutina,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="rutina";
+function render(){
+  var nav=document.getElementById("tabs"), main=document.getElementById("main");
+  nav.textContent="";
+  TABS.forEach(function(t){
+    var b=h("button",{type:"button",role:"tab","aria-selected":String(t.id===cur),onclick:function(){cur=t.id;selRoom=null;try{history.replaceState(null,"","#"+t.id);}catch(e){} render();window.scrollTo(0,0);}},h("span",{class:"ic","aria-hidden":"true",html:'<svg viewBox="0 0 24 24">'+t.ic+'</svg>'}),t.label);
+    nav.appendChild(b);
+  });
+  main.textContent=""; main.appendChild(VIEWS[cur]());
+}
+var hsh=(location.hash||"").replace("#",""); if(VIEWS[hsh]) cur=hsh;
+render();
+})();
+</script>
+
+</body>
+</html>
