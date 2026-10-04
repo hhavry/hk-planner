@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="App de estudio de Housekeeping: rutinas, limpieza profunda, Áreas Públicas y control.">
-<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>HK Planner Hotel Monserrat</title>
+<!DOCTYPE html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="description" content="App de estudio de Housekeeping: rutinas, limpieza profunda, Áreas Públicas y control.">\n<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n<title>HK Planner Hotel Monserrat</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: una columna de estudio de 720px; barra de cuatro pestañas fija arriba, cada una con el color de un paño del código de colores. */
@@ -165,9 +158,7 @@ summary{cursor:pointer;font-weight:600;padding:10px 0}
 details p{font-size:.93rem}
 </style>
 
-</head>
-<body>
-<div class="wrap">
+</head>\n<body>\n<div class="wrap">
   <header class="top">
     <h1 class="brand">HK Planner<small>Hotel Monserrat · hotel ficticio de práctica, 24 habitaciones · Housekeeping según Simón y Olmo Garre</small></h1>
   </header>
@@ -474,6 +465,7 @@ function vFondo(){
     h("figure",{class:"box rot"},h("div",{html:matSVG([2,1,4,3],"Cara B","Dar vuelta")}),h("figcaption",null,h("b",{text:"Cada 15 días: giro de 180°. "}),"El colchón se da vuelta sobre su lado largo: la cara que estaba abajo queda arriba y la cabecera sigue en la cabecera.")),
     h("figure",{class:"box rot"},h("div",{html:matSVG([4,3,2,1],"Cara A","Girar")}),h("figcaption",null,h("b",{text:"Una vez al mes: cambio cabeza-pies. "}),"El colchón gira sobre la cama sin darse vuelta: el extremo de la cabecera pasa a los pies."))));
   rotBox.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Los números son las esquinas marcadas en el colchón: mirando dónde quedó cada una se sabe qué movimiento toca la próxima vez."}));
+  rotBox.appendChild(h("div",{class:"note"},h("b",{text:"Atención: no todos los colchones se dan vuelta. "}),"Los de una sola cara de descanso, como los que tienen pillow top, viscoelástica o capas de distinta firmeza, están diseñados para usarse siempre del mismo lado. En esos casos no se invierte la cara: solo se hace el giro cabeza-pies sobre la cama. Ante la duda, vale la indicación del fabricante."));
   f.appendChild(rotBtn); f.appendChild(rotBox);
   f.appendChild(h("h3",{text:"Habitación que no se rentó"}));
   f.appendChild(h("p",{text:"Si lleva varios días vacía se asigna para un repaso de ocho pasos. Está en la pestaña Rutina, como «Habitación no rentada»."}));
@@ -669,6 +661,4 @@ var hsh=(location.hash||"").replace("#",""); if(VIEWS[hsh]) cur=hsh;
 render();
 })();
 </script>
-
-</body>
-</html>
+\n</body>\n</html>\n
