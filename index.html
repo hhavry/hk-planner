@@ -151,6 +151,14 @@ table.sh td{height:38px}
 table.sh td.mk{text-align:center;font-weight:700}
 .sh-foot{font-size:.85rem;color:var(--muted);margin:10px 0 0}
 .box .btn{margin-top:4px}
+figure.rot{margin:0}
+figure.rot svg{display:block;width:100%;max-width:350px;margin:0 auto 8px}
+figure.rot figcaption{font-size:.92rem}
+.m-body{fill:var(--sunk);stroke:var(--ink);stroke-width:2}
+.m-pil{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.m-dot{fill:var(--accent)} .m-num{fill:var(--on-accent);font:700 13px var(--body)}
+.m-face{fill:var(--ink);font:700 15px var(--body)} .m-lab{fill:var(--muted);font:700 10px var(--body);letter-spacing:.08em}
+.m-arr{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
 details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;margin-bottom:6px}
 summary{cursor:pointer;font-weight:600;padding:10px 0}
@@ -392,6 +400,19 @@ function vRutina(){
 /* ---------- pestaña 2: a fondo ---------- */
 var PREC=["Retirar toda la ropa blanca","Cubrir los muebles con sábanas viejas","Descolgar cuadros","Desconectar aire acondicionado y frigobar","Retirar televisor y teléfono","Retirar cortinados","Retirar o cubrir colchones y objetos decorativos","Cerrar las llaves de paso del agua","Marcar en el reporte «habitación bloqueada»"];
 var selRoom=null;
+function matSVG(after,face,verb){
+  function mat(x,c,f){
+    var pos=[[x+16,46],[x+94,46],[x+16,164],[x+94,164]], o='<text x="'+(x+55)+'" y="18" text-anchor="middle" class="m-lab">CABECERA</text>'+
+      '<rect x="'+x+'" y="30" width="110" height="150" rx="12" class="m-body"/><rect x="'+(x+22)+'" y="38" width="66" height="22" rx="6" class="m-pil"/>'+
+      '<text x="'+(x+55)+'" y="112" text-anchor="middle" class="m-face">'+f+'</text>';
+    pos.forEach(function(p,i){ o+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="11" class="m-dot"/><text x="'+p[0]+'" y="'+(p[1]+4.5)+'" text-anchor="middle" class="m-num">'+c[i]+'</text>'; });
+    return o;
+  }
+  return '<svg viewBox="0 0 350 196" role="img" aria-label="'+verb+' el colchón: esquinas antes 1 2 3 4, después '+after.join(" ")+'">'+
+    mat(10,[1,2,3,4],"Cara A")+
+    '<text x="175" y="92" text-anchor="middle" class="m-lab">'+verb.toUpperCase()+'</text><path d="M134 105h74" class="m-arr"/><path d="M200 97l10 8-10 8" class="m-arr"/>'+
+    mat(230,after,face)+'</svg>';
+}
 function vFondo(){
   var f=h("div");
   f.appendChild(h("h2",{text:"Limpieza profunda y bloqueo"}));
@@ -447,6 +468,13 @@ function vFondo(){
   }
   f.appendChild(h("h3",{text:"Rotación de colchones"}));
   f.appendChild(h("p",{text:"Para evitar el deterioro desparejo se rota de manera periódica. Ejemplo de la bibliografía: cada 15 días un giro de 180° y una vez al mes el cambio cabeza-pies. Se numeran las esquinas para llevar el control; en habitaciones de dos camas los colchones pueden intercambiarse. Colaboran valets y peones."}));
+  var rotBox=h("div",{id:"rotacion",hidden:true}), rotBtn=h("button",{class:"btn",type:"button","aria-expanded":"false","aria-controls":"rotacion",text:"Ver cómo se rota",onclick:function(){
+    rotBox.hidden=!rotBox.hidden; rotBtn.setAttribute("aria-expanded",String(!rotBox.hidden)); rotBtn.textContent=rotBox.hidden?"Ver cómo se rota":"Ocultar imagen"; }});
+  rotBox.appendChild(h("div",{class:"grid2",style:"margin-top:10px"},
+    h("figure",{class:"box rot"},h("div",{html:matSVG([2,1,4,3],"Cara B","Dar vuelta")}),h("figcaption",null,h("b",{text:"Cada 15 días: giro de 180°. "}),"El colchón se da vuelta sobre su lado largo: la cara que estaba abajo queda arriba y la cabecera sigue en la cabecera.")),
+    h("figure",{class:"box rot"},h("div",{html:matSVG([4,3,2,1],"Cara A","Girar")}),h("figcaption",null,h("b",{text:"Una vez al mes: cambio cabeza-pies. "}),"El colchón gira sobre la cama sin darse vuelta: el extremo de la cabecera pasa a los pies."))));
+  rotBox.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Los números son las esquinas marcadas en el colchón: mirando dónde quedó cada una se sabe qué movimiento toca la próxima vez."}));
+  f.appendChild(rotBtn); f.appendChild(rotBox);
   f.appendChild(h("h3",{text:"Habitación que no se rentó"}));
   f.appendChild(h("p",{text:"Si lleva varios días vacía se asigna para un repaso de ocho pasos. Está en la pestaña Rutina, como «Habitación no rentada»."}));
   return f;
