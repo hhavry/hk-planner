@@ -20,7 +20,7 @@ El «Hotel Monserrat» es **ficticio**: 24 habitaciones en 3 pisos (101–108, 2
 - Única carga externa: Google Fonts (Bricolage Grotesque para títulos, Figtree para texto), con fuentes de respaldo.
 - El avance de cada alumno se guarda en `localStorage`, clave `hkplanner.v1`, solo en su dispositivo. No hay nombres, cuentas ni seguimiento: fue una decisión de la docente.
 - Todo el DOM se arma con la función `h(tag, attrs, ...hijos)`. El texto ingresado por el usuario se inserta siempre con `textContent`.
-- Navegación por hash: `#rutina`, `#fondo`, `#frecuencias`, `#control`.
+- Navegación por hash: `#hoy` (pantalla inicial), `#rutina`, `#fondo`, `#frecuencias`, `#control`.
 - Debe verse bien en celular (400 px) y no tener scroll horizontal de página. Solo tablas y el calendario se deslizan dentro de su propio contenedor.
 
 ### Publicar un cambio
@@ -33,10 +33,11 @@ El artifact de Claude es el mismo contenido sin `<!DOCTYPE>`, `<html>`, `<head>`
 
 ## Estructura de la app
 
-Cuatro pestañas, cada una con modo **Estudiar** y modo **Practicar** (preguntas de repaso con explicación; mejor marca guardada).
+Cinco pestañas. **Hoy** es la pantalla inicial; las otras cuatro tienen modo **Estudiar** y modo **Practicar** (preguntas de repaso con explicación; mejor marca guardada).
 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
+| Hoy | Qué toca hacer día por día, con flechas para cambiar de fecha y casillas para tildar. Selector de puesto: Mucama, Áreas Públicas, Gobernanta y **Mi casa**. Las tareas enlazan a los procedimientos de las otras pestañas; la Gobernanta ve además los bloqueos activos y los partes urgentes. En Mi casa el alumno carga sus propias tareas con frecuencia (diaria, día por medio, semanal, quincenal, mensual). | `vHoy`, `HOY`, `dueOn`, `goTo`, `calIdx`; estado en `S.hoy`, `S.casa`, `S.puesto` |
 | Rutina | Habitación de salida (15 pasos), baño (8), armado de cama, habitación no rentada (8), cada paso con su «Por qué»; paños y productos; Los SÍ / Los No; códigos de estado; prioridades según ocupación. En Practicar: juego de ordenar pasos. | `vRutina`, `orderGame`, datos en `RUT`, `CODES` |
 | A fondo | Limpieza profunda anual; plano de bloqueos con reglas según ocupación y check-list de precauciones; rotación de colchones con esquema; habitación no rentada. | `vFondo`, `matSVG`, `PREC` |
 | Frecuencias | Matriz del lobby; proyección quincenal tipo calendario; recorrido de la brigada turno mañana; zonas nobles; tres planillas tipo que se abren con un clic. | `vFrec`, `calendar`, `FREQ`, `CAL_*`, `BRIG`, `NOBLES`, `PLAN` |
@@ -60,6 +61,9 @@ Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confir
 - La interpretación de la rotación de colchones: «giro de 180°» = dar vuelta de cara; «cambio cabeza-pies» = girar sobre la cama. **Pendiente de confirmación.**
 - El aviso sobre colchones de una sola cara y sus ejemplos.
 - Tres prácticas ambientales marcadas «Práctica del sector».
+- En la pestaña Hoy: la distribución de las tareas de cada puesto a lo largo del turno (las tareas salen del cuadernillo, el orden y agrupación no) y las cinco tareas de ejemplo de «Mi casa».
+
+El calendario quincenal y la pestaña Hoy comparten el mismo criterio de días: `calIdx(fecha)` devuelve la posición 0–13 dentro de un ciclo de dos semanas que empieza un lunes.
 
 ## Preferencias de la docente (respetarlas)
 
@@ -74,4 +78,4 @@ Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confir
 
 ## Proyecto de clase relacionado
 
-El diseño del proyecto de vibecoding de los alumnos (cronograma, 17 reglas, prompts por clase, rúbrica, uso de Antigravity gratuito) está en un documento aparte de Claude: «HK Planner: proyecto de vibecoding para Housekeeping». La app de los alumnos tiene además un modo «Mi casa»; esta app modelo solo cubre el hotel.
+El diseño del proyecto de vibecoding de los alumnos (cronograma, 17 reglas, prompts por clase, rúbrica, uso de Antigravity gratuito) está en un documento aparte de Claude: «HK Planner: proyecto de vibecoding para Housekeeping». La docente quiere que, además de la materia, los alumnos vean para qué sirve el vibecoding y puedan usar la app en su casa: por eso la pestaña Hoy incluye «Mi casa».

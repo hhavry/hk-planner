@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 header.top{padding-block:22px 12px}
 .brand{font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1.1;margin:0;letter-spacing:-.01em}
 .brand small{display:block;font-family:var(--body);font-weight:500;font-size:.9rem;color:var(--muted);letter-spacing:0;margin-top:6px}
-nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:2px solid var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;border-bottom:2px solid var(--ink)}
 nav.tabs button{font:700 .82rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
 nav.tabs button .ic{display:block;width:24px;height:24px}
 nav.tabs button .ic svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -159,6 +159,21 @@ figure.rot figcaption{font-size:.92rem}
 .m-dot{fill:var(--accent)} .m-num{fill:var(--on-accent);font:700 13px var(--body)}
 .m-face{fill:var(--ink);font:700 15px var(--body)} .m-lab{fill:var(--muted);font:700 10px var(--body);letter-spacing:.08em}
 .m-arr{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:480px){nav.tabs button{font-size:.66rem;padding:7px 1px;letter-spacing:-.01em}}
+.daynav{display:flex;align-items:center;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+.daynav .dl{font:700 1.1rem var(--display);min-width:0;flex:1 1 150px}
+.daynav .btn{padding:7px 12px}
+ul.todo{list-style:none;margin:8px 0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.todo li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:start}
+ul.todo li.done{background:var(--sunk)} ul.todo li.done .t{color:var(--muted);text-decoration:line-through}
+ul.todo input[type=checkbox]{width:22px;height:22px;margin-top:2px;accent-color:var(--accent)}
+ul.todo .t{font-weight:500;min-width:0;overflow-wrap:anywhere}
+ul.todo .t small{display:block;font-weight:400;font-size:.88rem;color:var(--muted)}
+ul.todo .lk{font:600 .82rem var(--body);color:var(--accent);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;white-space:nowrap}
+ul.todo .dot{width:22px;height:22px;display:grid;place-items:center;color:var(--accent);font-weight:700}
+.grp{font:700 .78rem var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:18px 0 4px}
+.addrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:end}
+@media (max-width:520px){.addrow{grid-template-columns:1fr}}
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
 details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;margin-bottom:6px}
 summary{cursor:pointer;font-weight:600;padding:10px 0}
@@ -201,6 +216,7 @@ function today(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth(
 
 /* ---------- contenido ---------- */
 var TABS=[
+ {id:"hoy",label:"Hoy",ic:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'},
  {id:"rutina",label:"Rutina",ic:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 15h18"/><path d="M5 10V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M8 10V9h3v1"/><path d="M3 18v2M21 18v2"/>'},
  {id:"fondo",label:"A fondo",ic:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 12.5l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z"/>'},
  {id:"frecuencias",label:"Frecuencias",ic:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'},
@@ -498,6 +514,7 @@ var NOBLES=[["Instalaciones altas y paredes","Techos, rejillas de aire y lámpar
  ["Instalaciones deportivas","Equipos de gimnasio, espejos, paredes y suelos; se cambian las toallas usadas."],
  ["Restaurantes y bares","Después de cada servicio y a fondo durante la noche. Las sillas se desmanchan cada día. El suelo se aspira o se mopea: no se barre."]];
 var CAL_D=["Repasos de baños, entrada y vidrios","Espejos, mobiliario y puertas","Aspirado de alfombras","Noche: fregado profundo de pisos"];
+function calIdx(d){ var base=new Date(2026,0,5), n=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-base)/86400000); return ((n%14)+14)%14; }
 var CAL_W={0:["Plantas artificiales","Rejillas de aire"],7:["Plantas artificiales","Rejillas de aire"]};
 var CAL_Q={2:["Revestimientos de madera","Lámparas de techo"],4:["Rotación de colchones: giro de 180°"],10:["Correr los sillones y limpiar detrás"]};
 function calendar(){
@@ -509,8 +526,8 @@ function calendar(){
   for(var i=0;i<14;i++){
     var d=new Date(start); d.setDate(start.getDate()+i);
     var isT=d.getTime()===t.getTime(), ul=h("ul");
-    (CAL_Q[i]||[]).forEach(function(x){ ul.appendChild(h("li",{class:"q"},h("small",{text:"Quincenal"}),x)); });
-    (CAL_W[i]||[]).forEach(function(x){ ul.appendChild(h("li",{class:"w"},h("small",{text:"Semanal"}),x)); });
+    (CAL_Q[calIdx(d)]||[]).forEach(function(x){ ul.appendChild(h("li",{class:"q"},h("small",{text:"Quincenal"}),x)); });
+    (CAL_W[calIdx(d)]||[]).forEach(function(x){ ul.appendChild(h("li",{class:"w"},h("small",{text:"Semanal"}),x)); });
     CAL_D.forEach(function(x){ ul.appendChild(h("li",{text:x})); });
     g.appendChild(h("div",{class:"day"+(isT?" today":"")+(i>=7?" last":"")},
       h("div",{class:"dt"},d.getDate()+" "+MES[d.getMonth()],isT?h("em",{text:"Hoy"}):null),ul));
@@ -655,8 +672,134 @@ function vControl(){
   return f;
 }
 
+
+/* ---------- pestaña 0: hoy ---------- */
+var hoyDate=null;
+var HOY={
+ mucama:{n:"Mucama",sub:"Turno mañana, con un piso asignado.",groups:[
+  ["Al ingresar",[
+   {t:"Uniforme y fichado."},
+   {t:"Presentarte en la oficina del Ama de Llaves",s:"Retirás el reporte de piso, la llave maestra de piso y las novedades."},
+   {t:"Preparar el carro completo en el office",s:"Se arma antes de subir al piso para no interrumpir la limpieza por faltantes."},
+   {t:"Contar las existencias del linen y anotar los faltantes en la planilla de la puerta."}]],
+  ["Durante el turno",[
+   {t:"Entrar primero a las habitaciones que figuran V o VL",s:"Verificás que estén en condiciones; si una «libre» está ocupada, lo informás a la gobernanta."},
+   {t:"Limpiar según las prioridades que indicó la supervisora",go:["rutina","salida"],gl:"Ver los 15 pasos"},
+   {t:"En cada habitación, el baño con su secuencia propia",go:["rutina","bano"],gl:"Ver los 8 pasos"},
+   {t:"Completar el reporte de piso al entrar y al salir de cada habitación",s:"Con hora de entrada y de salida, e informando cualquier avería."},
+   {t:"13:00 · Reportar al Ama de Llaves las habitaciones que siguen con No molestar."}]],
+  ["Al cerrar el turno",[
+   {t:"Dejar el carro limpio y guardado en el office",s:"Nunca queda en el pasillo."},
+   {t:"Entregar a la gobernanta el reporte, la llave maestra y las novedades."},
+   {t:"Fichado y vestuario."}]]]},
+ ap:{n:"Áreas Públicas",sub:"Limpiadora de la brigada, turno mañana. Recorrido de ejemplo de Olmo Garre.",groups:[
+  ["Recorrido del turno",[
+   {t:"05:00 · Recepción, lobby, entrada principal, escaleras y ascensores"},
+   {t:"06:00 · Restaurante, para el servicio de desayunos"},
+   {t:"07:00 · Repaso a salones, bar y terrazas"},
+   {t:"08:00 · Oficinas y repaso a Recepción y lobby"},
+   {t:"09:00 · Escalera de servicio y vestuarios"},
+   {t:"10:00 · Comedor de personal y repaso a Recepción y lobby"},
+   {t:"11:00 · Restaurante, para el servicio de almuerzos"},
+   {t:"12:00 · Repaso a Recepción, lobby y accesos"}]],
+  ["En cada pasada",[
+   {t:"Sanitarios de la zona, y firmar la planilla del baño público",go:["frecuencias"],gl:"Ver planillas"},
+   {t:"Volver sobre lo ya limpio si alguien lo pisó o lo ensució."},
+   {t:"Avisar averías y entregar los objetos olvidados que aparezcan."}]],
+  ["Queda para el turno noche",[
+   {t:"Fregado profundo de pisos y trabajos a fondo",s:"De noche no circulan huéspedes por las zonas de alto tránsito."}]]]},
+ gob:{n:"Gobernanta",sub:"Organiza el sector, distribuye el trabajo y controla.",groups:[
+  ["Al empezar",[
+   {t:"Recibir el reporte de Recepción y definir el orden de trabajo según la ocupación",go:["rutina","salida"],gl:"Ver prioridades"},
+   {t:"Distribuir las habitaciones entre las mucamas",s:"Entregás reportes de piso, llaves maestras y novedades."}]],
+  ["Durante el turno",[
+   {t:"Chequear las habitaciones terminadas y avisar a Recepción cuáles están disponibles",s:"La habitación chequeada pasa a IS."},
+   {t:"Derivar a Mantenimiento las averías que reportan las mucamas",go:["control"],gl:"Emitir parte"},
+   {t:"13:00 · Definir cómo verificar las habitaciones que siguen con No molestar."}]],
+  ["Al cerrar",[
+   {t:"Recibir reportes, llaves maestras y novedades de cada mucama."},
+   {t:"Registrar los objetos olvidados y coordinar su destino."}]]]}
+};
+var FREQ_D={diaria:1,alternos:2,semanal:7,quincenal:14,mensual:30}, FREQ_L={diaria:"Todos los días",alternos:"Día por medio",semanal:"Una vez por semana",quincenal:"Cada 15 días",mensual:"Una vez por mes"};
+if(!S.casa) S.casa=[
+ {t:"Ventilar y tender la cama",w:"En el hotel la habitación se ventila mientras se hace el resto.",f:"diaria",d:"2026-01-05",ej:true},
+ {t:"Baño: desinfectante primero, inodoro al final y con su propio paño",w:"El químico necesita minutos de contacto; el paño del inodoro no toca nada más.",f:"semanal",d:"2026-01-05",ej:true},
+ {t:"Polvo de arriba hacia abajo y piso desde el fondo hacia la puerta",w:"Lo que cae se limpia después y no se pisa lo ya limpio.",f:"semanal",d:"2026-01-05",ej:true},
+ {t:"Rotar el colchón",w:"Evita el desgaste desparejo. Mirá el esquema en A fondo.",f:"mensual",d:"2026-01-05",ej:true},
+ {t:"Limpieza profunda de un ambiente",w:"En el hotel cada habitación la recibe al menos una vez al año, planificada.",f:"mensual",d:"2026-01-12",ej:true}];
+if(!S.hoy) S.hoy={};
+function iso(d){ return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2); }
+function dueOn(task,d){ var p=task.d.split("-"), st=new Date(+p[0],+p[1]-1,+p[2]), n=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-st)/86400000); return n>=0 && n%FREQ_D[task.f]===0; }
+function goTo(g){ cur=g[0]; if(g[1]){ curRut=g[1]; } S.mode[g[0]]="estudiar"; selRoom=null; try{history.replaceState(null,"","#"+cur);}catch(e){} render(); window.scrollTo(0,0); }
+function vHoy(){
+  var f=h("div"), role=S.puesto||"mucama";
+  if(!hoyDate){ hoyDate=new Date(); hoyDate.setHours(0,0,0,0); }
+  var d=hoyDate, key=iso(d), t0=new Date(); t0.setHours(0,0,0,0);
+  f.appendChild(h("h2",{text:role==="casa"?"Hoy en mi casa":"Hoy en el Hotel Monserrat"}));
+  f.appendChild(h("p",{class:"lead",text:"Lo que toca hacer día por día. Elegí un puesto del hotel, o pasá a «Mi casa» y armá tu propia rutina con la misma lógica."}));
+  var ch=h("div",{class:"chips"});
+  [["mucama","Mucama"],["ap","Áreas Públicas"],["gob","Gobernanta"],["casa","Mi casa"]].forEach(function(o){
+    ch.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(role===o[0]),text:o[1],onclick:function(){S.puesto=o[0];save();render();}})); });
+  f.appendChild(ch);
+  function move(n){ return function(){ hoyDate=new Date(d.getFullYear(),d.getMonth(),d.getDate()+n); render(); }; }
+  var lbl=d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
+  f.appendChild(h("div",{class:"daynav"},
+    h("button",{class:"btn",type:"button","aria-label":"Día anterior",text:"‹",onclick:move(-1)}),
+    h("button",{class:"btn",type:"button","aria-label":"Día siguiente",text:"›",onclick:move(1)}),
+    h("div",{class:"dl",text:lbl.charAt(0).toUpperCase()+lbl.slice(1)+(d.getTime()===t0.getTime()?" · hoy":"")}),
+    d.getTime()!==t0.getTime()?h("button",{class:"btn",type:"button",text:"Volver a hoy",onclick:function(){hoyDate=null;render();}}):null));
+  var bar=h("i"), count=h("span",{class:"ref"}), boxes=[];
+  function upd(){ var n=boxes.filter(function(c){return c.checked;}).length; bar.style.width=boxes.length?(100*n/boxes.length)+"%":"0"; count.textContent=boxes.length?(n+" de "+boxes.length+" hechas"):"Sin tareas para este día"; }
+  f.appendChild(count); f.appendChild(h("div",{class:"bar"},bar));
+  function item(id,t,sub,go,gl,tag){
+    var k=key+"|"+role+"|"+id, cb=h("input",{type:"checkbox",id:"hoy-"+id.replace(/[^a-z0-9]/gi,"-"),"aria-label":t});
+    cb.checked=!!S.hoy[k]; boxes.push(cb);
+    var li=h("li",{class:cb.checked?"done":null},cb,
+      h("label",{class:"t",for:cb.id},tag?h("span",{class:"tag",style:"margin-right:6px",text:tag}):null,t,sub?h("small",{text:sub}):null),
+      go?h("button",{class:"lk",type:"button",text:gl||"Ver",onclick:function(){goTo(go);}}):h("span"));
+    cb.addEventListener("change",function(){ if(cb.checked) S.hoy[k]=1; else delete S.hoy[k]; save(); li.className=cb.checked?"done":""; upd(); });
+    return li;
+  }
+  if(role==="casa"){
+    var due=S.casa.map(function(t,i){return [t,i];}).filter(function(x){return dueOn(x[0],d);});
+    var ul=h("ul",{class:"todo"});
+    due.forEach(function(x){ ul.appendChild(item("c"+x[1]+"-"+x[0].t.length,x[0].t,x[0].w,null,null,FREQ_L[x[0].f])); });
+    f.appendChild(ul);
+    f.appendChild(h("h3",{text:"Mis tareas"}));
+    f.appendChild(h("p",{text:"Es la planilla de rutinas del hotel aplicada a tu casa: cada tarea con su frecuencia. Las cinco primeras son ejemplos con técnica hotelera; borralas o sumá las tuyas."}));
+    var ft=h("input",{type:"text",id:"casa-tarea",placeholder:"Por ejemplo: limpiar la heladera"}), ff=h("select",{id:"casa-frec"},Object.keys(FREQ_L).map(function(k){return h("option",{value:k,text:FREQ_L[k]});})), fm=h("div");
+    f.appendChild(h("form",{class:"box form",onsubmit:function(ev){ ev.preventDefault(); fm.textContent="";
+        if(!ft.value.trim()){ fm.appendChild(h("div",{class:"msg bad",text:"Escribí la tarea antes de agregarla."})); return; }
+        S.casa.push({t:ft.value.trim(),f:ff.value,d:iso(t0)}); save(); render(); }},
+      h("div",{class:"addrow"},h("label",{for:"casa-tarea"},"Tarea",ft),h("label",{for:"casa-frec"},"Frecuencia",ff),h("button",{class:"btn pri",type:"submit",text:"Agregar"})),fm));
+    var all=h("ul",{class:"todo",style:"margin-top:10px"});
+    S.casa.forEach(function(t,i){
+      all.appendChild(h("li",null,h("span",{class:"dot",text:"•"}),h("span",{class:"t"},t.t,h("small",{text:FREQ_L[t.f]+(t.ej?" · ejemplo":"")})),
+        h("button",{class:"lk",type:"button",text:"Borrar","aria-label":"Borrar "+t.t,onclick:function(){S.casa.splice(i,1);save();render();}}))); });
+    f.appendChild(all); upd(); return f;
+  }
+  var R=HOY[role];
+  f.appendChild(h("p",{style:"margin-top:8px",text:R.sub}));
+  var extra=[], idx=calIdx(d);
+  if(role==="ap"){ (CAL_Q[idx]||[]).forEach(function(x){extra.push([x,"Quincenal"]);}); (CAL_W[idx]||[]).forEach(function(x){extra.push([x,"Semanal"]);}); }
+  if(role==="gob"){ if(idx===4) extra.push(["Programar la rotación de colchones con valets y peones","Quincenal",["fondo"],"Ver esquema"]); if(d.getDate()===1) extra.push(["Inventario de blancos y suministros","Mensual"]); }
+  if(extra.length){ f.appendChild(h("div",{class:"grp",text:"Tareas periódicas de este día"})); var ue=h("ul",{class:"todo"});
+    extra.forEach(function(x,i){ ue.appendChild(item("x"+i,x[0],null,x[2],x[3],x[1])); }); f.appendChild(ue); }
+  if(role==="gob"){
+    var bl=Object.keys(S.blocked).filter(function(k){return S.blocked[k];}), ur=S.ots.filter(function(o){return o.imp==="Urgente";});
+    if(bl.length||ur.length){ f.appendChild(h("div",{class:"grp",text:"Pendientes que vienen de otras pestañas"})); var up=h("ul",{class:"todo"});
+      bl.forEach(function(b){ up.appendChild(h("li",null,h("span",{class:"dot",text:"!"}),h("span",{class:"t"},"Seguimiento del bloqueo de la habitación "+b,h("small",{text:"Sigue fuera del inventario vendible hasta que se desbloquee."})),h("button",{class:"lk",type:"button",text:"Ver plano",onclick:function(){goTo(["fondo"]);}}))); });
+      ur.forEach(function(o){ up.appendChild(h("li",null,h("span",{class:"dot",text:"!"}),h("span",{class:"t"},"Parte urgente sin resolver: "+o.d,h("small",{text:o.u})),h("button",{class:"lk",type:"button",text:"Ver partes",onclick:function(){goTo(["control"]);}}))); });
+      f.appendChild(up); }
+  }
+  R.groups.forEach(function(g,gi){ f.appendChild(h("div",{class:"grp",text:g[0]})); var ul=h("ul",{class:"todo"});
+    g[1].forEach(function(t,ti){ ul.appendChild(item("g"+gi+"-"+ti,t.t,t.s,t.go,t.gl)); }); f.appendChild(ul); });
+  f.appendChild(h("div",{class:"note",text:"Modelo de ejemplo. Las tareas salen de la bibliografía; la distribución en el día y los días asignados a lo semanal y quincenal son los del Hotel Monserrat."}));
+  upd(); return f;
+}
+
 /* ---------- navegación ---------- */
-var VIEWS={rutina:vRutina,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="rutina";
+var VIEWS={hoy:vHoy,rutina:vRutina,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="hoy";
 function render(){
   var nav=document.getElementById("tabs"), main=document.getElementById("main");
   nav.textContent="";
