@@ -11,7 +11,7 @@
 /* Layout: una columna de estudio de 720px; barra de cuatro pestañas fija arriba, cada una con el color de un paño del código de colores. */
 :root{
   --bg:#f5f3ee; --surface:#ffffff; --sunk:#ebe4da; --ink:#2a1b18; --muted:#5c4741; --line:#d6c4b9;
-  --accent:#a44e33; --on-accent:#ffffff; --band:#2a1b18; --on-band:#ffffff;
+  --accent:#a44e33; --on-accent:#ffffff; --band:#2a1b18; --on-band:#ffffff; --hoy:#f3c531; --on-hoy:#2a1b18; --hoy-on:#1d5236; --on-hoy-on:#ffffff;
   --p-azul:#2f6fd0; --p-verde:#2f8f5b; --p-ambar:#c48a12; --p-rojo:#c8463f;
   --ok:#14633f; --ok-bg:#cdeedd; --bad:#9c2620; --bad-bg:#f9d5d2; --warn-bg:#ffe6ad; --warn:#6b4700;
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
@@ -20,13 +20,13 @@
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#170e0c; --surface:#2a1b18; --sunk:#3b2822; --ink:#f6efe9; --muted:#d3c0b7; --line:#604840; 
-  --accent:#e89d7f; --on-accent:#2a1b18; --band:#e89d7f; --on-band:#2a1b18;
+  --accent:#e89d7f; --on-accent:#2a1b18; --band:#e89d7f; --on-band:#2a1b18; --hoy:#e9bd35; --on-hoy:#2a1b18; --hoy-on:#2c7a52; --on-hoy-on:#ffffff;
   --p-azul:#6fa3f2; --p-verde:#5fc48d; --p-ambar:#e6b043; --p-rojo:#ef7f78;
   --ok:#6fd3a5; --ok-bg:#173a2c; --bad:#f29089; --bad-bg:#43201e; --warn-bg:#3d3113; --warn:#f0cc7a;
   color-scheme:dark } }
 :root[data-theme="dark"]{
   --bg:#170e0c; --surface:#2a1b18; --sunk:#3b2822; --ink:#f6efe9; --muted:#d3c0b7; --line:#604840; 
-  --accent:#e89d7f; --on-accent:#2a1b18; --band:#e89d7f; --on-band:#2a1b18;
+  --accent:#e89d7f; --on-accent:#2a1b18; --band:#e89d7f; --on-band:#2a1b18; --hoy:#e9bd35; --on-hoy:#2a1b18; --hoy-on:#2c7a52; --on-hoy-on:#ffffff;
   --p-azul:#6fa3f2; --p-verde:#5fc48d; --p-ambar:#e6b043; --p-rojo:#ef7f78;
   --ok:#6fd3a5; --ok-bg:#173a2c; --bad:#f29089; --bad-bg:#43201e; --warn-bg:#3d3113; --warn:#f0cc7a;
   color-scheme:dark }
@@ -41,6 +41,9 @@ nav.tabs button{font:700 .82rem var(--body);color:var(--ink);background:var(--su
 nav.tabs button .ic{display:block;width:24px;height:24px}
 nav.tabs button .ic svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav.tabs button[aria-selected="true"] .ic{color:var(--on-accent)}
+nav.tabs button[data-tab="hoy"]{background:var(--hoy);color:var(--on-hoy);border-color:var(--hoy)}
+nav.tabs button[data-tab="hoy"][aria-selected="true"]{background:var(--hoy-on);color:var(--on-hoy-on);border-color:var(--hoy-on)}
+nav.tabs button[data-tab="hoy"][aria-selected="true"] .ic{color:var(--on-hoy-on)}
 nav.tabs button[aria-selected="true"]{color:var(--on-accent);background:var(--accent);border-color:var(--accent)}
 button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 h2{font-family:var(--display);font-weight:700;font-size:1.5rem;line-height:1.2;margin:26px 0 4px;text-wrap:balance}
@@ -216,11 +219,11 @@ function today(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth(
 
 /* ---------- contenido ---------- */
 var TABS=[
- {id:"hoy",label:"Hoy",ic:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'},
  {id:"rutina",label:"Rutina",ic:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 15h18"/><path d="M5 10V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M8 10V9h3v1"/><path d="M3 18v2M21 18v2"/>'},
  {id:"fondo",label:"A fondo",ic:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 12.5l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z"/>'},
  {id:"frecuencias",label:"Frecuencias",ic:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'},
- {id:"control",label:"Control",ic:'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.5h6v1"/><path d="M8.5 12.5l2.3 2.3 4.7-4.8"/>'}
+ {id:"control",label:"Control",ic:'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.5h6v1"/><path d="M8.5 12.5l2.3 2.3 4.7-4.8"/>'},
+ {id:"hoy",label:"Hoy",ic:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'}
 ];
 var RUT={
  salida:{n:"Habitación de salida",ref:"§ 6.14 · 15 pasos",intro:"Para una habitación vacía y sucia o de check out. El sentido es siempre de arriba hacia abajo y de atrás hacia adelante: lo que cae se limpia después y nunca se vuelve a pasar por lo ya limpio.",steps:[
@@ -799,12 +802,12 @@ function vHoy(){
 }
 
 /* ---------- navegación ---------- */
-var VIEWS={hoy:vHoy,rutina:vRutina,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="hoy";
+var VIEWS={hoy:vHoy,rutina:vRutina,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="rutina";
 function render(){
   var nav=document.getElementById("tabs"), main=document.getElementById("main");
   nav.textContent="";
   TABS.forEach(function(t){
-    var b=h("button",{type:"button",role:"tab","aria-selected":String(t.id===cur),onclick:function(){cur=t.id;selRoom=null;try{history.replaceState(null,"","#"+t.id);}catch(e){} render();window.scrollTo(0,0);}},h("span",{class:"ic","aria-hidden":"true",html:'<svg viewBox="0 0 24 24">'+t.ic+'</svg>'}),t.label);
+    var b=h("button",{type:"button",role:"tab","data-tab":t.id,"aria-selected":String(t.id===cur),onclick:function(){cur=t.id;selRoom=null;try{history.replaceState(null,"","#"+t.id);}catch(e){} render();window.scrollTo(0,0);}},h("span",{class:"ic","aria-hidden":"true",html:'<svg viewBox="0 0 24 24">'+t.ic+'</svg>'}),t.label);
     nav.appendChild(b);
   });
   main.textContent=""; main.appendChild(VIEWS[cur]());

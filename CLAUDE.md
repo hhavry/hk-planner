@@ -20,7 +20,7 @@ El «Hotel Monserrat» es **ficticio**: 24 habitaciones en 3 pisos (101–108, 2
 - Única carga externa: Google Fonts (Bricolage Grotesque para títulos, Figtree para texto), con fuentes de respaldo.
 - El avance de cada alumno se guarda en `localStorage`, clave `hkplanner.v1`, solo en su dispositivo. No hay nombres, cuentas ni seguimiento: fue una decisión de la docente.
 - Todo el DOM se arma con la función `h(tag, attrs, ...hijos)`. El texto ingresado por el usuario se inserta siempre con `textContent`.
-- Navegación por hash: `#hoy` (pantalla inicial), `#rutina`, `#fondo`, `#frecuencias`, `#control`.
+- Navegación por hash: `#rutina` (pantalla inicial), `#fondo`, `#frecuencias`, `#control`, `#hoy`.
 - Debe verse bien en celular (400 px) y no tener scroll horizontal de página. Solo tablas y el calendario se deslizan dentro de su propio contenedor.
 
 ### Publicar un cambio
@@ -33,7 +33,7 @@ El artifact de Claude es el mismo contenido sin `<!DOCTYPE>`, `<html>`, `<head>`
 
 ## Estructura de la app
 
-Cinco pestañas. **Hoy** es la pantalla inicial; las otras cuatro tienen modo **Estudiar** y modo **Practicar** (preguntas de repaso con explicación; mejor marca guardada).
+Cinco pestañas. **Hoy** va última, después de Control, en amarillo (`--hoy`) y en verde oscuro cuando está activa (`--hoy-on`): pedido expreso de la docente. Las otras cuatro tienen modo **Estudiar** y modo **Practicar** (preguntas de repaso con explicación; mejor marca guardada).
 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
