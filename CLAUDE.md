@@ -70,6 +70,7 @@ El calendario quincenal y la pestaña Hoy comparten el mismo criterio de días: 
 - Idioma: español rioplatense, con voseo («tocá», «elegí»).
 - El recuadro de prohibiciones se titula **«Los No»** y cada ítem empieza con «Nunca…» o «Jamás…».
 - La práctica se llama **«Preguntas de repaso»**, no «tipo parcial».
+- **Gobernanta vs. Ama de Llaves:** en la operación diaria la mucama se presenta, reporta y entrega todo a la **gobernanta**. «Ama de Llaves» se reserva para la cabeza del departamento. No escribir que la mucama va «a la oficina del Ama de Llaves», aunque Simón lo diga así.
 - Las pestañas llevan **iconos de línea de un solo tono** (cama, calendario, reloj, planilla). No usar rectángulos de colores ahí: se confunden con el código de paños.
 - Paleta tomada de las diapositivas de la cátedra: fondo crema `#f5f3ee`, marrón oscuro `#2a1b18` para texto y bandas de sección, terracota `#a44e33` como acento. En modo oscuro, fondo marrón y acento durazno `#e89d7f`.
 - Alto contraste y secciones bien separadas: cada título de sección (`h3`) es una banda oscura de ancho completo.
