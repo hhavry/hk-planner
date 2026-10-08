@@ -38,16 +38,16 @@ Cinco pestañas. **Hoy** va última, después de Control, en amarillo (`--hoy`) 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
 | Hoy | Qué toca hacer día por día, con flechas para cambiar de fecha y casillas para tildar. Selector de puesto: Mucama, Áreas Públicas, Gobernanta y **Mi casa**. Las tareas enlazan a los procedimientos de las otras pestañas; la Gobernanta ve además los bloqueos activos y los partes urgentes. En Mi casa el alumno carga sus propias tareas con frecuencia (diaria, día por medio, semanal, quincenal, mensual). | `vHoy`, `HOY`, `dueOn`, `goTo`, `calIdx`; estado en `S.hoy`, `S.casa`, `S.puesto` |
-| Rutina | Habitación de salida (15 pasos), baño (8), armado de cama, habitación no rentada (8), cada paso con su «Por qué»; paños y productos; Los SÍ / Los No; códigos de estado; prioridades según ocupación. En Practicar: juego de ordenar pasos. | `vRutina`, `orderGame`, datos en `RUT`, `CODES` |
+| Rutina | Habitación de salida (15 pasos), baño (8), armado de cama, habitación no rentada (8), cada paso con su «Por qué»; paños y productos; Los SÍ / Los No; códigos de estado; cartel de No molestar con la práctica actual; tabla de equivalencias de los nombres de los puestos; prioridades según ocupación. En Practicar: juego de ordenar pasos. | `vRutina`, `orderGame`, datos en `RUT`, `CODES` |
 | A fondo | Limpieza profunda anual; plano de bloqueos con reglas según ocupación y check-list de precauciones; rotación de colchones con esquema; habitación no rentada. | `vFondo`, `matSVG`, `PREC` |
 | Frecuencias | Matriz del lobby; proyección quincenal tipo calendario; recorrido de la brigada turno mañana; zonas nobles; tres planillas tipo que se abren con un clic. | `vFrec`, `calendar`, `FREQ`, `CAL_*`, `BRIG`, `NOBLES`, `PLAN` |
 | Control | Parte de avería (no se guarda sin sus cinco datos); trabajos pendientes; control de calidad S/R/D/F que genera órdenes; mantenimiento preventivo; prácticas ambientales. | `vControl`, `QC` |
 
-Las preguntas de repaso están en `QUIZ` (27 en total).
+Las preguntas de repaso están en `QUIZ` (29 en total).
 
 ## De dónde sale el contenido
 
-Fuente única: el **Cuadernillo 2 – Housekeeping 2026** de la cátedra, que sistematiza a Simón, M. A. (2004), *Housekeeping ama de llaves*, y a Olmo Garre, *Departamento de Gobernanta*. Apartados usados: Unidad 5 (Housekeeping–Mantenimiento), § 6.6, 6.9, 6.11 a 6.17, 6.29, 6.30, 7.1 a 7.3.
+Fuente única: el **Cuadernillo 2 – Housekeeping 2026** de la cátedra, **revisión de octubre de 2026** (la app se actualizó a esa versión el 7/10/2026), que sistematiza a Simón, M. A. (2004), *Housekeeping ama de llaves*, y a Olmo Garre, *Departamento de Gobernanta*. Apartados usados: Unidad 5 (Housekeeping–Mantenimiento), § 5.3 (nombres de los puestos), § 6.6, 6.9, 6.11 a 6.17, 6.29, 6.30, 7.1 a 7.3.
 
 Regla de trabajo: **no inventar contenido hotelero**. Si algo no está en el cuadernillo, se marca en la app como «Práctica del sector» o «Modelo de ejemplo», o se consulta a la docente.
 
@@ -55,7 +55,7 @@ Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confir
 
 - Los colores asignados a cada paño (el cuadernillo pide un color por área, sin decir cuáles).
 - Varios «Por qué» de armado de cama y de habitación no rentada.
-- Las 27 preguntas de repaso (redactadas a partir del cuadernillo, sin contrastar con parciales).
+- Las 29 preguntas de repaso (redactadas a partir del cuadernillo, sin contrastar con parciales).
 - Los días de la semana del calendario quincenal (el cuadernillo fija la frecuencia, no el día).
 - El formato y los datos de las tres planillas tipo.
 - La interpretación de la rotación de colchones: «giro de 180°» = dar vuelta de cara; «cambio cabeza-pies» = girar sobre la cama. **Pendiente de confirmación.**
@@ -70,7 +70,7 @@ El calendario quincenal y la pestaña Hoy comparten el mismo criterio de días: 
 - Idioma: español rioplatense, con voseo («tocá», «elegí»).
 - El recuadro de prohibiciones se titula **«Los No»** y cada ítem empieza con «Nunca…» o «Jamás…».
 - La práctica se llama **«Preguntas de repaso»**, no «tipo parcial».
-- **Gobernanta vs. Ama de Llaves:** en la operación diaria la mucama se presenta, reporta y entrega todo a la **gobernanta**. «Ama de Llaves» se reserva para la cabeza del departamento. No escribir que la mucama va «a la oficina del Ama de Llaves», aunque Simón lo diga así.
+- **Gobernanta vs. Ama de Llaves (criterio del cuadernillo, revisión de octubre de 2026):** Ama de Llaves es la cabeza del departamento; gobernanta es la supervisora de pisos. La mucama **retira** el reporte, la llave de piso y las novedades en la oficina del Ama de Llaves (el reporte lo confecciona la gobernanta) y al terminar el turno los **entrega a la gobernanta**, a quien también reporta las habitaciones con No molestar, las averías y los objetos olvidados. Donde esto se aparta de Simón, el cuadernillo aclara «(en Simón: Ama de Llaves)».
 - Las pestañas llevan **iconos de línea de un solo tono** (cama, calendario, reloj, planilla). No usar rectángulos de colores ahí: se confunden con el código de paños.
 - Paleta tomada de las diapositivas de la cátedra: fondo crema `#f5f3ee`, marrón oscuro `#2a1b18` para texto y bandas de sección, terracota `#a44e33` como acento. En modo oscuro, fondo marrón y acento durazno `#e89d7f`.
 - Alto contraste y secciones bien separadas: cada título de sección (`h3`) es una banda oscura de ancho completo.

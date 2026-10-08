@@ -192,7 +192,7 @@ details p{font-size:.93rem}
   <nav class="tabs" role="tablist" id="tabs"></nav>
   <main id="main"></main>
   <footer>
-    Material de estudio de la cátedra Departamento de Front Office y Housekeeping. Contenido basado en el Cuadernillo 2 de la materia, que sistematiza a Simón, M. A. (2004), <i>Housekeeping ama de llaves</i>, y Olmo Garre, <i>Departamento de Gobernanta</i>. Lo marcado como «práctica del sector» no proviene de esa bibliografía. Tu avance se guarda solo en este dispositivo.
+    Material de estudio de la cátedra Departamento de Front Office y Housekeeping. Contenido basado en el Cuadernillo 2 de la materia (revisión de octubre de 2026), que sistematiza a Simón, M. A. (2004), <i>Housekeeping ama de llaves</i>, y Olmo Garre, <i>Departamento de Gobernanta</i>. Lo marcado como «práctica del sector» no proviene de esa bibliografía. Tu avance se guarda solo en este dispositivo.
   </footer>
 </div>
 
@@ -247,7 +247,7 @@ var RUT={
   ["Limpiar la mampara o bañera y la cortina de baño.","Se empieza por lo más alto y más limpio."],
   ["Limpiar vasos, lavabo y jabonera.","Son superficies que el huésped toca con las manos y la boca: se limpian antes que el inodoro."],
   ["Limpiar el espejo.","Sin papel, que deja pelusa: paño de algodón."],
-  ["Limpiar el inodoro y el bidet, por dentro y por fuera, con su paño exclusivo.","Siempre al final: es el foco de mayor carga microbiana. Su paño no toca ninguna otra superficie."],
+  ["Limpiar el inodoro y el bidet, por dentro y por fuera, con su paño exclusivo.","Son los últimos artefactos que se limpian: el inodoro es el foco de mayor carga microbiana. Su paño no toca ninguna otra superficie."],
   ["Colocar amenities y blancos.","Se reponen con el baño ya higienizado."],
   ["Controlar que no hayan quedado pelos y que esté todo acomodado.","La estética general es parte del estándar."],
   ["Limpiar el piso, saliendo hacia la puerta.","Recibe lo que cae durante toda la rutina y no se vuelve a pisar."]]},
@@ -272,14 +272,16 @@ var RUT={
 var CODES=[["V / VL","Vacía y limpia desde el día anterior"],["O / OC 01, 02…","Ocupada; el número indica cuántos huéspedes"],["S","Sucia por arrastre: quedó así desde ayer, no es salida del día"],["SNA","Salida no arreglada: hizo check out hoy y aún no se limpió"],["L","Lista: fue salida del día y ya está preparada"],["IS","Chequeada: limpia e inspeccionada por gobernanta o supervisora"],["PS","Posible salida: check out no confirmado"],["PE / SE","Poco equipaje o sin equipaje: alerta a Seguridad y Recepción"],["NM","No molestar"],["RS","Rechazó servicio"],["FS (OOS)","Fuera de servicio: problema menor; sigue contando en el inventario"],["B (OOO)","Bloqueada: sale del inventario vendible"],["R","Reservada"],["A","Asignada a un huésped que ingresa hoy"]];
 var QUIZ={
  rutina:[
-  {q:"¿Por qué el inodoro y el bidet se limpian al final?",o:["Porque es la tarea más rápida","Para evitar contaminación cruzada y dar tiempo de acción al desinfectante","Porque lo indica Recepción","Para no mojar el piso antes de tiempo"],a:1,e:"Es el foco de mayor carga microbiana y el químico aplicado al principio necesita minutos de contacto (§ 6.17)."},
+  {q:"¿Por qué el inodoro y el bidet son los últimos artefactos que se limpian?",o:["Porque es la tarea más rápida","Para evitar contaminación cruzada y dar tiempo de acción al desinfectante","Porque lo indica Recepción","Para no mojar el piso antes de tiempo"],a:1,e:"Es el foco de mayor carga microbiana y el químico aplicado al principio necesita minutos de contacto (§ 6.17)."},
   {q:"¿Qué estado saca una habitación del inventario vendible?",o:["FS / OOS","NM","B / OOO","IS"],a:2,e:"La bloqueada (out of order) sale del inventario. La fuera de servicio no se asigna momentáneamente pero sigue contando."},
   {q:"En un hotel con alta ocupación, ¿qué se hace primero?",o:["Las salidas no arregladas","Las ocupadas que continúan","Controlar las vacías y limpias contra el reporte de Recepción","Las habitaciones VIP"],a:2,e:"Orden de Simón: control de VL, sucias por arrastre, salidas, preferencias, ocupadas que continúan, ocupadas con salida prevista (§ 6.6)."},
   {q:"La mucama va a almorzar. ¿Dónde deja el carro?",o:["En el pasillo, contra la pared","En el office o dentro de una habitación vacía y sucia","En el ascensor de servicio","Junto a la puerta de la última habitación"],a:1,e:"Por ningún motivo se lo deja abandonado en el pasillo: los robos de materiales son frecuentes (§ 6.12)."},
   {q:"¿Qué significa SNA?",o:["Sucia no asignada","Salida no arreglada","Sin novedad aparente","Servicio no aceptado"],a:1,e:"Hizo check out en la fecha pero todavía no se limpió."},
   {q:"¿Cuál de estas acciones con productos químicos está prohibida?",o:["Dosificar con dispenser","Usar guantes","Trasvasarlos a botellas de bebidas","Llevarlos en el canasto del carro"],a:2,e:"Nunca se trasvasan a botellas de bebidas. Tampoco se usan envases sin identificar, se mezclan productos ni se dejan en la habitación (§ 6.12)."},
   {q:"El huésped dejó la toalla colgada en el toallero. ¿Qué indica?",o:["Que pide toalla nueva","Que va a usarla otra vez","Que rechazó el servicio","Que hizo check out"],a:1,e:"Toalla colgada: la reutiliza. Toalla en la pileta: pide cambio. Es parte del programa ambiental del hotel (§ 6.13)."},
-  {q:"Una habitación mantiene el cartel de No molestar. ¿Qué hace la mucama a las 13 hs?",o:["Entra igual a limpiar","Golpea hasta que respondan","Reporta la habitación a la gobernanta","La marca como vacía"],a:2,e:"No se golpea ni se llama; a las 13 hs se reportan las que mantienen el cartel (§ 6.13)."}],
+  {q:"Una habitación mantiene el cartel de No molestar. ¿Qué hace la mucama a las 13 hs?",o:["Entra igual a limpiar","Golpea hasta que respondan","Reporta la habitación a la gobernanta","La marca como vacía"],a:2,e:"No se golpea ni se llama; a las 13 hs se reportan a la gobernanta las que mantienen el cartel (en Simón: al Ama de Llaves) (§ 6.13)."},
+  {q:"Se cumplió el plazo máximo del hotel y la habitación sigue con No molestar. ¿Quién decide el ingreso?",o:["La mucama del piso","La gobernanta, sola","Un jefe o el gerente de turno","Recepción, por teléfono"],a:2,e:"La decisión nunca es de la mucama. La gobernanta lleva la lista y avisa a Recepción; el ingreso lo resuelve un jefe o el gerente de turno, con registro de cada intento de contacto (§ 6.13)."},
+  {q:"En el convenio colectivo argentino (CCT 389/04), ¿qué categoría equivale al Ama de Llaves?",o:["Mucama","Gobernanta","Gobernanta principal","Supervisora de pisos"],a:2,e:"El convenio no usa «Ama de Llaves»: la jefatura es la Gobernanta principal. La Gobernanta del convenio es la supervisora de pisos. En las cadenas, Executive Housekeeper (§ 5.3)."}],
  fondo:[
   {q:"¿Con qué frecuencia mínima recibe limpieza profunda cada habitación?",o:["Una vez por mes","Cada seis meses","Al menos una vez al año","Cada dos años"],a:2,e:"Al menos una vez al año, aprovechando para reparaciones y mantenimiento (§ 6.29)."},
   {q:"Con ocupación excelente, ¿cómo se bloquea para limpieza profunda?",o:["Un piso completo","De a una o dos habitaciones por vez","Los tres últimos pisos","No se bloquea"],a:1,e:"Con ocupación oscilante se bloquea por pisos; con ocupación excelente, de a una o dos habitaciones."},
@@ -409,6 +411,24 @@ function vRutina(){
 
   f.appendChild(h("h3",{text:"Estados de habitación"}));
   f.appendChild(table(["Código","Significado"],CODES,true));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"La equivalencia en inglés de FS (out of service) y de B (out of order) es la de clase. En la lista de Simón, FS «puede indicarse OOO»: conviene confirmar el código del hotel donde se trabaja."}));
+  f.appendChild(h("h3",{text:"Cartel de No molestar"}));
+  f.appendChild(h("span",{class:"ref",text:"§ 6.13 · revisión de octubre de 2026"}));
+  f.appendChild(h("p",{text:"El cartel impide el ingreso: no se golpea ni se llama. No es lo mismo que el rechazo de servicio, en el que el huésped declina expresamente la limpieza del día y la habitación queda registrada como atendida sin servicio."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Qué hace la mucama",["Si es temprano, anota la hora en que pasó y vuelve más tarde","A las 13 hs reporta a la gobernanta las habitaciones que mantienen el cartel","Cerca del fin del turno, desliza bajo la puerta la tarjeta de solicitud de servicio","Nunca decide entrar por su cuenta"]),
+    box("Práctica actual",["Muchas cadenas fijan un plazo máximo sin verificar la habitación, por lo general entre 24 y 48 horas","La gobernanta lleva la lista de habitaciones con cartel y avisa a Recepción cuando se cumple el plazo","El ingreso lo resuelve un jefe o el gerente de turno","Se registra cada intento de contacto: llamado, nota bajo la puerta, hora"])));
+  f.appendChild(h("div",{class:"note",text:"En la bibliografía el cartel impide el ingreso sin límite de tiempo, con el reporte de las 13 hs como único control. Hoy cada hotel define su plazo y lo actualiza: hay que conocer la política del hotel donde se trabaja."}));
+  f.appendChild(h("h3",{text:"Quién es quién: los nombres de los puestos"}));
+  f.appendChild(h("span",{class:"ref",text:"§ 5.3 · revisión de octubre de 2026"}));
+  f.appendChild(h("p",{text:"El mismo puesto recibe nombres distintos según el autor, el país y el empleador. En esta app, Ama de Llaves es la cabeza del departamento y gobernanta es la supervisora de pisos."}));
+  f.appendChild(table(["En la cátedra","Convenio CCT 389/04","Olmo Garre (España)","Cadenas internacionales"],[
+    ["Ama de Llaves","Gobernanta principal (nivel 7)","Gobernanta","Executive Housekeeper o Director of Housekeeping"],
+    ["Gobernanta","Gobernanta (nivel 6)","Subgobernanta","Housekeeping Supervisor o Floor Supervisor"],
+    ["Mucama","Mucama (nivel 4)","Camarera de pisos","Room Attendant"],
+    ["Valet y runner","","Valet","Houseperson o Runner"],
+    ["Personal de áreas públicas","","Limpiadora","Public Area Attendant"]],true));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Atención al leer a Olmo Garre: cuando dice «la gobernanta» habla de la jefa del departamento, es decir, nuestra Ama de Llaves. En un hotel chico una sola persona puede reunir las dos funciones."}));
   f.appendChild(h("h3",{text:"Prioridades según la ocupación"}));
   f.appendChild(h("div",{class:"grid2"},
     box("Alta ocupación",["Control de vacías y limpias (VL) contra el reporte de Recepción","Vacías y sucias por arrastre (S)","Salidas no arregladas (SNA)","Habitaciones con preferencia: VIP, pedidos especiales","Ocupadas que continúan","Ocupadas con salida prevista en el día"],true),
@@ -682,7 +702,7 @@ var HOY={
  mucama:{n:"Mucama",sub:"Turno mañana, con un piso asignado.",groups:[
   ["Al ingresar",[
    {t:"Uniforme y fichado."},
-   {t:"Presentarte ante la gobernanta",s:"Te entrega el reporte de piso, la llave maestra de piso y las novedades."},
+   {t:"Presentarte en la oficina del Ama de Llaves",s:"Retirás el reporte de piso que confeccionó la gobernanta, la llave maestra de piso y las novedades."},
    {t:"Preparar el carro completo en el office",s:"Se arma antes de subir al piso para no interrumpir la limpieza por faltantes."},
    {t:"Contar las existencias del linen y anotar los faltantes en la planilla de la puerta."}]],
   ["Durante el turno",[
@@ -690,7 +710,8 @@ var HOY={
    {t:"Limpiar según las prioridades que indicó la supervisora",go:["rutina","salida"],gl:"Ver los 15 pasos"},
    {t:"En cada habitación, el baño con su secuencia propia",go:["rutina","bano"],gl:"Ver los 8 pasos"},
    {t:"Completar el reporte de piso al entrar y al salir de cada habitación",s:"Con hora de entrada y de salida, e informando cualquier avería."},
-   {t:"13:00 · Reportar a la gobernanta las habitaciones que siguen con No molestar."}]],
+   {t:"Avisar a la gobernanta en el momento lo que requiere una acción",s:"Una avería, un objeto olvidado, un daño o un faltante: no se espera al fin del turno."},
+   {t:"13:00 · Reportar a la gobernanta las habitaciones que siguen con No molestar",s:"No se golpea ni se ingresa: la decisión de entrar nunca es de la mucama.",go:["rutina","salida"],gl:"Ver cartel"}]],
   ["Al cerrar el turno",[
    {t:"Dejar el carro limpio y guardado en el office",s:"Nunca queda en el pasillo."},
    {t:"Entregar a la gobernanta el reporte, la llave maestra y las novedades."},
@@ -711,22 +732,24 @@ var HOY={
    {t:"Avisar averías y entregar los objetos olvidados que aparezcan."}]],
   ["Queda para el turno noche",[
    {t:"Fregado profundo de pisos y trabajos a fondo",s:"De noche no circulan huéspedes por las zonas de alto tránsito."}]]]},
- gob:{n:"Gobernanta",sub:"Organiza el sector, distribuye el trabajo y controla.",groups:[
+ gob:{n:"Gobernanta",sub:"Supervisora de pisos: confecciona los reportes, inspecciona las habitaciones y recibe el cierre del turno. Responde al Ama de Llaves.",groups:[
   ["Al empezar",[
-   {t:"Recibir el reporte de Recepción y definir el orden de trabajo según la ocupación",go:["rutina","salida"],gl:"Ver prioridades"},
-   {t:"Distribuir las habitaciones entre las mucamas",s:"Entregás reportes de piso, llaves maestras y novedades."}]],
+   {t:"Definir el orden de trabajo según la ocupación y el reporte de Recepción",go:["rutina","salida"],gl:"Ver prioridades"},
+   {t:"Confeccionar el reporte de piso de cada mucama",s:"Lo retiran en la oficina del Ama de Llaves, junto con la llave de piso y las novedades."}]],
   ["Durante el turno",[
-   {t:"Chequear las habitaciones terminadas y avisar a Recepción cuáles están disponibles",s:"La habitación chequeada pasa a IS."},
-   {t:"Derivar a Mantenimiento las averías que reportan las mucamas",go:["control"],gl:"Emitir parte"},
-   {t:"13:00 · Definir cómo verificar las habitaciones que siguen con No molestar."}]],
+   {t:"Recibir los avisos de las mucamas: averías, objetos olvidados y habitaciones con No molestar"},
+   {t:"Derivar las averías a Mantenimiento",go:["control"],gl:"Emitir parte"},
+   {t:"Inspeccionar las habitaciones terminadas y avisar a Recepción cuáles están disponibles",s:"La habitación chequeada pasa a IS."},
+   {t:"13:00 · Armar la lista de habitaciones con No molestar",s:"Avisás a Recepción cuando se cumple el plazo del hotel; el ingreso lo resuelve un jefe o el gerente de turno."}]],
   ["Al cerrar",[
-   {t:"Recibir reportes, llaves maestras y novedades de cada mucama."},
-   {t:"Registrar los objetos olvidados y coordinar su destino."}]]]}
+   {t:"Recibir de cada mucama el reporte, las llaves de piso y las novedades",s:"Cada devolución queda registrada; antes del cierre se verifica que estén todas las llaves."},
+   {t:"Registrar y guardar los objetos olvidados",s:"Alhajas, dinero u objetos de mucho valor se reportan al Gerente de División Habitaciones para su guarda en caja de seguridad."},
+   {t:"Informar al Ama de Llaves el resultado del turno",s:"Y elevarle lo que excede tu decisión: un conflicto con un huésped, un objeto de valor, un accidente o el ingreso a una habitación."}]]]}
 };
 var FREQ_D={diaria:1,alternos:2,semanal:7,quincenal:14,mensual:30}, FREQ_L={diaria:"Todos los días",alternos:"Día por medio",semanal:"Una vez por semana",quincenal:"Cada 15 días",mensual:"Una vez por mes"};
 if(!S.casa) S.casa=[
  {t:"Ventilar y tender la cama",w:"En el hotel la habitación se ventila mientras se hace el resto.",f:"diaria",d:"2026-01-05",ej:true},
- {t:"Baño: desinfectante primero, inodoro al final y con su propio paño",w:"El químico necesita minutos de contacto; el paño del inodoro no toca nada más.",f:"semanal",d:"2026-01-05",ej:true},
+ {t:"Baño: desinfectante primero; el inodoro, último artefacto y con su propio paño",w:"El químico necesita minutos de contacto; el paño del inodoro no toca nada más.",f:"semanal",d:"2026-01-05",ej:true},
  {t:"Polvo de arriba hacia abajo y piso desde el fondo hacia la puerta",w:"Lo que cae se limpia después y no se pisa lo ya limpio.",f:"semanal",d:"2026-01-05",ej:true},
  {t:"Rotar el colchón",w:"Evita el desgaste desparejo. Mirá el esquema en A fondo.",f:"mensual",d:"2026-01-05",ej:true},
  {t:"Limpieza profunda de un ambiente",w:"En el hotel cada habitación la recibe al menos una vez al año, planificada.",f:"mensual",d:"2026-01-12",ej:true}];
