@@ -38,16 +38,26 @@ Cinco pestañas. **Hoy** va última, después de Control, en amarillo (`--hoy`) 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
 | Hoy | Qué toca hacer día por día, con flechas para cambiar de fecha y casillas para tildar. Selector de puesto: Mucama, Áreas Públicas, Gobernanta y **Mi casa**. Las tareas enlazan a los procedimientos de las otras pestañas; la Gobernanta ve además los bloqueos activos y los partes urgentes. En Mi casa el alumno carga sus propias tareas con frecuencia (diaria, día por medio, semanal, quincenal, mensual). | `vHoy`, `HOY`, `dueOn`, `goTo`, `calIdx`; estado en `S.hoy`, `S.casa`, `S.puesto` |
-| Rutina | Habitación de salida (15 pasos), baño (8), armado de cama, habitación no rentada (8), cada paso con su «Por qué»; paños y productos; Los SÍ / Los No; códigos de estado; cartel de No molestar con la práctica actual; tabla de equivalencias de los nombres de los puestos; prioridades según ocupación. En Practicar: juego de ordenar pasos. | `vRutina`, `orderGame`, datos en `RUT`, `CODES` |
+| Rutina | Habitación de salida (15 pasos), **habitación ocupada (10 pasos con subpasos, FEHGRA)**, baño (8), armado de cama, **apertura o turndown (11 pasos, FEHGRA)**, habitación no rentada (8), cada paso con su «Por qué» cuando la fuente lo da; «Los No» propios de la ocupada; paños y productos; Los SÍ / Los No; códigos de estado; cartel de No molestar con la práctica actual; tabla de equivalencias de los nombres de los puestos; prioridades según ocupación. En Practicar: juego de ordenar pasos (salida, ocupada, baño y apertura). | `vRutina`, `orderGame`, datos en `RUT`, `CODES` |
 | A fondo | Limpieza profunda anual; plano de bloqueos con reglas según ocupación y check-list de precauciones; rotación de colchones con esquema; habitación no rentada. | `vFondo`, `matSVG`, `PREC` |
 | Frecuencias | Matriz del lobby; proyección quincenal tipo calendario; recorrido de la brigada turno mañana; zonas nobles; tres planillas tipo que se abren con un clic. | `vFrec`, `calendar`, `FREQ`, `CAL_*`, `BRIG`, `NOBLES`, `PLAN` |
 | Control | Parte de avería (no se guarda sin sus cinco datos); trabajos pendientes; control de calidad S/R/D/F que genera órdenes; mantenimiento preventivo; prácticas ambientales. | `vControl`, `QC` |
 
-Las preguntas de repaso están en `QUIZ` (29 en total).
+Las preguntas de repaso están en `QUIZ` (35 en total).
+
+En `RUT`, cada paso es `[paso, porqué, subpasos]`; el tercer elemento es opcional. Una rutina puede tener además `note` (aviso en ámbar bajo la intro) y `losNo` (recuadro «Los No» al final).
 
 ## De dónde sale el contenido
 
 Fuente única: el **Cuadernillo 2 – Housekeeping 2026** de la cátedra, **revisión de octubre de 2026** (la app se actualizó a esa versión el 7/10/2026), que sistematiza a Simón, M. A. (2004), *Housekeeping ama de llaves*, y a Olmo Garre, *Departamento de Gobernanta*. Apartados usados: Unidad 5 (Housekeeping–Mantenimiento), § 5.3 (nombres de los puestos), § 6.6, 6.9, 6.11 a 6.17, 6.29, 6.30, 7.1 a 7.3.
+
+Segunda fuente, desde el 29/10/2026, solo para las rutinas de **habitación ocupada** y **apertura (turndown)**: FEHGRA, *Manual de Procedimientos para Mucamas* (2012), pp. 40–55 (diez pasos de la ocupada) y pp. 57–60 (apertura, cobertura o turn down). Criterios aplicados:
+
+- Donde el manual dice «Supervisor», la app dice «gobernanta» (criterio de la cátedra).
+- Los subpasos salen del texto numerado (1.1, 2.1…). Tres agregados salen de los epígrafes de las fotos: higienizarse las manos al terminar el baño y la habitación (pp. 51 y 54), retirar la colcha antes de abrir la cama y llevar las toallas a la bolsa del carro en la apertura (p. 59).
+- El manual tiene dos diferencias entre texto y esquema: en la ocupada (paso 10, p. 55) y en la apertura (cerrar persianas: paso 4 en el esquema de la p. 57, paso 8 en el texto de la p. 58). Se sigue el texto y la app lo avisa.
+- Los «Por qué» de estas dos rutinas solo aparecen donde el manual da la razón; el resto queda sin «Por qué».
+- Los «Los No» de la ocupada reformulan prohibiciones del manual. Las seis preguntas de repaso nuevas están redactadas a partir del manual.
 
 Regla de trabajo: **no inventar contenido hotelero**. Si algo no está en el cuadernillo, se marca en la app como «Práctica del sector» o «Modelo de ejemplo», o se consulta a la docente.
 
@@ -55,7 +65,7 @@ Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confir
 
 - Los colores asignados a cada paño (el cuadernillo pide un color por área, sin decir cuáles).
 - Varios «Por qué» de armado de cama y de habitación no rentada.
-- Las 29 preguntas de repaso (redactadas a partir del cuadernillo, sin contrastar con parciales).
+- Las 35 preguntas de repaso (29 a partir del cuadernillo y 6 a partir del manual de FEHGRA, sin contrastar con parciales).
 - Los días de la semana del calendario quincenal (el cuadernillo fija la frecuencia, no el día).
 - El formato y los datos de las tres planillas tipo.
 - La interpretación de la rotación de colchones: «giro de 180°» = dar vuelta de cara; «cambio cabeza-pies» = girar sobre la cama. **Pendiente de confirmación.**
