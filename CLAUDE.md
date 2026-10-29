@@ -59,7 +59,7 @@ Cambios del 29/10/2026 para alinear la app con la presentación:
 - La habitación de salida dejó de ser la rutina de 15 pasos del cuadernillo: ahora son los 8 pasos de FEHGRA (pp. 60-64), y la ocupada es el procedimiento base de 10 pasos.
 - El baño dejó de ser la secuencia de 8 pasos de Simón: ahora son los 7 de FEHGRA (cerámicos, sanitarios, accesorios, puertas y espejos, grifería, piso, examinar). Amenities y toallas se reponen en el paso 8 de la habitación. La pregunta «¿por qué el inodoro es lo último?» se reemplazó por «¿por qué cepillo y paño exclusivos?».
 - El armado de cama son las 6 capas de la diapositiva de § 6.16. Las fundas van con la abertura hacia el centro de la cama (Simón); «pie de cama» en FEHGRA es la alfombrita descartable del turn down.
-- Los productos básicos son ocho, no siete; paños: «Muebles y superficies» y «Vasos y vidrios».
+- Los productos básicos son ocho, no siete; paños: «Muebles y superficies» y «Vasos y vidrios», con los colores de la diapositiva 15 (rojo `#c0473a`, ámbar `#d9a43a`, azul `#4d7ea8`, coral `#d9785e`; en modo oscuro, versiones más claras). Pedido de la docente: la presentación ya está publicada con esos colores.
 - Donde FEHGRA dice «Supervisor», la app dice «el supervisor (la gobernanta)», como la clase.
 
 Diferencias dentro de la propia presentación, **pendientes de que la docente las corrija** (la app sigue el contenido de las diapositivas, no las portadas ni el cierre):
@@ -68,13 +68,11 @@ Diferencias dentro de la propia presentación, **pendientes de que la docente la
 - Diapositiva 11 (portada de 6.12): dice «Los siete productos»; la diapositiva 16 dice ocho.
 - Diapositiva 78 (síntesis): «El inodoro, al final y con su paño». En la secuencia de FEHGRA (diapositiva 60) los sanitarios son el paso 2.
 - Diapositiva 18: en la tabla, secuestrante es 6 y limpiador de pisos 7; en las notas del orador están al revés.
-- Diapositiva 15: el color de ejemplo de «Vasos y vidrios» es un coral parecido al rojo del inodoro; la app mantiene el verde del Hotel Monserrat.
 
 Regla de trabajo: **no inventar contenido hotelero**. Si algo no está en el cuadernillo, se marca en la app como «Práctica del sector» o «Modelo de ejemplo», o se consulta a la docente.
 
 Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confirmar con la docente:
 
-- Los colores asignados a cada paño (el cuadernillo pide un color por área, sin decir cuáles).
 - Varios «Por qué» de armado de cama y de habitación no rentada.
 - Las 46 preguntas de repaso (redactadas a partir del cuadernillo, del manual de FEHGRA y de la presentación de la Unidad 6 (II), sin contrastar con parciales).
 - Los días de la semana del calendario quincenal (el cuadernillo fija la frecuencia, no el día).
