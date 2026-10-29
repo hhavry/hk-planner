@@ -38,26 +38,37 @@ Cinco pestañas. **Hoy** va última, después de Control, en amarillo (`--hoy`) 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
 | Hoy | Qué toca hacer día por día, con flechas para cambiar de fecha y casillas para tildar. Selector de puesto: Mucama, Áreas Públicas, Gobernanta y **Mi casa**. Las tareas enlazan a los procedimientos de las otras pestañas; la Gobernanta ve además los bloqueos activos y los partes urgentes. En Mi casa el alumno carga sus propias tareas con frecuencia (diaria, día por medio, semanal, quincenal, mensual). | `vHoy`, `HOY`, `dueOn`, `goTo`, `calIdx`; estado en `S.hoy`, `S.casa`, `S.puesto` |
-| Rutina | Habitación de salida (15 pasos), **habitación ocupada (10 pasos con subpasos, FEHGRA)**, baño (8), armado de cama, **apertura o turndown (11 pasos, FEHGRA)**, habitación no rentada (8), cada paso con su «Por qué» cuando la fuente lo da; «Los No» propios de la ocupada; paños y productos; Los SÍ / Los No; códigos de estado; cartel de No molestar con la práctica actual; tabla de equivalencias de los nombres de los puestos; prioridades según ocupación. En Practicar: juego de ordenar pasos (salida, ocupada, baño y apertura). | `vRutina`, `orderGame`, datos en `RUT`, `CODES` |
+| Rutina | Seis procedimientos, en el orden de la clase: habitación ocupada (FEHGRA, 10 pasos y 40 subpasos numerados), habitación de salida (FEHGRA, 8 pasos), baño (FEHGRA, 7 pasos), armado de cama (6 capas), turn down (FEHGRA, 11 pasos, con técnica del triángulo y tres niveles) y habitación no rentada (Simón, 8 pasos). Debajo, siguiendo la PPT de la Unidad 6 (II): la mucama (presentación personal, tareas, rutina diaria, por qué revisar las libres, Olmo Garre); carro, tríada y office; paños, herramientas, los 8 productos con dónde y cómo, Los SÍ / Los No, escala de pH, abrasivos, ceras y lustramuebles; estados de habitación; No molestar con la actualización; tarjetas, situaciones al ingresar y novedades obligatorias; dotación estándar; nombres de los puestos, convenio, runner y valet; prioridades según ocupación. En Practicar: ordenar pasos (ocupada, salida, baño, cama y turn down). | `vRutina`, `orderGame`, `box`, `wide`, datos en `RUT`, `PROD`, `CODES` |
 | A fondo | Limpieza profunda anual; plano de bloqueos con reglas según ocupación y check-list de precauciones; rotación de colchones con esquema; habitación no rentada. | `vFondo`, `matSVG`, `PREC` |
 | Frecuencias | Matriz del lobby; proyección quincenal tipo calendario; recorrido de la brigada turno mañana; zonas nobles; tres planillas tipo que se abren con un clic. | `vFrec`, `calendar`, `FREQ`, `CAL_*`, `BRIG`, `NOBLES`, `PLAN` |
 | Control | Parte de avería (no se guarda sin sus cinco datos); trabajos pendientes; control de calidad S/R/D/F que genera órdenes; mantenimiento preventivo; prácticas ambientales. | `vControl`, `QC` |
 
-Las preguntas de repaso están en `QUIZ` (35 en total).
+Las preguntas de repaso están en `QUIZ` (46 en total).
 
-En `RUT`, cada paso es `[paso, porqué, subpasos]`; el tercer elemento es opcional. Una rutina puede tener además `note` (aviso en ámbar bajo la intro) y `losNo` (recuadro «Los No» al final).
+En `RUT`, cada paso es `[paso, porqué, subpasos, alTerminar]`; del segundo en adelante son opcionales. Los subpasos se numeran solos (1.1, 1.2…). Una rutina puede tener además `note` (aviso en ámbar bajo la intro), `losNo` (recuadro «Los No»), `boxes` (recuadros al final: `[título, ítems, numerado]`) y `warn` (aviso en ámbar al final). El avance tildado se guarda por rutina y cantidad de pasos (`S.done["ocupada@10"]`), para que un cambio de pasos no herede tildes viejas.
 
 ## De dónde sale el contenido
 
-Fuente única: el **Cuadernillo 2 – Housekeeping 2026** de la cátedra, **revisión de octubre de 2026** (la app se actualizó a esa versión el 7/10/2026), que sistematiza a Simón, M. A. (2004), *Housekeeping ama de llaves*, y a Olmo Garre, *Departamento de Gobernanta*. Apartados usados: Unidad 5 (Housekeeping–Mantenimiento), § 5.3 (nombres de los puestos), § 6.6, 6.9, 6.11 a 6.17, 6.29, 6.30, 7.1 a 7.3.
+Fuentes, en este orden de prioridad:
 
-Segunda fuente, desde el 29/10/2026, solo para las rutinas de **habitación ocupada** y **apertura (turndown)**: FEHGRA, *Manual de Procedimientos para Mucamas* (2012), pp. 40–55 (diez pasos de la ocupada) y pp. 57–60 (apertura, cobertura o turn down). Criterios aplicados:
+1. **La presentación de clase de la Unidad 6, parte II** (Clase 13, «El personal de limpieza y los procesos de operaciones», § 6.11 a 6.20), que la docente enseña desde el 29/10/2026. La pestaña Rutina tiene que ser fiel a ella: procedimientos, nombres, ejemplos y actualizaciones salen de ahí. A su vez sigue a Simón (pp. 51-64 y 81-83), a Olmo Garre (Caps. 2 y 7) y a FEHGRA (2012), *Manual de procedimientos para mucamas*.
+2. El **Cuadernillo 2 – Housekeeping 2026** de la cátedra, **revisión de octubre de 2026**, para todo lo que la presentación no cubre: Unidad 5 (Housekeeping–Mantenimiento), § 5.3 (nombres de los puestos), § 6.6, 6.9, 6.29, 6.30 y 7.1 a 7.3.
 
-- Donde el manual dice «Supervisor», la app dice «gobernanta» (criterio de la cátedra).
-- Los subpasos salen del texto numerado (1.1, 2.1…). Tres agregados salen de los epígrafes de las fotos: higienizarse las manos al terminar el baño y la habitación (pp. 51 y 54), retirar la colcha antes de abrir la cama y llevar las toallas a la bolsa del carro en la apertura (p. 59).
-- El manual tiene dos diferencias entre texto y esquema: en la ocupada (paso 10, p. 55) y en la apertura (cerrar persianas: paso 4 en el esquema de la p. 57, paso 8 en el texto de la p. 58). Se sigue el texto y la app lo avisa.
-- Los «Por qué» de estas dos rutinas solo aparecen donde el manual da la razón; el resto queda sin «Por qué».
-- Los «Los No» de la ocupada reformulan prohibiciones del manual. Las seis preguntas de repaso nuevas están redactadas a partir del manual.
+Cambios del 29/10/2026 para alinear la app con la presentación:
+
+- La habitación de salida dejó de ser la rutina de 15 pasos del cuadernillo: ahora son los 8 pasos de FEHGRA (pp. 60-64), y la ocupada es el procedimiento base de 10 pasos.
+- El baño dejó de ser la secuencia de 8 pasos de Simón: ahora son los 7 de FEHGRA (cerámicos, sanitarios, accesorios, puertas y espejos, grifería, piso, examinar). Amenities y toallas se reponen en el paso 8 de la habitación. La pregunta «¿por qué el inodoro es lo último?» se reemplazó por «¿por qué cepillo y paño exclusivos?».
+- El armado de cama son las 6 capas de la diapositiva de § 6.16. Las fundas van con la abertura hacia el centro de la cama (Simón); «pie de cama» en FEHGRA es la alfombrita descartable del turn down.
+- Los productos básicos son ocho, no siete; paños: «Muebles y superficies» y «Vasos y vidrios».
+- Donde FEHGRA dice «Supervisor», la app dice «el supervisor (la gobernanta)», como la clase.
+
+Diferencias dentro de la propia presentación, **pendientes de que la docente las corrija** (la app sigue el contenido de las diapositivas, no las portadas ni el cierre):
+
+- Diapositiva 32 (portada de 6.14): todavía dice «Pasos 1 a 5 · 6 a 10 · 11 a 15», de la rutina vieja de 15 pasos.
+- Diapositiva 11 (portada de 6.12): dice «Los siete productos»; la diapositiva 16 dice ocho.
+- Diapositiva 78 (síntesis): «El inodoro, al final y con su paño». En la secuencia de FEHGRA (diapositiva 60) los sanitarios son el paso 2.
+- Diapositiva 18: en la tabla, secuestrante es 6 y limpiador de pisos 7; en las notas del orador están al revés.
+- Diapositiva 15: el color de ejemplo de «Vasos y vidrios» es un coral parecido al rojo del inodoro; la app mantiene el verde del Hotel Monserrat.
 
 Regla de trabajo: **no inventar contenido hotelero**. Si algo no está en el cuadernillo, se marca en la app como «Práctica del sector» o «Modelo de ejemplo», o se consulta a la docente.
 
@@ -65,7 +76,7 @@ Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confir
 
 - Los colores asignados a cada paño (el cuadernillo pide un color por área, sin decir cuáles).
 - Varios «Por qué» de armado de cama y de habitación no rentada.
-- Las 35 preguntas de repaso (29 a partir del cuadernillo y 6 a partir del manual de FEHGRA, sin contrastar con parciales).
+- Las 46 preguntas de repaso (redactadas a partir del cuadernillo, del manual de FEHGRA y de la presentación de la Unidad 6 (II), sin contrastar con parciales).
 - Los días de la semana del calendario quincenal (el cuadernillo fija la frecuencia, no el día).
 - El formato y los datos de las tres planillas tipo.
 - La interpretación de la rotación de colchones: «giro de 180°» = dar vuelta de cara; «cambio cabeza-pies» = girar sobre la cama. **Pendiente de confirmación.**
