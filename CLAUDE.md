@@ -61,6 +61,7 @@ Cambios del 29/10/2026 para alinear la app con la presentación:
 - El armado de cama son las 6 capas de la diapositiva de § 6.16. Las fundas van con la abertura hacia el centro de la cama (Simón); «pie de cama» en FEHGRA es la alfombrita descartable del turn down.
 - Los productos básicos son ocho, no siete; paños: «Muebles y superficies» y «Vasos y vidrios», con los colores de la diapositiva 15 (rojo `#c0473a`, ámbar `#d9a43a`, azul `#4d7ea8`, coral `#d9785e`; en modo oscuro, versiones más claras). Pedido de la docente: la presentación ya está publicada con esos colores.
 - Donde FEHGRA dice «Supervisor», la app dice «el supervisor (la gobernanta)», como la clase.
+- A pedido de la docente, la salida suma subpasos de clase que FEHGRA no trae: vajilla de Room Service al pasillo, del cesto solo los papeles de adentro, retirar incluso las toallas que parecen sin usar, contar la ropa blanca y revisar daños (paso 3); aspirar desde el fondo hacia la puerta (paso 4); rociar el baño y dejar actuar mientras se arma la cama (paso 5); aromatizar, cerrar, reporte de piso con hora de entrada y salida y volver al office (paso 8).
 
 Diferencias dentro de la propia presentación, **pendientes de que la docente las corrija** (la app sigue el contenido de las diapositivas, no las portadas ni el cierre):
 
