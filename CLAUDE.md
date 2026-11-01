@@ -6,22 +6,20 @@ Archivo de contexto para quien retome esta app (una persona o un asistente de IA
 
 App web de estudio de Housekeeping para alumnos de primer año de la materia **Departamento de Front Office y Housekeeping (2.6.106)**, turno noche, 2.º cuatrimestre 2026. La docente es Helena Havrylets.
 
-Los alumnos la usan para estudiar las rutinas hoteleras según la bibliografía y como **modelo de referencia** de la app que ellos mismos construyen en clase con vibecoding (Antigravity, plan gratuito), una pestaña por clase del 22/10 al 12/11.
+Nació como planner (modelo de referencia del proyecto de vibecoding de los alumnos). **Desde el 1/11/2026 cambió de rumbo a pedido de la docente: es un reflejo de las presentaciones de clase de la Unidad 6.** Áreas Públicas y lavandería van a otra app. No incluye la Unidad 5.
 
 - Público: https://hk-planner.vercel.app
 - Repositorio: https://github.com/hhavry/hk-planner (rama `main`)
-- Copia en Claude (artifact privado de la docente): https://claude.ai/artifact/KW4jZGd44w7g9PBtbUBFhb
-
-El «Hotel Monserrat» es **ficticio**: 24 habitaciones en 3 pisos (101–108, 201–208, 301–308) más áreas públicas.
+- Copia en Claude (artifact de la docente): https://claude.ai/artifact/KW4jZGd44w7g9PBtbUBFhb
 
 ## Cómo está hecha
 
 - Un único archivo `index.html` con HTML, CSS y JavaScript adentro. Sin build, sin dependencias, sin backend.
 - Única carga externa: Google Fonts (Bricolage Grotesque para títulos, Figtree para texto), con fuentes de respaldo.
-- El avance de cada alumno se guarda en `localStorage`, clave `hkplanner.v1`, solo en su dispositivo. No hay nombres, cuentas ni seguimiento: fue una decisión de la docente.
+- El avance de cada alumno (pasos tildados, mejores marcas, partes de avería) se guarda en `localStorage`, clave `hkplanner.v1`, solo en su dispositivo. No hay nombres, cuentas ni seguimiento.
 - Todo el DOM se arma con la función `h(tag, attrs, ...hijos)`. El texto ingresado por el usuario se inserta siempre con `textContent`.
-- Navegación por hash: `#rutina` (pantalla inicial), `#gobernanta`, `#fondo`, `#frecuencias`, `#control`, `#hoy`. `goTo([pestaña, rutina, idDeSección])` abre una pestaña y, si se le pasa el tercer elemento, baja hasta esa sección (ids en Gobernanta: `codigos`, `prioridades`, `reporte-general`, `reporte-pisos`, `organizacion`, `calculo`, `chequeo`, `lost-found`, `formularios`, `llaves`; en Rutina: `nm`).
-- Debe verse bien en celular (400 px) y no tener scroll horizontal de página. Solo tablas y el calendario se deslizan dentro de su propio contenedor.
+- Navegación por hash: `#gestion` (pantalla inicial), `#operaciones`, `#repaso`. Los hash viejos `#rutina` y `#gobernanta` redirigen; los demás caen en la inicial. `goTo(pestaña, idDeSección)` abre una pestaña y baja hasta la sección; los ids son `s6-1` … `s6-19` (`sid("6.14")`).
+- Debe verse bien en celular (360–400 px) y no tener scroll horizontal de página. Solo las tablas anchas se deslizan dentro de su propio contenedor.
 
 ### Publicar un cambio
 
@@ -33,27 +31,28 @@ El artifact de Claude es el mismo contenido sin `<!DOCTYPE>`, `<html>`, `<head>`
 
 ## Estructura de la app
 
-Seis pestañas. **Hoy** va última, después de Control, en amarillo (`--hoy`) y en verde oscuro cuando está activa (`--hoy-on`): pedido expreso de la docente. Las otras cinco tienen modo **Estudiar** y modo **Practicar** (preguntas de repaso con explicación; mejor marca guardada).
+Tres pestañas, una por clase más el repaso. Cada pestaña abre con la etiqueta de la clase, el título y la bibliografía de la portada de la PPT, y un índice de secciones. Cada sección es una banda oscura con su número (`secHead`) y debajo la línea de subtemas de su portada.
 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
-| Hoy | Qué toca hacer día por día, con flechas para cambiar de fecha y casillas para tildar. Selector de puesto: Mucama, Áreas Públicas, Gobernanta y **Mi casa**. Las tareas enlazan a los procedimientos de las otras pestañas; la Gobernanta ve además los bloqueos activos y los partes urgentes. En Mi casa el alumno carga sus propias tareas con frecuencia (diaria, día por medio, semanal, quincenal, mensual). | `vHoy`, `HOY`, `dueOn`, `goTo`, `calIdx`; estado en `S.hoy`, `S.casa`, `S.puesto` |
-| Rutina | Seis procedimientos, en el orden de la clase: habitación ocupada (FEHGRA, 10 pasos y 41 subpasos numerados, con cuadro comparativo ocupada vs. check out), habitación de salida (FEHGRA, 8 pasos), baño (FEHGRA, 7 pasos), armado de cama (6 capas, cuatro sistemas de ropa de cama y esquinas en sobre y en inglete), turn down (FEHGRA, 11 pasos, con técnica del triángulo y tres niveles) y habitación no rentada (Simón, 8 pasos). Debajo, siguiendo la PPT de la Unidad 6 (II): la mucama (presentación personal, tareas, rutina diaria, por qué revisar las libres, Olmo Garre); carro, tríada y office; paños, herramientas, los 8 productos con dónde y cómo, Los SÍ / Los No, escala de pH, abrasivos, ceras y lustramuebles; No molestar con la actualización; tarjetas, situaciones al ingresar y novedades obligatorias; dotación estándar con los complementos «Hoy» de la industria; nombres de los puestos, convenio, runner y valet; limpieza a pedido. Los estados y las prioridades se mudaron a Gobernanta (queda un recuadro con enlaces). Botones «Videos de la clase» en baño y armado de cama (`VIDS`, `vidRow`). En Practicar: ordenar pasos (ocupada, salida, baño, cama y turn down). | `vRutina`, `orderGame`, `box`, `wide`, `vidRow`, datos en `RUT`, `PROD`, `CMP`, `SYS`, `VIDS` |
-| Gobernanta | Unidad 6 (I), § 6.1 a 6.10, en el orden de la PPT: la gobernanta (áreas, turno, dotación y tiempo, imprevistos, exigencias y carrera); estados y códigos (matriz, cuatro tablas con inglés, práctica de lectura con lecturas ocultas); prioridades; Reporte General; Reporte de Pisos (modelo Piso 6, circuito, discrepancias con ejemplo Piso 5, control de seguridad, comparación); organización del trabajo, topes por convenio, factores, créditos, schedule; calculadora «¿Cuántas mucamas necesita el hotel?» con el ejemplo de clase (600 hab., 75 % → 55 mucamas); chequeo; Lost & Found; formularios; llaves; síntesis. | `vGob`, `calcEf`, `sec`, `sheetToggle`, datos en `CODES`, `NOMEN`, `TOPES`, `CALC0` |
-| A fondo | Limpieza profunda anual; plano de bloqueos con reglas según ocupación y check-list de precauciones; rotación de colchones con esquema; habitación no rentada. | `vFondo`, `matSVG`, `PREC` |
-| Frecuencias | Matriz del lobby; proyección quincenal tipo calendario; recorrido de la brigada turno mañana; zonas nobles; tres planillas tipo que se abren con un clic. | `vFrec`, `calendar`, `FREQ`, `CAL_*`, `BRIG`, `NOBLES`, `PLAN` |
-| Control | Parte de avería (no se guarda sin sus cinco datos); trabajos pendientes; control de calidad S/R/D/F que genera órdenes; mantenimiento preventivo; prácticas ambientales. | `vControl`, `QC` |
+| Gestión de pisos · Unidad 6 (I) | Clase 12, § 6.1 a 6.10: la gobernanta; estados y códigos (matriz, cuatro tablas con inglés, «para no confundir», práctica de lectura con lecturas ocultas); prioridades; Reporte General; Reporte de Pisos (modelo Piso 6, circuito, discrepancias con ejemplo Piso 5, control de seguridad, comparación); organización y cálculo de personal (sin calculadora: los alumnos ya la tienen); chequeo; Lost & Found; formularios; llaves; síntesis. | `vU1`, `U1`, datos en `CODES`, `NOMEN` |
+| Personal y operaciones · Unidad 6 (II) | Clase 13, § 6.11 a 6.19: la mucama; carro, productos y office; tarjetas y situaciones al ingresar, con parte de avería interactivo y trabajos pendientes; limpieza de la habitación (principio, ocupada / salida / turn down con casillas, cuadro comparativo); baño; no rentada y rotación de colchones con esquema; armado de la cama (sistemas, esquinas, calidad, prevención); dotación estándar; runner y valet; síntesis. | `vU2`, `U2`, `rutBlock`, `parteAveria`, `matSVG`, datos en `RUT`, `PROD`, `CMP`, `SYS`, `VIDS` |
+| Repaso | Preguntas de repaso filtrables por parte (toda la unidad, 6 I, 6 II) o por sección, y «Ordená los pasos» (ocupada, salida, turn down, baño, cama). | `vRep`, `quiz(lista, clave)`, `orderGame`; `QUIZ` es una lista plana con `s:"6.x"` |
 
-Las preguntas de repaso están en `QUIZ` (64 en total: 27 de rutina, 18 de gobernanta, 6 de fondo, 7 de frecuencias, 6 de control).
+`QUIZ` tiene 54 preguntas, cada una con su sección en `s`. La mejor marca se guarda por filtro (`S.best["parte-u1"]`, `S.best["sec-6.14"]`).
 
-En `RUT`, cada paso es `[paso, porqué, subpasos, alTerminar]`; del segundo en adelante son opcionales. Los subpasos se numeran solos (1.1, 1.2…). Una rutina puede tener además `note` (aviso en ámbar bajo la intro), `losNo` (recuadro «Los No»), `boxes` (recuadros al final: `[título, ítems, numerado]`) y `warn` (aviso en ámbar al final). El avance tildado se guarda por rutina y cantidad de pasos (`S.done["ocupada@10"]`), para que un cambio de pasos no herede tildes viejas.
+En `RUT`, cada paso es `[paso, porqué, subpasos, alTerminar]`; del segundo en adelante son opcionales. Los subpasos se numeran solos (1.1, 1.2…). Una rutina puede tener además `note`, `losNo`, `boxes` (`[título, ítems, numerado]`), `warn`, `vids` y `sys`. El avance tildado se guarda por rutina y cantidad de pasos (`S.done["ocupada@10"]`).
+
+**Qué se sacó el 1/11/2026, a pedido de la docente:** las pestañas Hoy (con «Mi casa»), A fondo (limpieza profunda y plano de bloqueos), Frecuencias (Áreas Públicas, va a otra app) y Control (control de calidad S/R/D/F, prácticas ambientales); la calculadora de efectivos; la Unidad 5 (nombres de los puestos); y todas las notas de actualización y «Hotelería hoy» (plazo del No molestar, dotación en desuso, libres de humo, papel → PMS, RFID, convenios, tickets digitales, llaves digitales, limpieza a pedido). No volver a agregarlos sin consultarla.
 
 ## De dónde sale el contenido
 
 Fuentes, en este orden de prioridad:
 
-1. **Las presentaciones de clase** (PDF en la carpeta «HK/Subido» de la docente): Unidad 5 completa; Unidad 6 (I), Clase 12, «Gestión de Pisos: supervisión, reportes y control», § 6.1 a 6.10, que alimenta la pestaña Gobernanta; y Unidad 6 (II), Clase 13, «El personal de limpieza y los procesos de operaciones», en dos PDF: § 6.11 a 6.13 y § 6.14 a 6.19 (versión del 1/11/2026). La numeración nueva: 6.14 limpieza de la habitación (ocupada, salida, comparativo y turn down), 6.15 baño, 6.16 no rentada y colchones, 6.17 armado de cama, 6.18 dotación, 6.19 runner y valet. La pestaña Rutina tiene que ser fiel a ella: procedimientos, nombres, ejemplos y actualizaciones salen de ahí. A su vez sigue a Simón (pp. 51-64 y 81-83), a Olmo Garre (Caps. 2 y 7) y a FEHGRA (2012), *Manual de procedimientos para mucamas*.
-2. El **Cuadernillo 2 – Housekeeping 2026** de la cátedra, **revisión de octubre de 2026**, para todo lo que la presentación no cubre: Unidad 5 (Housekeeping–Mantenimiento), § 5.3 (nombres de los puestos), § 6.6, 6.9, 6.29, 6.30 y 7.1 a 7.3.
+1. **Las presentaciones de clase de la Unidad 6** (PDF en la carpeta «HK/Subido» de la docente): parte I, Clase 12, «Gestión de Pisos: supervisión, reportes y control», § 6.1 a 6.10 (dos PDF: 6.1–6.3 y 6.4–6.10); parte II, Clase 13, «El personal de limpieza y los procesos de operaciones», § 6.11 a 6.19 (dos PDF: 6.11–6.13 y 6.14–6.19, versión del 1/11/2026). Numeración: 6.14 limpieza de la habitación (ocupada, salida, comparativo y turn down), 6.15 baño, 6.16 no rentada y colchones, 6.17 armado de cama, 6.18 dotación, 6.19 runner y valet. La app tiene que ser fiel a ellas: secciones, títulos, procedimientos, nombres y ejemplos salen de ahí. Varias diapositivas son imágenes (rotación de colchones, esquinas, rutina diaria, cálculo de efectivos): renderizarlas antes de decir que algo no está.
+2. Lo que no está en las presentaciones no entra, salvo que la docente lo pida.
+
+Historial: el 29/10/2026 la app se alineó con la presentación de la Unidad 6 (II) y el 1/11/2026 pasó a la estructura actual.
 
 Cambios del 29/10/2026 para alinear la app con la presentación:
 
@@ -64,12 +63,12 @@ Cambios del 29/10/2026 para alinear la app con la presentación:
 - Donde FEHGRA dice «Supervisor», la app dice «el supervisor (la gobernanta)», como la clase.
 - A pedido de la docente, la salida suma subpasos de clase que FEHGRA no trae: vajilla de Room Service al pasillo, del cesto solo los papeles de adentro, retirar incluso las toallas que parecen sin usar, contar la ropa blanca y revisar daños (paso 3); aspirar desde el fondo hacia la puerta (paso 4); rociar el baño y dejar actuar mientras se arma la cama (paso 5); aromatizar, cerrar, reporte de piso con hora de entrada y salida y volver al office (paso 8).
 
-Cambios del 1/11/2026 (PPT nuevas de la carpeta «Subido»):
+Cambios del 1/11/2026 (PPT nuevas de la carpeta «Subido»), primera pasada; ese mismo día la app se reestructuró en las tres pestañas actuales y se sacaron las actualizaciones:
 
 - Pestaña nueva Gobernanta con la Unidad 6 (I). Estados de habitación y prioridades se mudaron ahí desde Rutina, actualizados: códigos con equivalencia en inglés, LT y Cu/Cx; con baja ocupación, VL → VIP → ocupadas que continúan → vacías sucias y salidas, más la lista «sin tarea».
 - Referencias de § renumeradas según la PPT nueva (ver arriba), también en las preguntas.
 - Ocupada: 41 subpasos (el 7.7 «higienizarse y controlar» pasó a ser subpaso).
-- Nuevos: cuadro comparativo ocupada vs. check out; cuatro sistemas de ropa de cama (nórdica y mixta = práctica del sector); esquinas en sobre (Simón p. 69) y en inglete (industria); complementos de dotación «Hoy»; nota de hoteles libres de humo en el baño; convenio de la mucama con la redacción nueva (asistencia 10 %, complemento 12 %, CCT 362/03 «para los hoteles de su ámbito»); matices de runner y valet hoy.
+- Nuevos: cuadro comparativo ocupada vs. check out; cuatro sistemas de ropa de cama (nórdica y mixta = práctica del sector); esquinas en sobre (Simón p. 69) y en inglete (industria); complementos de dotación «Hoy»; convenio de la mucama con la redacción nueva (asistencia 10 %, complemento 12 %, CCT 362/03 «para los hoteles de su ámbito»); matices de runner y valet hoy.
 - La diapositiva de rotación de colchones confirma la interpretación de la app (180° = dar vuelta de cara; cabeza-pies = girar sobre la cama).
 - Videos: links encontrados por título y pendientes de confirmar por la docente: FEHGRA 1.4 «Proceso de limpieza de baño» (youtube 2qOMBlwt3KU), L-gic esquinas (zekqwevi9lo), UGT «03 Buenas prácticas… Hacer la cama» (Qhv_gROwu3M). FEHGRA 1.1, 1.2 y 1.3 están cargados en `VIDS` sin link: no se muestran hasta tener la URL.
 
@@ -82,18 +81,12 @@ Diferencias dentro de la propia presentación, **pendientes de que la docente la
 
 Regla de trabajo: **no inventar contenido hotelero**. Si algo no está en el cuadernillo, se marca en la app como «Práctica del sector» o «Modelo de ejemplo», o se consulta a la docente.
 
-Cosas que **no** vienen del cuadernillo y están marcadas o pendientes de confirmar con la docente:
+Cosas que **no** salen textuales de las presentaciones y están marcadas o pendientes de confirmar con la docente:
 
-- Varios «Por qué» de armado de cama y de habitación no rentada.
-- Las 64 preguntas de repaso (redactadas a partir del cuadernillo, del manual de FEHGRA y de las presentaciones de la Unidad 6, sin contrastar con parciales).
-- En la calculadora de efectivos: la opción «2 francos (40 h)» y el margen de licencias aplicado como porcentaje sobre la plantilla (el ejemplo de clase usa 1 franco y 0 %).
-- Los días de la semana del calendario quincenal (el cuadernillo fija la frecuencia, no el día).
-- El formato y los datos de las tres planillas tipo.
-- El aviso sobre colchones de una sola cara y sus ejemplos.
-- Tres prácticas ambientales marcadas «Práctica del sector».
-- En la pestaña Hoy: la distribución de las tareas de cada puesto a lo largo del turno (las tareas salen del cuadernillo, el orden y agrupación no) y las cinco tareas de ejemplo de «Mi casa».
-
-El calendario quincenal y la pestaña Hoy comparten el mismo criterio de días: `calIdx(fecha)` devuelve la posición 0–13 dentro de un ciclo de dos semanas que empieza un lunes.
+- Varios «Por qué» de los procedimientos (armado de cama, habitación no rentada).
+- Las 54 preguntas de repaso (redactadas a partir de las presentaciones y del manual de FEHGRA, sin contrastar con parciales).
+- Los videos: links encontrados por título (ver arriba), pendientes de confirmar; FEHGRA 1.1, 1.2 y 1.3 sin link.
+- Nórdica y mixta (ropa de cama) y la columna «Hoy, además» de la dotación: así figuran en la PPT, como práctica del sector o industria.
 
 ## Preferencias de la docente (respetarlas)
 
@@ -109,4 +102,4 @@ El calendario quincenal y la pestaña Hoy comparten el mismo criterio de días: 
 
 ## Proyecto de clase relacionado
 
-El diseño del proyecto de vibecoding de los alumnos (cronograma, 17 reglas, prompts por clase, rúbrica, uso de Antigravity gratuito) está en un documento aparte de Claude: «HK Planner: proyecto de vibecoding para Housekeeping». La docente quiere que, además de la materia, los alumnos vean para qué sirve el vibecoding y puedan usar la app en su casa: por eso la pestaña Hoy incluye «Mi casa».
+El diseño del proyecto de vibecoding de los alumnos (cronograma, 17 reglas, prompts por clase, rúbrica, uso de Antigravity gratuito) está en un documento aparte de Claude: «HK Planner: proyecto de vibecoding para Housekeeping». Desde el 1/11/2026 esta app ya no tiene la pestaña Hoy ni «Mi casa»: es material de estudio de la Unidad 6.
