@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="App de estudio de Housekeeping: rutinas, limpieza profunda, Áreas Públicas y control.">
+<meta name="description" content="App de estudio de Housekeeping: rutinas, gestión de pisos, limpieza profunda, Áreas Públicas y control.">
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>HK Planner Hotel Monserrat</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap">
@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 header.top{padding-block:22px 12px}
 .brand{font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1.1;margin:0;letter-spacing:-.01em}
 .brand small{display:block;font-family:var(--body);font-weight:500;font-size:.9rem;color:var(--muted);letter-spacing:0;margin-top:6px}
-nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;border-bottom:2px solid var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;border-bottom:2px solid var(--ink)}
 nav.tabs button{font:700 .82rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
 nav.tabs button .ic{display:block;width:24px;height:24px}
 nav.tabs button .ic svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -110,7 +110,7 @@ label.ck input{width:20px;height:20px;accent-color:var(--accent);flex:none;margi
 /* formularios */
 .form{display:grid;gap:10px}
 .form label{display:grid;gap:4px;font-weight:600;font-size:.88rem}
-input[type=text],input[type=date],select,textarea{font:400 1rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+input[type=text],input[type=date],input[type=number],select,textarea{font:400 1rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
 .ot{display:grid;grid-template-columns:1fr auto;gap:4px 10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:6px}
 .ot .d{font-weight:600;min-width:0;overflow-wrap:anywhere}
 .ot .m{font-size:.85rem;color:var(--muted);grid-column:1}
@@ -159,6 +159,9 @@ table.sh td{height:38px}
 table.sh td.mk{text-align:center;font-weight:700}
 .sh-foot{font-size:.85rem;color:var(--muted);margin:10px 0 0}
 .box .btn{margin-top:4px}
+a.btn{text-decoration:none;display:inline-block}
+.vids{margin:10px 0}
+.vids small{color:var(--muted);font-weight:500}
 figure.rot{margin:0}
 figure.rot svg{display:block;width:100%;max-width:350px;margin:0 auto 8px}
 figure.rot figcaption{font-size:.92rem}
@@ -167,7 +170,8 @@ figure.rot figcaption{font-size:.92rem}
 .m-dot{fill:var(--accent)} .m-num{fill:var(--on-accent);font:700 13px var(--body)}
 .m-face{fill:var(--ink);font:700 15px var(--body)} .m-lab{fill:var(--muted);font:700 10px var(--body);letter-spacing:.08em}
 .m-arr{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:480px){nav.tabs button{font-size:.66rem;padding:7px 1px;letter-spacing:-.01em}}
+@media (max-width:370px){nav.tabs button{font-size:.56rem!important}}
+@media (max-width:480px){nav.tabs{gap:3px}nav.tabs button{font-size:.6rem;padding:7px 0;letter-spacing:-.02em}}
 .daynav{display:flex;align-items:center;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
 .daynav .dl{font:700 1.1rem var(--display);min-width:0;flex:1 1 150px}
 .daynav .btn{padding:7px 12px}
@@ -186,6 +190,18 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
 details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 12px;margin-bottom:6px}
 summary{cursor:pointer;font-weight:600;padding:10px 0}
 details p{font-size:.93rem}
+/* calculadora de efectivos */
+.calc .grp{margin-top:12px}
+.cin{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.calc label{display:grid;gap:4px;font-weight:600;font-size:.88rem;align-content:start}
+.calc label.ck{display:flex;font-weight:500}
+.calc label.lab{margin-top:10px}
+.calc small{font-weight:400;color:var(--muted);font-size:.8rem}
+.calc-res{margin-top:10px}
+ol.calc-steps{padding-left:22px}
+ol.calc-steps li{margin-bottom:6px}
+ol.calc-steps b{display:block;font-weight:600}
+ol.calc-steps code{font:500 .88rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted);overflow-wrap:anywhere}
 </style>
 
 </head>
@@ -197,7 +213,7 @@ details p{font-size:.93rem}
   <nav class="tabs" role="tablist" id="tabs"></nav>
   <main id="main"></main>
   <footer>
-    Material de estudio de la cátedra Departamento de Front Office y Housekeeping. Contenido basado en las presentaciones de clase (Unidad 6, parte II) y en el Cuadernillo 2 de la materia (revisión de octubre de 2026), que siguen a Simón, M. A. (2004), <i>Housekeeping ama de llaves</i>, a Olmo Garre, <i>Departamento de Gobernanta</i>, y a FEHGRA (2012), <i>Manual de procedimientos para mucamas</i>. Lo marcado como «práctica del sector» no proviene de esa bibliografía. Tu avance se guarda solo en este dispositivo.
+    Material de estudio de la cátedra Departamento de Front Office y Housekeeping. Contenido basado en las presentaciones de clase (Unidad 6, partes I y II) y en el Cuadernillo 2 de la materia (revisión de octubre de 2026), que siguen a Simón, M. A. (2004), <i>Housekeeping ama de llaves</i>, a Olmo Garre, <i>Departamento de Gobernanta</i>, y a FEHGRA (2012), <i>Manual de procedimientos para mucamas</i>. Lo marcado como «práctica del sector» no proviene de esa bibliografía. Tu avance se guarda solo en este dispositivo.
   </footer>
 </div>
 
@@ -225,27 +241,28 @@ function today(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth(
 /* ---------- contenido ---------- */
 var TABS=[
  {id:"rutina",label:"Rutina",ic:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 15h18"/><path d="M5 10V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M8 10V9h3v1"/><path d="M3 18v2M21 18v2"/>'},
+ {id:"gobernanta",label:"Gobernanta",ic:'<circle cx="8" cy="15.5" r="4"/><path d="M11 12.5l8.5-8.5"/><path d="M16 7l2.5 2.5M13.5 9.5l2 2"/>'},
  {id:"fondo",label:"A fondo",ic:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M12 12.5l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z"/>'},
  {id:"frecuencias",label:"Frecuencias",ic:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'},
  {id:"control",label:"Control",ic:'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.5h6v1"/><path d="M8.5 12.5l2.3 2.3 4.7-4.8"/>'},
  {id:"hoy",label:"Hoy",ic:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'}
 ];
 var RUT={
- ocupada:{n:"Habitación ocupada",ref:"§ 6.14 · FEHGRA (2012), pp. 40–56 · 10 pasos, 40 subpasos",intro:"El sistema de limpieza de FEHGRA: diez pasos principales que forman un ciclo de cuatro fases. Ingresar y preparar (pasos 1 y 2), despejar y controlar (3 a 5), limpiar (6 y 7) y reponer y cerrar (8 a 10). El orden importa: primero se despeja, luego se limpia, con el baño antes que la habitación, y al final se repone. El paso 5, Ordenar, solo se hace en las ocupadas. El principio es siempre el mismo: de arriba hacia abajo y del fondo hacia la puerta; lo que cae se limpia después y nunca se pisa lo ya limpio.",steps:[
+ ocupada:{n:"Habitación ocupada",ref:"§ 6.14 · FEHGRA (2012), pp. 40–56 · 10 pasos, 41 subpasos",cmp:true,vids:["v11","v12"],intro:"El sistema de limpieza de FEHGRA: diez pasos principales que forman un ciclo de cuatro fases. Ingresar y preparar (pasos 1 y 2), despejar y controlar (3 a 5), limpiar (6 y 7) y reponer y cerrar (8 a 10). El orden importa: primero se despeja, luego se limpia, con el baño antes que la habitación, y al final se repone. El paso 5, Ordenar, solo se hace en las ocupadas. El principio es siempre el mismo: de arriba hacia abajo y del fondo hacia la puerta; lo que cae se limpia después y nunca se pisa lo ya limpio.",steps:[
   ["Anunciarse y entrar a la habitación.","El carro bloqueando la puerta impide que alguien entre sin ser visto y protege a la mucama y las pertenencias del huésped.",["Verificar que no esté colgado el cartel de No molestar.","Verificar que no esté colocada la traba de la puerta.","Golpear con los nudillos y aguardar unos instantes.","Si el huésped estuviera, disculparse y ofrecer el servicio.","Volver a golpear; entreabrir y anunciarse: «Servicio de Mucama». Si está vacía, abrir del todo, estacionar el carro bloqueando la puerta y completar el reporte.","Si el huésped regresa mientras se limpia, ofrecer retirarse y preguntar cuándo volver.","Si hay que interrumpir: retirar todo lo que se ingresó, cerrar la puerta y llevar el carro al office."]],
   ["Ventilar; apagar luces y aparatos eléctricos.","Las cortinas se corren para tener más luz y las ventanas se abren para renovar el aire.",["Correr las cortinas y abrir las ventanas.","Verificar que todas las luces estén apagadas.","Corroborar que los aparatos funcionen y apagarlos, excepto el minibar."]],
   ["Retirar los «sucios».","Las sábanas se sacuden para que no quede ningún objeto entre ellas.",["Recoger la vajilla usada y llamar a Room Service para que la retire.","Retirar los residuos de los cestos de la habitación y del baño.","Desvestir las camas: frazada y almohadas, sin fundas, sobre una silla o banqueta.","Retirar las sábanas sacudiéndolas y ponerlas en la bolsa del carro.","Retirar del baño las toallas usadas, también a la bolsa del carro.","Al terminar de retirar sucios, higienizarse las manos."]],
   ["Verificar daños y desperfectos.","Todo desperfecto se reporta con el parte de avería.",["Revisar con cuidado la habitación: luces y lámparas, TV y control remoto, aire o calefacción, frigobar, teléfono, cortinas y persianas, cerradura y ventanas, perchas y placard, muebles, paredes y alfombra.","Lo mismo en el baño, comprobando que grifos y desagües funcionen: grifos y canillas, desagües, inodoro (descarga y pérdidas), ducha o bañera, luces y extractor, secador de pelo, azulejos y juntas, espejo y accesorios."]],
   ["Ordenar (solo en habitaciones ocupadas).","",["Ordenar diarios, revistas y prendas: doblarlas y colocarlas en su lugar.","Dejar la bolsa de lavandería del huésped junto a la puerta, para que la retiren.","No tocar valores ni dinero a la vista: avisar al supervisor (la gobernanta)."]],
   ["Limpiar el baño.","Tiene su propia secuencia: mirá la rutina «Baño».",["Empezar por los cerámicos: las paredes, de arriba hacia abajo y en el sentido de las agujas del reloj.","Desinfectar y limpiar los sanitarios por dentro y por fuera, con un cepillo exclusivo para el interior del inodoro.","Limpiar los accesorios: muebles, toalleros, portarrollos, grifería, desagües y espejos.","Lavar el piso, cuidando los rincones y detrás de los sanitarios.","Examinar el baño desde la puerta: con la mirada, de arriba hacia abajo y de izquierda a derecha.","Al finalizar, higienizarse las manos."]],
-  ["Limpiar la habitación.","La cama es lo principal del dormitorio: sábanas y fundas sin manchas, arrugas ni pelos; todas las prendas bien colocadas y simétricas; el tendido sin arrugas ni bultos.",["Limpiar el adorno sobre la cabecera de la cama y su respaldo.","Cuadros, lámparas y muebles, por todos sus lados y patas. El placard, con cajones y rieles, se limpia en las salidas: en las ocupadas no se abre.","Teléfono, televisor y heladera, con el producto que indica el supervisor (la gobernanta).","Marcos, puertas y ventanas.","Vidrios y espejos, sin manchas ni pátina.","Vestir la cama al final, con blancos limpios, y acomodar almohadas y almohadones."],"Al terminar la habitación, higienizarse las manos y controlar que todo esté correcto."],
+  ["Limpiar la habitación.","La cama es lo principal del dormitorio: sábanas y fundas sin manchas, arrugas ni pelos; todas las prendas bien colocadas y simétricas; el tendido sin arrugas ni bultos.",["Limpiar el adorno sobre la cabecera de la cama y su respaldo.","Cuadros, lámparas y muebles, por todos sus lados y patas. El placard, con cajones y rieles, se limpia en las salidas: en las ocupadas no se abre.","Teléfono, televisor y heladera, con el producto que indica el supervisor (la gobernanta).","Marcos, puertas y ventanas.","Vidrios y espejos, sin manchas ni pátina.","Vestir la cama al final, con blancos limpios, y acomodar almohadas y almohadones.","Al terminar la habitación, higienizarse las manos y controlar que todo esté correcto."]],
   ["Reponer insumos.","Amenities, toallas y papel no se reponen al limpiar el baño: van acá, después de la habitación.",["Reponer suministros: menú de Room Service, directorio, bolsas y listas de lavandería.","Reponer el baño: amenities, toallas, papel higiénico."]],
   ["Aspirar.","",["Aspirar a fondo: zócalos, esquinas, detrás y debajo de los muebles. Sin alfombra, se sigue el procedimiento habitual de cada tipo de piso."]],
   ["Aromatizar, supervisar y elaborar el reporte.","",["Cerrar las ventanas y correr las cortinas.","Examinar la habitación como se hizo con el baño.","Aromatizar.","Elaborar el reporte."]]],
   losNo:["Nunca entrar si cuelga el cartel de No molestar o está puesta la traba de la puerta.","Nunca tocar valores ni dinero que el huésped dejó a la vista: se avisa al supervisor (la gobernanta).","Jamás abrir el placard de una habitación ocupada.","Nunca apagar el minibar.","Jamás dejar elementos de limpieza en la habitación si hay que interrumpir el trabajo."],
   boxes:[["Ocupada: lo que agrega Simón",["Procurar que el huésped no esté","Sus cosas, sobre una silla: nunca en cajones","Papeles: no se tocan ni se reordenan","Pijamas, colgados en el baño","Diarios ordenados sobre la cómoda","Joyas o dinero: no tocar; informar a la gobernanta y ofrecer al huésped la caja de seguridad"]],
    ["De salida: lo que cambia (Simón)",["Limpieza profunda","Cajón por cajón, buscando olvidados","Dotación completa: queda lista para vender","Los pasos están en la rutina «Habitación de salida»"]]]},
- salida:{n:"Habitación de salida",ref:"§ 6.14 · FEHGRA (2012), pp. 60–64 · 8 pasos",intro:"Check out. El proceso es el de la habitación ocupada, con más detenimiento y algunos agregados: el objetivo es dejarla en estado de venta, con la dotación completa. Los subpasos completan los pasos de FEHGRA con las indicaciones de clase.",
+ salida:{n:"Habitación de salida",ref:"§ 6.14 · FEHGRA (2012), pp. 60–64 · 8 pasos",cmp:true,intro:"Check out. El proceso es el de la habitación ocupada, con más detenimiento y algunos agregados: el objetivo es dejarla en estado de venta, con la dotación completa. Los subpasos completan los pasos de FEHGRA con las indicaciones de clase.",
   note:"Precinto de «Desinfectado»: es obligatorio solo donde lo exige la normativa provincial. En el resto es opcional y hoy está en desuso en la hotelería internacional.",steps:[
   ["Revisar toda la habitación mientras el huésped hace el check out.","Así se detectan los objetos olvidados o los faltantes."],
   ["Si hay un objeto olvidado, avisar a Recepción y guardarlo.","",["Con los datos del huésped, el número de habitación, la fecha y el nombre de quien lo encontró."]],
@@ -255,7 +272,7 @@ var RUT={
   ["Limpiar el baño como en una ocupada, con más detenimiento.","",["Precinto de «Desinfectado» en el inodoro.","Toallas de papel y papel higiénico con la punta doblada.","Blancos, amenities y vasos envueltos."]],
   ["Verificar roturas o desperfectos y comunicarlos a Mantenimiento.",""],
   ["Avisar al supervisor (la gobernanta) el estado de la habitación.","",["Aromatizar, cerrar la puerta, completar el reporte de piso con hora de entrada y salida, y volver al office."]]]},
- bano:{n:"Baño",ref:"§ 6.17 · FEHGRA (2012), pp. 48–51 · 7 pasos",intro:"Es el paso 6 de la habitación: el baño se limpia antes que la habitación. Amenities, toallas y papel no se reponen acá: van en el paso 8, después de limpiar la habitación.",steps:[
+ bano:{n:"Baño",ref:"§ 6.15 · FEHGRA (2012), pp. 48–51 · 7 pasos",vids:["v14"],intro:"Es el paso 6 de la habitación: el baño se limpia antes que la habitación. Amenities, toallas y papel no se reponen acá: van en el paso 8, después de limpiar la habitación.",steps:[
   ["Cerámicos: de arriba hacia abajo, en el sentido de las agujas del reloj.","Lo que cae se limpia después."],
   ["Sanitarios, por dentro y por fuera; cepillo exclusivo para el interior del inodoro.","Contaminación cruzada: con el mismo paño, los gérmenes del inodoro llegarían al vaso que el huésped usa con la boca. Por eso lleva cepillo exclusivo y el paño del color del sanitario."],
   ["Accesorios: muebles, toalleros, portarrollos y desagües.",""],
@@ -263,8 +280,9 @@ var RUT={
   ["Grifería, probando que funcione.",""],
   ["Lavar el piso, cuidando los rincones y detrás de los sanitarios.","El piso va al final porque recibe todo lo que cae."],
   ["Examinar el baño desde la puerta e higienizarse las manos.","Las manos se higienizan antes de pasar a la habitación, para no llevar la suciedad del baño a lo limpio.",["Con la mirada, de arriba hacia abajo y de izquierda a derecha."]]],
-  boxes:[["Recomendaciones de Simón",["Espejos sin marcas: agua, un chorrito de vinagre y paño de algodón; el papel deja pelusa","Teléfono: con alcohol en cada salida y el cable enrollado","Papel higiénico: con un doblez en la punta y siempre un repuesto","Vasos: con agua y alcohol","Revisar la flor de la ducha y los tapones","Separar los blancos secos de los mojados","Lo «dudoso» (cosméticos, remedios, calzado): a la gobernanta, no a la basura (en Simón: Ama de Llaves). Lo guarda un tiempo prudencial"]]]},
- cama:{n:"Armado de cama",ref:"§ 6.16 · FEHGRA (2012), pp. 52–53 y 61 · 6 capas",intro:"La cama se arma por capas, de abajo hacia arriba. Es lo principal del dormitorio.",
+  boxes:[["Recomendaciones de Simón",["Espejos sin marcas: agua, un chorrito de vinagre y paño de algodón; el papel deja pelusa","Teléfono: con alcohol en cada salida y el cable enrollado","Papel higiénico: con un doblez en la punta y siempre un repuesto","Vasos: con agua y alcohol","Revisar la flor de la ducha y los tapones","Separar los blancos secos de los mojados","Lo «dudoso» (cosméticos, remedios, calzado): a la gobernanta, no a la basura (en Simón: Ama de Llaves). Lo guarda un tiempo prudencial"]]],
+  warn:"Actualización: hoteles libres de humo. Antes se dejaban ceniceros limpios y carteritas de fósforos en la mesa de luz y el escritorio. La Ley 26.687 prohíbe fumar en lugares de trabajo y espacios cerrados de acceso público (lobby, restaurantes, salones); no menciona las habitaciones, pero casi todos los hoteles lo extendieron a ellas y cobran la limpieza si se fuma. La perfumina sigue: con moderación, y nunca si el huésped pidió una habitación sin aromas. Los aerosoles ya no usan CFC (Protocolo de Montreal)."},
+ cama:{n:"Armado de cama",ref:"§ 6.17 · FEHGRA (2012), pp. 52–53 y 61 · 6 capas",sys:true,vids:["v13","vlgic","vugt"],intro:"La cama se arma por capas, de abajo hacia arriba. Es lo principal del dormitorio.",
   note:"En FEHGRA, «pie de cama» es la alfombrita descartable del turn down, no la pieza decorativa.",steps:[
   ["Colchón, rotado periódicamente.","La rotación está explicada en la pestaña A fondo."],
   ["Cubrecolchón.","Es estándar del hotel: no figura en FEHGRA."],
@@ -272,10 +290,12 @@ var RUT={
   ["Sábana de arriba, bien estirada.","Simón la llama encimera."],
   ["Frazada.","",["Con triple sheeting, una tercera sábana envuelve la frazada: su pelusa no molesta a los alérgicos. En ese caso el cubrecama se retira por completo (Simón)."]],
   ["Cubrecama, almohadas y almohadones.","",["Cubrecama marcando la almohada (FEHGRA).","Fundas con una sola abertura: hacia el centro de la cama (Simón).","Acomodar almohadas y almohadones."]]],
-  boxes:[["Control de calidad (FEHGRA)",["Sábanas y fundas sin manchas, arrugas ni pelos","Todas las prendas bien colocadas y simétricas","Tendido sin arrugas ni bultos","Cubrecama marcando la almohada"]],
+  boxes:[["Cómo se hacen las esquinas",["Remeter la sábana bajo el colchón, a los pies","A unos 40 cm del pie, levantar el borde y formar un triángulo","Remeter lo que cuelga debajo del triángulo","En sobre (90°, Simón p. 69): bajar el triángulo con el pliegue vertical, sobre la arista del colchón, y remeter. Queda una esquina cuadrada. En inglete (45°, industria): bajar el triángulo con el pliegue en diagonal a 45° sobre el costado, y remeter"],true],
+   ["Esquinas: dos formas, muchos nombres",["Guiate por el pliegue, no por el nombre: los nombres cambian incluso entre expertos","Cuadrada (90°): el pliegue cae justo sobre la arista del colchón. Se la llama en sobre (Simón), box, square o hotel corner","A 45°: queda una línea en diagonal cerca de la esquina. Se la llama en inglete, esquina de hospital o militar (industria)","FEHGRA (p. 61) no nombra una técnica: pide «fuertes dobleces» para evitar arrugas","Sábana ajustable: Simón la desaconseja, porque con el lavado el elástico cede","Organización: terminar un lado antes de pasar al otro, o trabajar en pareja"]],
+   ["Control de calidad (FEHGRA)",["Sábanas y fundas sin manchas, arrugas ni pelos","Todas las prendas bien colocadas y simétricas","Tendido sin arrugas ni bultos","Cubrecama marcando la almohada"]],
    ["Estándares de calidad (Simón)",["Bombones nunca sobre el doblez: manchan","Sábanas lisas, sin ribetes: se pueden rotar","Sin ajustables: el elástico cede con el lavado","Blancura y planchado impecables"]],
    ["Prevención de riesgos (Olmo Garre)",["Sobreesfuerzos: levantar colchones o correr camas sin técnica produce lesiones lumbares. Flexionar las rodillas y pedir ayuda","Instalaciones: no manipular enchufes ni equipos con las manos mojadas; las fallas se informan a Mantenimiento","Químicos: pueden irritar la piel y las vías respiratorias. Usar guantes y nunca mezclarlos","La gobernanta arma el manual de prevención: pausas, rotación y formación","La habitación castiga más la columna que las áreas: quien tiene problemas de columna o está embarazada pasa a la brigada de limpieza"]]]},
- apertura:{n:"Turn down (apertura)",ref:"§ 6.18 · FEHGRA (2012), pp. 57–60 · 11 pasos",intro:"Turn down service, apertura, descubierta o cortesía nocturna: preparar la habitación para el descanso, para que el huésped sienta que se piensa en su confort. Cuándo: entre las 18 y las 22 hs. Quién: la mucama de la tarde. Dónde: en hoteles de 4 y 5 estrellas. Nunca con «No molestar». Se ingresa como en la limpieza: anunciándose dos veces y colocando la llave de la luz.",
+ apertura:{n:"Turn down (apertura)",ref:"§ 6.14 · FEHGRA (2012), pp. 57–60 · 11 pasos",intro:"Turn down service, apertura, descubierta o cortesía nocturna: preparar la habitación para el descanso, para que el huésped sienta que se piensa en su confort. Cuándo: entre las 18 y las 22 hs. Quién: la mucama de la tarde. Dónde: en hoteles de 4 y 5 estrellas. Nunca con «No molestar». Se ingresa como en la limpieza: anunciándose dos veces y colocando la llave de la luz.",
   note:"En el diagrama de la p. 57, cerrar persianas figura como paso 4. Se sigue el orden de la lista de la p. 58.",steps:[
   ["Limpiar ceniceros y vaciar los cestos de residuos.","",["Actualización: con la Ley 26.687 y los hoteles libres de humo, los ceniceros en la habitación están en desuso."]],
   ["Retirar las toallas usadas.","",["A la bolsa del carro."]],
@@ -291,7 +311,7 @@ var RUT={
   boxes:[["Cómo se abre la cama: la técnica del triángulo",["Habitación: basura y vajilla; revisar desperfectos; black outs cruzados, para más oscuridad; acomodar ropa y zapatos; control remoto y agua o bombones en la mesa de luz; luz de lectura","Cama: retirar el cobertor y doblarlo en cuatro; almohadas reclinadas; la sábana de arriba se abre en triángulo; ropa de dormir sobre la cama, pie de cama y pantuflas a los costados. La atención, nunca sobre el doblez","Baño: retirar los blancos usados, repasar y reponer"]],
    ["Los tres niveles del servicio (Simón)",["Básico: cortinas, luz, abrir la cama y una atención. Es el mínimo: deja la habitación lista para dormir","Intermedio: además, basura de la habitación y vajilla sucia, para que el huésped no encuentre restos del día","Superior: además, basura del baño, toallas nuevas y baño seco. Deja el baño como a la mañana: es el estándar de los hoteles de lujo","Tiene presupuesto propio: personal, atenciones y ropa extra"],true]],
   warn:"Con un turno tarde reducido (una mucama cada 50 habitaciones, aproximadamente), sumar el turn down puede dejar habitaciones sucias: hace falta coordinar con Recepción e informar al huésped."},
- norentada:{n:"Habitación no rentada",ref:"§ 6.15 · Simón, pp. 62–63 · 8 pasos",intro:"Las habitaciones que llevan varios días vacías se repasan igual. FEHGRA no trae un procedimiento para este caso.",steps:[
+ norentada:{n:"Habitación no rentada",ref:"§ 6.16 · Simón, pp. 62–63 · 8 pasos",intro:"Las habitaciones que llevan varios días vacías se repasan igual. FEHGRA no trae un procedimiento para este caso.",steps:[
   ["Ventilar.","El aire encerrado es lo primero que nota el próximo huésped."],
   ["Limpiar muebles y vidrios.","El polvo se acumula aunque nadie la use."],
   ["Verificar los artefactos del baño (pérdidas, grifos) y asearlos si corresponde.","Se detecta la falla antes que el huésped."],
@@ -309,11 +329,32 @@ var PROD=[["Desinfectante","Desinfecta superficies compatibles","Sanitarios y su
  ["Secuestrante de polvo","Facilita la captación de polvo con mopa o paño; no reemplaza el lavado del piso","Mopas o paños destinados a captar polvo en superficies compatibles","Aplicar sobre la mopa o el paño, en la cantidad y con la espera indicadas. Recoger el polvo sin saturar"],
  ["Limpiador de pisos","Limpia según el material y el acabado del piso","Pisos compatibles con el producto","Retirar polvo y residuos. Dosificar (diluir solo cuando lo indique el fabricante) y pasar mopa o equipo adecuado. Enjuagar si corresponde y dejar secar"],
  ["Desodorante ambiental / perfumina","Uso opcional: aromatiza o trata olores; no sustituye la limpieza","Ambientes autorizados por el protocolo del hotel","Eliminar la fuente del olor y ventilar. Aplicar la dosis indicada, con moderación, y nunca si el huésped pidió una habitación sin aromas. Sobre textiles, solo si está autorizado"]];
-var CODES=[["V / VL","Vacía y limpia desde el día anterior"],["O / OC 01, 02…","Ocupada; el número indica cuántos huéspedes"],["S","Sucia por arrastre: quedó así desde ayer, no es salida del día"],["SNA","Salida no arreglada: hizo check out hoy y aún no se limpió"],["L","Lista: fue salida del día y ya está preparada"],["IS","Chequeada: limpia e inspeccionada por gobernanta o supervisora"],["PS","Posible salida: check out no confirmado"],["PE / SE","Poco equipaje o sin equipaje: alerta a Seguridad y Recepción"],["NM","No molestar"],["RS","Rechazó servicio (refused service)"],["SLO","Sleep out: no durmió en la habitación"],["FS (OOS)","Fuera de servicio: problema menor; sigue contando en el inventario"],["B (OOO)","Bloqueada: sale del inventario vendible"],["R","Reservada"],["A","Asignada a un huésped que ingresa hoy"]];
+var CODES=[
+ ["Vacías: el ciclo de limpieza, de sucia a disponible",[["V / VL","Vacía y limpia desde el día anterior: no tuvo salida hoy","Vacant Clean · VC"],["S","Sucia por arrastre: quedó así de ayer","Vacant Dirty · VD"],["SNA","Salida no arreglada: check out de hoy, sin limpiar","Check Out · C/O"],["L","Limpia: la mucama ya la preparó","Vacant Ready · VR"],["IS","Chequeada por la gobernanta: recién ahí está disponible","Inspected · INS"]]],
+ ["Ocupadas: quién está, si quiere servicio y alertas",[["OC 01, 02…","Ocupada; el número indica cuántos huéspedes","Occupied · OCC"],["PS","Posible salida, no confirmada","Due Out · DO"],["ND","No durmió en la habitación","Sleep Out · SLO"],["NM","No molestar: el huésped colgó el cartel","Do Not Disturb · DND"],["RS","Rechazó el servicio; se registra","Refused Service · RS"],["PE / SE","Poco o sin equipaje: alerta para Seguridad. Puede ser un skipper, un huésped que se va sin pagar","Light / No Baggage"]]],
+ ["Llegadas: qué preparar",[["R","Reservada","Reserved · RES"],["A","Asignada a un huésped que llega hoy","Assigned · Expected Arrival"],["LT","Limpiar temprano: el huésped llega antes","Early Make-up · Priority"],["Cu / Cx","Poner cuna o cama extra","Crib / Rollaway Bed"]]],
+ ["Fuera de venta",[["FS","Fuera de servicio: problema menor; no se asigna, pero sigue en el inventario","Out of Service · OOS"],["B","Bloqueada: sale del inventario vendible hasta que se desbloquee","Out of Order · OOO"]]]];
+var NOMEN=[["103","OC","S PS","01/00","Ocupada por 1 adulto, sucia. Posible salida: confirmar con Recepción."],["104","V","SA","—","Vacía y sucia, asignada a una llegada de hoy: tiene que estar lista antes del arribo."],["106","V","S","—","Vacía y sucia: hay que limpiarla."],["202","B","S","—","Bloqueada (OOO), fuera de inventario. Sucia."],["204","OC","L","02/00","Ocupada por 2 adultos; servicio del día hecho."],["306","V","IS","—","Vacía y chequeada por la gobernanta: lista para vender."],["307","OC","S","01/01","Ocupada por 1 adulto y 1 menor; falta el servicio."]];
+var CMP=[["Ingreso","Anunciarse; respetar el No molestar. Si el huésped está, ofrecer volver","Revisar la habitación mientras el huésped hace el check out: olvidados y faltantes"],
+ ["Pertenencias","No se tocan: ropa sobre una silla, pijamas en el baño, papeles sin reordenar. Joyas o dinero: informar a la gobernanta","No hay: se busca cajón por cajón. Lo olvidado se avisa a Recepción y se guarda con sus datos"],
+ ["Armarios y cajones","No se abren","Se limpian por dentro, con los rieles"],
+ ["Blancos","Cambio según la política del hotel y las tarjetas de sostenibilidad","Se retira todo, incluso las toallas que parecen sin usar; se cuenta y se revisa"],
+ ["Cama","Tender o cambiar según la política del hotel","Rotar el colchón periódicamente y vestir con blancos limpios"],
+ ["Baño","Limpiar, desinfectar y reponer","Igual, con más detenimiento; precinto donde lo exige la norma"],
+ ["Pisos","Aspirar zócalos, esquinas y debajo de los muebles","Limpieza según el material: madera, cerámicos o alfombra"],
+ ["Al terminar","Reporte; la habitación sigue ocupada","Avisar al supervisor: queda lista para la venta"]];
+var SYS=[["Tradicional (dos sábanas)","Bajera · encimera · frazada · cubrecama","El tendido convencional en ambos autores","FEHGRA pp. 29–30 y 45 · Simón p. 60"],
+ ["Triple sábana (triple sheeting)","Bajera · encimera · frazada · 3.ª sábana","Alto nivel: la tercera sábana envuelve la frazada y protege a los alérgicos de la pelusa","Simón p. 53"],
+ ["Nórdica o europea","Bajera · duvet con funda","Sin encimera. Habitual en Europa; se destaca por su simplicidad","Práctica del sector"],
+ ["Mixta","Bajera · encimera · duvet con funda","El duvet reemplaza a la frazada y al cubrecama","Práctica del sector"]];
+var VIDS={v11:["1.1 · Servicio de limpieza de la habitación","FEHGRA",""],v12:["1.2 · Ingreso a la habitación y retiro de basura","FEHGRA",""],v13:["1.3 · Desmantelado y tendido de cama","FEHGRA",""],
+ v14:["1.4 · Proceso de limpieza de baño","FEHGRA","https://www.youtube.com/watch?v=2qOMBlwt3KU"],
+ vlgic:["Esquinas de cama: hospital o militar y box corner (en inglés)","L-gic","https://www.youtube.com/watch?v=zekqwevi9lo"],
+ vugt:["03 · Buenas prácticas de camareras de piso: hacer la cama","UGT","https://www.youtube.com/watch?v=Qhv_gROwu3M"]};
 var QUIZ={
  rutina:[
-  {q:"¿Por qué el inodoro tiene cepillo y paño exclusivos?",o:["Porque es lo último que se limpia","Para evitar la contaminación cruzada hacia lo que el huésped toca con las manos y la boca","Porque lo pide Mantenimiento","Para ahorrar producto"],a:1,e:"Con el mismo paño, los gérmenes del inodoro llegarían al vaso del huésped. FEHGRA indica un cepillo exclusivo para el interior del inodoro, y se usa el paño del color del sanitario (§ 6.12 y 6.17)."},
-  {q:"Según FEHGRA, ¿cuándo se reponen amenities, toallas y papel del baño?",o:["Al empezar la limpieza del baño","Al terminar el baño, antes de examinarlo","En el paso 8, después de limpiar la habitación","Al final del turno"],a:2,e:"El baño es el paso 6 y la habitación el 7; la reposición de insumos es el paso 8 (§ 6.17)."},
+  {q:"¿Por qué el inodoro tiene cepillo y paño exclusivos?",o:["Porque es lo último que se limpia","Para evitar la contaminación cruzada hacia lo que el huésped toca con las manos y la boca","Porque lo pide Mantenimiento","Para ahorrar producto"],a:1,e:"Con el mismo paño, los gérmenes del inodoro llegarían al vaso del huésped. FEHGRA indica un cepillo exclusivo para el interior del inodoro, y se usa el paño del color del sanitario (§ 6.12 y 6.15)."},
+  {q:"Según FEHGRA, ¿cuándo se reponen amenities, toallas y papel del baño?",o:["Al empezar la limpieza del baño","Al terminar el baño, antes de examinarlo","En el paso 8, después de limpiar la habitación","Al final del turno"],a:2,e:"El baño es el paso 6 y la habitación el 7; la reposición de insumos es el paso 8 (§ 6.14 y 6.15)."},
   {q:"¿Cuáles son los tres elementos de la tríada operativa?",o:["Carro, Reporte de Pisos y llaves","Carro, uniforme y guantes","Reporte, teléfono y llaves","Paños, productos y aspiradora"],a:0,e:"Se verifican antes de dar el primer paso hacia las habitaciones (§ 6.12)."},
   {q:"¿En qué zona del carro van los productos químicos?",o:["Arriba, junto a los blancos","Abajo, separados de blancos y amenities","Con los amenities, para tenerlos a mano","Colgados a un costado"],a:1,e:"Zona 4, acción directa: abajo y separados, para evitar contaminación y derrames. Los blancos van arriba (§ 6.12)."},
   {q:"¿Qué tipo de producto saca el sarro y el óxido?",o:["Ácido, pH menor a 7","Neutro, pH 7","Alcalino, pH mayor a 7","Abrasivo en polvo"],a:0,e:"Los neutros son de uso general y los alcalinos blanquean y desinfectan (Simón, § 6.12)."},
@@ -321,13 +362,10 @@ var QUIZ={
   {q:"La cama de una habitación ocupada no se usó. ¿Qué hace la mucama?",o:["Nada: es asunto del huésped","Lo reporta como sleep out (SLO)","La desarma igual","La marca como vacía"],a:1,e:"La cama sin usar puede indicar una salida sin pago: es una de las novedades obligatorias (Simón, § 6.13)."},
   {q:"En una habitación ocupada, ¿dónde se dejan las cosas del huésped?",o:["Guardadas en los cajones","Sobre una silla, nunca en cajones","Dentro del placard","En una bolsa del hotel"],a:1,e:"Tampoco se tocan ni se reordenan los papeles, y los pijamas se cuelgan en el baño (Simón, § 6.14)."},
   {q:"Habitación de salida con piso cerámico. ¿Cómo se limpia?",o:["Se aspira","Primera pasada con trapo bien cargado de agua, segunda con trapo bien seco; luego cera y lustre","Se encera y lustra sin lavar","Con antisarro"],a:1,e:"La madera se encera y lustra; la alfombra se aspira (FEHGRA, § 6.14)."},
-  {q:"A la hora del turn down, una habitación tiene el cartel de No molestar. ¿Qué se hace?",o:["Se entra igual: es una cortesía","No se hace el turn down","Se golpea una sola vez","Se deja la atención colgada del picaporte"],a:1,e:"El turn down nunca se hace con No molestar (§ 6.18)."},
-  {q:"En el turn down, ¿qué es el «pie de cama» según FEHGRA?",o:["La pieza decorativa a los pies de la cama","La alfombrita descartable que se pone al costado de la cama","La frazada doblada a los pies","El almohadón chico"],a:1,e:"Se coloca con las pantuflas a los costados de la cama abierta (§ 6.16 y 6.18)."},
-  {q:"¿Qué nivel de turn down incluye toallas nuevas y el baño seco?",o:["Básico","Intermedio","Superior","Ninguno: eso es de la limpieza diaria"],a:2,e:"Básico: cortinas, luz, cama y atención. Intermedio: más basura y vajilla. Superior: más baño (Simón, § 6.18)."},
-  {q:"¿Qué estado saca una habitación del inventario vendible?",o:["FS / OOS","NM","B / OOO","IS"],a:2,e:"La bloqueada (out of order) sale del inventario. La fuera de servicio no se asigna momentáneamente pero sigue contando."},
-  {q:"En un hotel con alta ocupación, ¿qué se hace primero?",o:["Las salidas no arregladas","Las ocupadas que continúan","Controlar las vacías y limpias contra el reporte de Recepción","Las habitaciones VIP"],a:2,e:"Orden de Simón: control de VL, sucias por arrastre, salidas, preferencias, ocupadas que continúan, ocupadas con salida prevista (§ 6.6)."},
+  {q:"A la hora del turn down, una habitación tiene el cartel de No molestar. ¿Qué se hace?",o:["Se entra igual: es una cortesía","No se hace el turn down","Se golpea una sola vez","Se deja la atención colgada del picaporte"],a:1,e:"El turn down nunca se hace con No molestar (§ 6.14)."},
+  {q:"En el turn down, ¿qué es el «pie de cama» según FEHGRA?",o:["La pieza decorativa a los pies de la cama","La alfombrita descartable que se pone al costado de la cama","La frazada doblada a los pies","El almohadón chico"],a:1,e:"Se coloca con las pantuflas a los costados de la cama abierta (§ 6.14)."},
+  {q:"¿Qué nivel de turn down incluye toallas nuevas y el baño seco?",o:["Básico","Intermedio","Superior","Ninguno: eso es de la limpieza diaria"],a:2,e:"Básico: cortinas, luz, cama y atención. Intermedio: más basura y vajilla. Superior: más baño (Simón, § 6.14)."},
   {q:"La mucama va a almorzar. ¿Dónde deja el carro?",o:["En el pasillo, contra la pared","En el office o dentro de una habitación vacía y sucia","En el ascensor de servicio","Junto a la puerta de la última habitación"],a:1,e:"Por ningún motivo se lo deja abandonado en el pasillo: los robos de materiales son frecuentes (§ 6.12)."},
-  {q:"¿Qué significa SNA?",o:["Sucia no asignada","Salida no arreglada","Sin novedad aparente","Servicio no aceptado"],a:1,e:"Hizo check out en la fecha pero todavía no se limpió."},
   {q:"¿Cuál de estas acciones con productos químicos está prohibida?",o:["Dosificar con dispenser","Usar guantes","Trasvasarlos a botellas de bebidas","Llevarlos en el canasto del carro"],a:2,e:"Nunca se trasvasan a botellas de bebidas. Tampoco se usan envases sin identificar, se mezclan productos ni se dejan en la habitación (§ 6.12)."},
   {q:"El huésped dejó la toalla colgada en el toallero. ¿Qué indica?",o:["Que pide toalla nueva","Que va a usarla otra vez","Que rechazó el servicio","Que hizo check out"],a:1,e:"Toalla colgada: la reutiliza. Toalla en la pileta: pide cambio. Es parte del programa ambiental del hotel (§ 6.13)."},
   {q:"Una habitación mantiene el cartel de No molestar. ¿Qué hace la mucama a las 13 hs?",o:["Entra igual a limpiar","Golpea hasta que respondan","Reporta la habitación a la gobernanta","La marca como vacía"],a:2,e:"No se golpea ni se llama; a las 13 hs se reportan a la gobernanta las que mantienen el cartel (en Simón: al Ama de Llaves) (§ 6.13)."},
@@ -336,16 +374,38 @@ var QUIZ={
   {q:"Al ventilar una habitación ocupada, ¿qué aparato queda encendido?",o:["El televisor","El aire acondicionado","El mini bar","La lámpara de noche"],a:2,e:"Se comprueba que todos los aparatos funcionen y se apagan, con excepción del mini bar (FEHGRA, p. 43)."},
   {q:"El huésped dejó dinero a la vista. ¿Qué hace la mucama?",o:["Lo guarda en un cajón","No lo toca y avisa a la gobernanta","Lo lleva a Recepción","Lo anota y sigue"],a:1,e:"No se tocan valores ni dinero a la vista: se avisa al supervisor, la gobernanta (FEHGRA, p. 47). Simón agrega ofrecer al huésped la caja de seguridad."},
   {q:"En una habitación ocupada, ¿se limpia el interior del placard?",o:["Sí, todos los días","No: en las ocupadas el placard no se abre","Solo si el huésped lo pide","Una vez por semana"],a:1,e:"El interior del placard, con cajones y rieles, se limpia en las habitaciones de salida (FEHGRA, p. 51)."},
-  {q:"¿Qué es la apertura o turndown?",o:["La limpieza de una habitación de salida","La preparación de la habitación para el descanso del huésped","El desbloqueo de una habitación","El primer ingreso de la mañana"],a:1,e:"También se llama descubierta o cortesía nocturna. La hace la mucama de la tarde, entre las 18 y las 22 hs, en hoteles de 4 y 5 estrellas (§ 6.18)."},
+  {q:"¿Qué es la apertura o turndown?",o:["La limpieza de una habitación de salida","La preparación de la habitación para el descanso del huésped","El desbloqueo de una habitación","El primer ingreso de la mañana"],a:1,e:"También se llama descubierta o cortesía nocturna. La hace la mucama de la tarde, entre las 18 y las 22 hs, en hoteles de 4 y 5 estrellas (§ 6.14)."},
   {q:"En la apertura de una habitación con una sola cama individual, ¿por qué lado se abre la cama?",o:["Siempre por el lado derecho","Por el lado más cercano a la puerta","Por el lado de la ventana","Por los pies"],a:1,e:"Si la puerta queda hacia los pies de la cama, se abre por el lado de la mesa de noche, el derecho (FEHGRA, p. 58)."},
-  {q:"En el convenio colectivo argentino (CCT 389/04), ¿qué categoría equivale al Ama de Llaves?",o:["Mucama","Gobernanta","Gobernanta principal","Supervisora de pisos"],a:2,e:"El convenio no usa «Ama de Llaves»: la jefatura es la Gobernanta principal. La Gobernanta del convenio es la supervisora de pisos. En las cadenas, Executive Housekeeper (§ 5.3)."}],
+  {q:"En el convenio colectivo argentino (CCT 389/04), ¿qué categoría equivale al Ama de Llaves?",o:["Mucama","Gobernanta","Gobernanta principal","Supervisora de pisos"],a:2,e:"El convenio no usa «Ama de Llaves»: la jefatura es la Gobernanta principal. La Gobernanta del convenio es la supervisora de pisos. En las cadenas, Executive Housekeeper (§ 5.3)."},
+  {q:"¿Qué sistema de ropa de cama no lleva sábana encimera?",o:["Tradicional","Triple sábana","Nórdica o europea","Mixta"],a:2,e:"La nórdica lleva bajera y duvet con funda. La mixta suma la encimera y el duvet reemplaza a la frazada y al cubrecama. Nórdica y mixta son práctica del sector (§ 6.17)."},
+  {q:"La esquina «en sobre» de Simón, ¿cómo se reconoce?",o:["Queda una línea en diagonal a 45°","El pliegue cae justo sobre la arista del colchón: esquina cuadrada","La sábana es ajustable","No se remete"],a:1,e:"Es la esquina a 90° (box, square o hotel corner). La de 45° se llama en inglete, de hospital o militar. Guiate por el pliegue, no por el nombre (§ 6.17)."},
+  {q:"¿En qué tipo de habitación se limpian armarios y cajones por dentro?",o:["En la ocupada","En la de salida (check out)","En la no rentada","En todas, todos los días"],a:1,e:"En la ocupada no se abren. En el check out se limpian por dentro, con los rieles, y se revisa cajón por cajón buscando olvidados (§ 6.14)."}],
+ gobernanta:[
+  {q:"¿Qué estado saca una habitación del inventario vendible?",o:["FS / OOS","NM","B / OOO","IS"],a:2,e:"La bloqueada (out of order) sale del inventario hasta que se desbloquea. La fuera de servicio (OOS) tiene un problema menor: no se asigna, pero sigue en el inventario (§ 6.2)."},
+  {q:"¿Qué significa SNA?",o:["Sucia no asignada","Salida no arreglada","Sin novedad aparente","Servicio no aceptado"],a:1,e:"Hizo check out hoy y todavía no se limpió (Check Out · C/O). La S, en cambio, es la sucia por arrastre, que quedó así de ayer (§ 6.2)."},
+  {q:"En el reporte figura: 104 · V · SA. ¿Cómo se lee?",o:["Ocupada, salida anticipada","Vacía y sucia, asignada a una llegada de hoy","Vacía, sin arreglar desde ayer","Vacía y lista para vender"],a:1,e:"Tiene que estar lista antes del arribo, por eso cambia la prioridad (§ 6.2)."},
+  {q:"En un hotel con alta ocupación, ¿qué se hace primero?",o:["Las salidas no arregladas","Las ocupadas que continúan","Controlar las vacías limpias (VL) para liberarlas","Las habitaciones VIP"],a:2,e:"Con alta ocupación, primero lo que se puede vender: VL, sucias por arrastre (S), salidas de hoy (SNA), VIP, ocupadas que continúan y, al final, las ocupadas con salida prevista, porque hay que esperar a que salgan (Simón, § 6.3)."},
+  {q:"Con baja ocupación, después de controlar las VL, ¿qué va primero?",o:["Las vacías sucias","Las salidas del día","Las VIP","Las bloqueadas"],a:2,e:"Sin presión por vender, primero el huésped que está: VL, VIP, ocupadas que continúan y recién después vacías sucias y salidas (Simón, § 6.3)."},
+  {q:"¿Quién emite el Reporte General de Habitaciones?",o:["La gobernanta","La mucama","El recepcionista del turno mañana","El auditor nocturno"],a:2,e:"Lo emite Recepción a primera hora, según el cierre nocturno, y lo recibe el Ama de Llaves, que lo fracciona en los reportes de piso (§ 6.4)."},
+  {q:"¿Por qué el reporte de piso es «realista» y el Reporte General no?",o:["Porque lo firma el gerente","Porque cada estado se verificó en la habitación","Porque es digital","Porque se emite dos veces"],a:1,e:"El Reporte General es administrativo: refleja los registros de Recepción. El de piso vuelve con lo que la mucama vio en cada habitación (§ 6.5)."},
+  {q:"¿Cuál es el reporte de piso más importante?",o:["El de las 15–16 h, del turno mañana","El de las 23–24 h, del turno tarde","El de las 7 h","Todos valen igual"],a:1,e:"Lo usa la auditoría nocturna. Con el Reporte General de la mañana, son los tres reportes diarios que menciona Simón (§ 6.5)."},
+  {q:"Recepción tiene la 505 como OC 01 y Pisos la encuentra SNA. ¿Qué discrepancia es?",o:["Un cambio de habitación no informado","Una cama extra no registrada","Una salida no registrada","Una single ocupada por dos"],a:2,e:"La habitación está vacía, pero el sistema la muestra ocupada y no se puede vender. Se informa a Recepción antes de la auditoría nocturna (§ 6.5)."},
+  {q:"¿En qué consiste el control de seguridad al cierre del turno?",o:["Revisar las llaves de toda la brigada","Volver a abrir cada habitación del reporte para confirmar que no quedó ninguna sin hacer","Cerrar las ventanas de los pasillos","Contar la ropa del office"],a:1,e:"Reporte en mano: abrir cada puerta, mirar cama y baño, firmar y devolver a la gobernanta (Olmo Garre, § 6.5)."},
+  {q:"Hotel de 4 estrellas con el CCT 362/03. ¿Cuántas habitaciones puede tener como máximo una mucama?",o:["10","12","16","Sin tope"],a:1,e:"CCT 362/03: 5 estrellas, 10; 4 estrellas, 12. CCT 389/04: Especial 10, A 13, B 15, C 16, D sin tope. Es un tope, no una sugerencia (§ 6.6)."},
+  {q:"Según el tiempo alcanzan 29 mucamas y según el tope del convenio hacen falta 38. ¿Cuántas van al turno mañana?",o:["29","33","38","67"],a:2,e:"Se toma el número mayor: el tiempo dice cuántas personas alcanzan para el trabajo; el convenio fija cuántas habitaciones puede tener cada una como máximo (§ 6.6)."},
+  {q:"El hotel A asigna 19 habitaciones por mucama y el B, 15. ¿El A es más eficiente?",o:["Sí, siempre","No, siempre","No se puede saber sin el contexto","Sí, si tiene más estrellas"],a:2,e:"El índice de arreglo depende de la categoría, los metros, el cambio de sábanas y hasta de si el carro puede quedar en el pasillo (Olmo Garre, § 6.6)."},
+  {q:"¿Cuál es la desventaja del sistema centralizado (domicilio fijo)?",o:["No se puede evaluar a la mucama","El trabajo no se reparte parejo entre los pisos","El huésped no conoce a la mucama","Se pierde el control del linen"],a:1,e:"Por eso se combina con el no centralizado: cada mucama tiene un piso base y la carga se equilibra con créditos (§ 6.6)."},
+  {q:"En el chequeo, lo sucio se limpia y lo roto se repara. ¿Y lo que falta?",o:["Se anota para el mes siguiente","Se repone","Se cobra al huésped","Se bloquea la habitación"],a:1,e:"La revisión no es desconfianza: es la garantía de calidad del producto (§ 6.7)."},
+  {q:"Nadie reclamó un objeto olvidado. ¿Qué se hace?",o:["Se tira","Se dona o se entrega a quien lo halló","Lo guarda la mucama","Se vende"],a:1,e:"Siempre con doble registro: la planilla de la gobernanta y el Libro de Actas (§ 6.8)."},
+  {q:"¿Qué llave abre aunque el huésped haya puesto el seguro?",o:["La maestra de piso","La maestra de sector","La gran maestra","La de emergencia"],a:3,e:"La gran maestra no abre con el seguro puesto; la de emergencia sí, incluso las bloqueadas (§ 6.10)."},
+  {q:"Un huésped le regala algo a la mucama. ¿Qué necesita para sacarlo del hotel?",o:["Nada","La boleta de retiro, firmada por el Ama de Llaves","Un pedido de reparación","Una requisición"],a:1,e:"Va por triplicado (Seguridad, Housekeeping y empleado) y Seguridad la controla en la salida (§ 6.9)."}],
  fondo:[
   {q:"¿Con qué frecuencia mínima recibe limpieza profunda cada habitación?",o:["Una vez por mes","Cada seis meses","Al menos una vez al año","Cada dos años"],a:2,e:"Al menos una vez al año, aprovechando para reparaciones y mantenimiento (§ 6.29)."},
   {q:"Con ocupación excelente, ¿cómo se bloquea para limpieza profunda?",o:["Un piso completo","De a una o dos habitaciones por vez","Los tres últimos pisos","No se bloquea"],a:1,e:"Con ocupación oscilante se bloquea por pisos; con ocupación excelente, de a una o dos habitaciones."},
   {q:"¿Quién define cuáles habitaciones y en qué orden pueden bloquearse?",o:["La mucama del piso","Mantenimiento","El gerente de Recepción","Reservas"],a:2,e:"El bloqueo se planifica junto a Recepción, que fija las fechas de bloqueo y desbloqueo y hace el seguimiento."},
   {q:"¿Cuál es el primer paso de un bloqueo por reparación?",o:["Retirar cortinas y cubrir muebles","Avisar a Recepción para que deje de venderla","Limpiar la habitación","Pedir presupuesto"],a:1,e:"Tres pasos: aviso a Recepción, preparación de la zona, y al terminar limpieza y desbloqueo con aviso de disponibilidad."},
   {q:"¿Cuál NO es una precaución del bloqueo?",o:["Retirar toda la ropa blanca","Cerrar las llaves de paso del agua","Dejar el frigobar enchufado","Descolgar los cuadros"],a:2,e:"Se desconectan aire acondicionado y frigobar, y se retiran televisor y teléfono."},
-  {q:"Según el ejemplo de la bibliografía, ¿cómo se rota un colchón?",o:["Una vez al año se da vuelta","Cada 15 días giro de 180° y una vez al mes cambio cabeza-pies","Todas las semanas se cambia de habitación","Solo cuando se hunde"],a:1,e:"Se numeran las esquinas para llevar el control. Colaboran valets y peones (§ 6.15)."}],
+  {q:"Según el ejemplo de la bibliografía, ¿cómo se rota un colchón?",o:["Una vez al año se da vuelta","Cada 15 días giro de 180° y una vez al mes cambio cabeza-pies","Todas las semanas se cambia de habitación","Solo cuando se hunde"],a:1,e:"Se numeran las esquinas para llevar el control. Colaboran valets y peones (§ 6.16)."}],
  frecuencias:[
   {q:"¿Qué turno concentra los trabajos más profundos en áreas públicas?",o:["Mañana","Tarde","Noche","Se reparten por igual"],a:2,e:"De noche no hay huéspedes circulando por las zonas de alto tránsito. Mañana y tarde hacen repasos."},
   {q:"En la matriz del vestíbulo, ¿qué tarea es quincenal?",o:["Aspirado de alfombras","Espejos","Lámparas de techo y correr sillones para limpiar detrás","Rejillas de aire"],a:2,e:"Diario: espejos, mobiliario, puertas, aspirado. Semanal: rejillas de aire. Quincenal: madera, lámparas de techo, detrás de los sillones."},
@@ -375,6 +435,12 @@ function table(head,rows,codeCol){
     h("tbody",null,rows.map(function(r){return h("tr",null,r.map(function(c,i){return h("td",{class:(codeCol&&i===0)?"code":null,text:c});}));}))));
 }
 function wide(px,t){ t.firstChild.style.minWidth=px+"px"; t.setAttribute("tabindex","0"); return t; }
+function vidRow(keys){
+  var v=keys.filter(function(k){return VIDS[k]&&VIDS[k][2];});
+  if(!v.length) return null;
+  return h("div",{class:"vids"},h("span",{class:"ref",text:"Videos de la clase"}),h("div",{class:"row"},v.map(function(k){var x=VIDS[k];
+    return h("a",{class:"btn",href:x[2],target:"_blank",rel:"noopener"},h("span",{"aria-hidden":"true",text:"▶ "}),x[0],h("small",{text:" · "+x[1]})); })));
+}
 function box(title,items,ordered){
   return h("div",{class:"box"},h("h4",{text:title}),h(ordered?"ol":"ul",null,items.map(function(x){return h("li",{text:x});})));
 }
@@ -457,6 +523,10 @@ function vRutina(){
     ol.appendChild(li);
   });
   f.appendChild(ol); upd();
+  var vr=r.vids?vidRow(r.vids):null; if(vr) f.appendChild(vr);
+  if(r.cmp){ f.appendChild(h("h4",{class:"sub-h",text:"Ocupada vs. check out: el cuadro comparativo"})); f.appendChild(wide(600,table(["","Ocupada","Check out"],CMP,true))); }
+  if(r.sys){ f.appendChild(h("h4",{class:"sub-h",text:"Cuatro sistemas de ropa de cama"})); f.appendChild(wide(640,table(["Sistema","Capas","Qué lo distingue","Fuente"],SYS,true)));
+    f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Las fuentes del curso describen el tradicional (y Simón, la triple sábana). Nórdica y mixta son práctica del sector."})); }
   if(r.losNo) f.appendChild(box("Los No",r.losNo));
   if(r.boxes) f.appendChild(h("div",{class:"grid2",style:"margin-top:10px"},r.boxes.map(function(b){return box(b[0],b[1],b[2]);})));
   if(r.warn) f.appendChild(h("div",{class:"note",text:r.warn}));
@@ -510,11 +580,7 @@ function vRutina(){
     box("Ceras (Simón)",["Al alcohol: nunca sobre pisos de goma o vinílico","Siliconadas: dejan el piso resbaladizo; riesgo de caídas","Al agua: sirven para casi todo, menos corcho"]),
     box("Lustramuebles (Simón)",["Los antiestáticos son los más recomendables: no atraen el polvo y el mueble queda limpio por más tiempo"])));
 
-  f.appendChild(h("h3",{text:"Estados de habitación"}));
-  f.appendChild(table(["Código","Significado"],CODES,true));
-  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"La equivalencia en inglés de FS (out of service) y de B (out of order) es la de clase. En la lista de Simón, FS «puede indicarse OOO»: conviene confirmar el código del hotel donde se trabaja."}));
-
-  f.appendChild(h("h3",{text:"Cartel de No molestar"}));
+  f.appendChild(h("h3",{id:"nm",text:"Cartel de No molestar"}));
   f.appendChild(h("span",{class:"ref",text:"§ 6.13 · clase y Simón"}));
   f.appendChild(h("p",{text:"El cartel impide el ingreso: no se golpea ni se llama. No es lo mismo que el rechazo de servicio, en el que el huésped declina expresamente la limpieza del día y la habitación queda registrada como atendida sin servicio. Por seguridad, ninguna habitación queda sin controlar indefinidamente."}));
   f.appendChild(h("div",{class:"grid2"},
@@ -530,18 +596,19 @@ function vRutina(){
     box("Novedades obligatorias en ocupadas (Simón)",["No durmió (sleep out, SLO): la cama sin usar puede indicar una salida sin pago","Más huéspedes de los registrados: afecta la tarifa y la seguridad; Recepción debe saber quién está en el hotel","Rechazó el servicio (refused service, RS): se registra para que no figure como un olvido","Cocina en la habitación: riesgo de incendio y de daños; en general lo prohíbe el reglamento","Tiene una mascota: si el hotel no la admite o no la registró, se informa; además exige otra limpieza","Conducta indecente: se informa a la gobernanta, no se resuelve sola"])));
 
   f.appendChild(h("h3",{text:"Dotación estándar de la habitación"}));
-  f.appendChild(h("span",{class:"ref",text:"§ 6.19 · ejemplo de Simón"}));
-  f.appendChild(table(["Dónde","Qué lleva"],[
-    ["Por cama","Sábana de abajo, sábana de arriba y 2 fundas"],
-    ["Baño twin","2 toallones, 2 de mano, 2 faciales, 2 de bidet y pie de baño"],
-    ["Tocador","Jabón, champú, enjuague, vasos y 2 rollos"],
-    ["Mesa de luz","Anotador y bolígrafo junto al teléfono"],
-    ["Placard","Bolsa, formulario y precios de lavandería"],
-    ["Picaporte","No molestar y tarjeta de desayuno"]],true));
+  f.appendChild(h("span",{class:"ref",text:"§ 6.18 · Simón e industria"}));
+  f.appendChild(h("p",{text:"Estandarizar el servicio: todas las habitaciones del mismo tipo llevan lo mismo, en el mismo lugar. La última columna suma los complementos habituales hoy en la industria, que no figuran en la bibliografía y varían según la categoría y la cadena."}));
+  f.appendChild(wide(600,table(["Dónde","Qué lleva (Simón)","Hoy, además (industria)"],[
+    ["Por cama","Sábana de abajo, sábana de arriba y 2 fundas","Protector de colchón; menú de almohadas"],
+    ["Baño twin","2 toallones, 2 de mano, 2 faciales, 2 de bidet y pie de baño","Bata y pantuflas; secador de pelo"],
+    ["Tocador","Jabón, champú, enjuague, vasos y 2 rollos","Dispensers rellenables; kits a pedido"],
+    ["Mesa de luz","Anotador y bolígrafo junto al teléfono","Carga USB; QR de servicios; agua de cortesía"],
+    ["Placard","Bolsa, formulario y precios de lavandería","Plancha y tabla; cafetera o pava eléctrica"],
+    ["Picaporte","No molestar y tarjeta de desayuno","No molestar digital; llave en el celular"]],true)));
   f.appendChild(h("div",{class:"note",text:"Actualización: cenicero, fósforos, guía telefónica, hojas de fax, postales y grilla del cable están en desuso; también salen el directorio telefónico y la Biblia, hoy opcional según la cadena. La información está en la TV, un QR o la app. Solo las normas de evacuación siguen impresas detrás de la puerta. El principio de estandarización sigue más vigente que nunca."}));
 
   f.appendChild(h("h3",{text:"Quién es quién: los nombres de los puestos"}));
-  f.appendChild(h("span",{class:"ref",text:"§ 5.3, 6.11 y 6.20"}));
+  f.appendChild(h("span",{class:"ref",text:"§ 5.3, 6.11 y 6.19"}));
   f.appendChild(h("p",{text:"El mismo puesto recibe nombres distintos según el autor, el país y el empleador. En esta app, Ama de Llaves es la cabeza del departamento y gobernanta es la supervisora de pisos."}));
   f.appendChild(table(["En la cátedra","Convenio CCT 389/04","Olmo Garre (España)","Cadenas internacionales"],[
     ["Ama de Llaves","Gobernanta principal (nivel 7)","Gobernanta","Executive Housekeeper o Director of Housekeeping"],
@@ -551,14 +618,235 @@ function vRutina(){
     ["Personal de áreas públicas","","Limpiadora","Public Area Attendant"]],true));
   f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Atención al leer a Olmo Garre: cuando dice «la gobernanta» habla de la jefa del departamento, es decir, nuestra Ama de Llaves. En un hotel chico una sola persona puede reunir las dos funciones."}));
   f.appendChild(h("div",{class:"grid2"},
-    box("La mucama en el convenio (CCT 389/04)",["Lo firman UTHGRA (sindicato) y FEHGRA (cámara de empresas)","Define a la mucama como la responsable de la limpieza, servicio y atención de las habitaciones y del sector a su cargo; a la gobernanta le asigna la supervisión de su sector","Categoría 4, junto con valet, telefonista y chofer","Sueldo: categoría del puesto × estrellas del hotel","Jornada de 8 horas, según la Ley de Contrato de Trabajo y el convenio","Adicionales: antigüedad, asistencia perfecta y complemento de servicio","En CABA también rige el CCT 362/03, con la Asociación de Hoteles de Turismo","Los montos se actualizan en paritarias varias veces al año: consultá la escala vigente en UTHGRA"]),
-    box("Runner y valet",["Equivalencia internacional: valet = runner = houseman = mozo de pisos. Es el apoyo de las mucamas (houseman a veces es quien limpia áreas públicas)","Runner (bibliografía): lustra zapatos, lleva cunas y camas extra, repone el minibar; así la mucama no corta su ritmo","Runner hoy: traslada insumos, ropa sucia, toallas y residuos, y lleva la ropa limpia a los offices de cada piso","Valet (Olmo Garre): limpieza a fondo, pasillos y almacenes, champú de alfombras, rejillas, cortinas, ropa a los offices, supletorias y cunas, pequeños arreglos, bloqueos y salones de noche. Todos le piden algo","En Argentina (CCT): el Valet atiende al pasajero en la habitación (arma y desarma valijas, ropa limpia y planchada, lustra el calzado, ordena los armarios). El Peón de piso mueve muebles y colchones, colabora con la mucama y limpia a fondo pasillos y escaleras: es el equivalente local del runner"])));
+    box("La mucama en el convenio (CCT 389/04)",["Lo firman UTHGRA (sindicato) y FEHGRA (cámara de empresas)","Define a la mucama como la responsable de la limpieza, servicio y atención de las habitaciones y del sector a su cargo; a la gobernanta le asigna la supervisión de su sector","Categoría 4, junto con valet, telefonista y chofer","Salario básico: según el nivel profesional y la categoría convencional del establecimiento","Jornada: máximo de 8 horas diarias o 48 semanales, con las modalidades y excepciones que prevé la ley","Adicionales sobre el básico: asistencia perfecta (10 %) y complemento de servicio (12 %), más antigüedad y alimentación, según las condiciones del convenio","También existe el CCT 362/03 (UTHGRA–AHT) para los hoteles comprendidos en su ámbito: antes de consultar la escala, identificar el convenio aplicable","Los montos se actualizan en paritarias: consultá la escala vigente en UTHGRA"]),
+    box("Runner y valet",["Equivalencia internacional: valet = runner = houseman = mozo de pisos. Es el apoyo de las mucamas (houseman a veces es quien limpia áreas públicas)","Runner (bibliografía): lustra zapatos, lleva cunas y camas extra, repone el minibar; así la mucama no corta su ritmo","Runner hoy (avisos de empleo): traslada insumos, ropa sucia, toallas y residuos; lleva la ropa limpia de lavandería a los offices de cada piso y repone según la planilla de blancos. Más acento en llevar pedidos del huésped (toallas extra, amenities, cunas); en hoteles grandes, de cualquier área","Valet (Olmo Garre): limpieza a fondo, pasillos y almacenes, champú de alfombras, rejillas, cortinas, ropa a los offices, supletorias y cunas, pequeños arreglos, bloqueos, jardín, piscina, sauna y gimnasio, salones de noche, máquinas de pisos y cristales. Todos le piden algo","Valet hoy (avisos de empleo): ayuda a las camareras de pisos; entrega ropa limpia, amenities y suministros a habitaciones y carros, y los mantiene abastecidos y en buen estado. Puede incluir el lavado y planchado que pide el huésped","En Argentina (CCT): el Valet atiende al pasajero en la habitación (arma y desarma valijas, ropa limpia y planchada, lustra el calzado, ordena los armarios). El Peón de piso mueve muebles y colchones, colabora con la mucama y limpia a fondo pasillos y escaleras: es el equivalente local del runner"])));
 
-  f.appendChild(h("h3",{text:"Prioridades según la ocupación"}));
-  f.appendChild(h("div",{class:"grid2"},
-    box("Alta ocupación",["Control de vacías y limpias (VL) contra el reporte de Recepción","Vacías y sucias por arrastre (S)","Salidas no arregladas (SNA)","Habitaciones con preferencia: VIP, pedidos especiales","Ocupadas que continúan","Ocupadas con salida prevista en el día"],true),
-    box("Baja ocupación",["Control de vacías y limpias (VL)","Ocupadas con preferencia y las que continúan","Vacías sucias y salidas del día: no hay presión por reponer inventario vendible"],true)));
   f.appendChild(h("div",{class:"note",text:"Hotelería hoy: en EE. UU. Hilton pasó en 2021 a la limpieza solo a pedido, automática al quinto día, salvo en sus marcas de lujo; Marriott, según el hotel, a pedido y automática cada sexta noche; Four Seasons hace dos servicios por día. El desafío: la gobernanta ya no sabe de antemano cuántas habitaciones limpiar."}));
+  f.appendChild(h("div",{class:"box",style:"margin-top:14px"},h("h4",{text:"¿Y los estados de habitación y las prioridades?"}),
+    h("p",{text:"Están en la pestaña Gobernanta, con los códigos, las prioridades según la ocupación y los reportes (Unidad 6, parte I)."}),
+    h("div",{class:"row"},h("button",{class:"btn",type:"button",text:"Ver los códigos",onclick:function(){goTo(["gobernanta",null,"codigos"]);}}),h("button",{class:"btn",type:"button",text:"Ver las prioridades",onclick:function(){goTo(["gobernanta",null,"prioridades"]);}}))));
+  return f;
+}
+
+/* ---------- pestaña: gobernanta (Unidad 6, parte I) ---------- */
+var showNomen=false, showDisc=false;
+var CALC0={hab:600,oc:75,sal:150,ms:35,mr:20,mt:8,pt:100,jor:480,np:80,tope:"12",topeT:false,fr:"1",lic:0}, CALC=null;
+var TOPES=[["10","CCT 362/03 · 5 estrellas · hasta 10"],["12","CCT 362/03 · 4 estrellas · hasta 12"],["10e","CCT 389/04 · Especial · hasta 10"],["13","CCT 389/04 · A · hasta 13"],["15","CCT 389/04 · B · hasta 15"],["16","CCT 389/04 · C · hasta 16"],["0","CCT 389/04 · D · sin tope"]];
+function nf(n){ return n.toLocaleString("es-AR",{maximumFractionDigits:1}); }
+function sec(f,id,title,ref){ f.appendChild(h("h3",{id:id,text:title})); if(ref) f.appendChild(h("span",{class:"ref",text:ref})); }
+function sheetToggle(label,isOpen,set,build){
+  var holder=h("div"), b=h("button",{class:"btn",type:"button","aria-expanded":String(isOpen()),text:isOpen()?"Cerrar":label,onclick:function(){
+    set(!isOpen()); b.setAttribute("aria-expanded",String(isOpen())); b.textContent=isOpen()?"Cerrar":label; holder.textContent=""; if(isOpen()) holder.appendChild(build()); }});
+  if(isOpen()) holder.appendChild(build());
+  return h("div",{style:"margin:8px 0"},b,holder);
+}
+function calcEf(){
+  if(!CALC) CALC=JSON.parse(JSON.stringify(CALC0));
+  var out=h("div"), wrap=h("div",{class:"box calc"});
+  function num(k,lab,hint){ var i=h("input",{type:"number",id:"cf-"+k,min:"0",inputmode:"numeric",value:String(CALC[k])});
+    i.addEventListener("input",function(){ CALC[k]=parseFloat(i.value)||0; draw(); });
+    return h("label",{for:"cf-"+k},lab,i,hint?h("small",{text:hint}):null); }
+  var tp=h("select",{id:"cf-tope"},TOPES.map(function(t){return h("option",{value:t[0],text:t[1],selected:CALC.tope===t[0]});}));
+  tp.addEventListener("change",function(){CALC.tope=tp.value;draw();});
+  var tt=h("input",{type:"checkbox",id:"cf-topeT"}); tt.checked=CALC.topeT; tt.addEventListener("change",function(){CALC.topeT=tt.checked;draw();});
+  var fr=h("select",{id:"cf-fr"},[["1","1 franco (6 días × 8 h = 48 h)"],["2","2 francos (5 días × 8 h = 40 h)"]].map(function(t){return h("option",{value:t[0],text:t[1],selected:CALC.fr===t[0]});}));
+  fr.addEventListener("change",function(){CALC.fr=fr.value;draw();});
+  wrap.appendChild(h("div",{class:"row",style:"justify-content:space-between"},h("strong",{text:"Datos del cálculo"}),h("button",{class:"btn",type:"button",text:"Volver al ejemplo de clase",onclick:function(){CALC=null;render();var el=document.getElementById("calculo");if(el)el.scrollIntoView();}})));
+  wrap.appendChild(h("div",{class:"grp",text:"Hotel y ocupación"}));
+  wrap.appendChild(h("div",{class:"cin"},num("hab","Habitaciones del hotel"),num("oc","Ocupación del día (%)"),num("sal","Salidas del día (check out)","Hasta el total de ocupadas; el resto son repasos.")));
+  wrap.appendChild(h("div",{class:"grp",text:"Tiempo por tarea (minutos)"}));
+  wrap.appendChild(h("div",{class:"cin"},num("ms","Salida"),num("mr","Repaso de ocupada"),num("mt","Servicio de tarde"),num("pt","Ocupadas con servicio de tarde (%)")));
+  wrap.appendChild(h("div",{class:"grp",text:"Jornada y convenio"}));
+  wrap.appendChild(h("div",{class:"cin"},num("jor","Jornada (min)"),num("np","No productivos (min)","Comida, carro, traslados, reunión.")));
+  wrap.appendChild(h("label",{for:"cf-tope",class:"lab"},"Tope de habitaciones por mucama (turno mañana)",tp));
+  wrap.appendChild(h("label",{class:"ck"},tt,"Aplicar el tope también al turno tarde"));
+  wrap.appendChild(h("div",{class:"grp",text:"Descansos y licencias"}));
+  wrap.appendChild(h("div",{class:"cin"},h("label",{for:"cf-fr"},"Francos por semana",fr),num("lic","Margen para licencias (%)","Vacaciones, enfermedad.")));
+  function draw(){
+    out.textContent="";
+    var C=CALC, occ=Math.round(C.hab*C.oc/100), sal=Math.min(C.sal,occ), rep=occ-sal, prod=C.jor-C.np;
+    if(prod<=0||occ<=0){ out.appendChild(h("div",{class:"msg bad",text:prod<=0?"Los minutos no productivos no pueden igualar ni superar la jornada.":"Con esa ocupación no hay habitaciones para limpiar."})); return; }
+    var tope=parseInt(C.tope,10)||0, minM=sal*C.ms+rep*C.mr, byT=Math.ceil(minM/prod-1e-9), byC=tope?Math.ceil(occ/tope-1e-9):0, man=Math.max(byT,byC);
+    var roomsT=occ*C.pt/100, minT=roomsT*C.mt, tar=Math.ceil(minT/prod-1e-9), tarC=(C.topeT&&tope)?Math.ceil(roomsT/tope-1e-9):0, tarF=Math.max(tar,tarC);
+    var dia=man+tarF, dias=7-parseInt(C.fr,10), pl=dia*7/dias*(1+C.lic/100), plR=Math.ceil(pl-1e-9);
+    out.appendChild(h("div",{class:"box calc-res"},
+      h("div",{class:"kpi"},h("div",null,h("b",{text:String(plR)}),"mucamas en plantilla"),h("div",null,h("b",{text:String(man)}),"mañana"),h("div",null,h("b",{text:String(tarF)}),"tarde"),h("div",null,h("b",{text:String(dia)}),"por día")),
+      h("div",{class:"row"},h("span",{class:"tag sector",text:byC>byT?"Manda el convenio":"Manda el tiempo"}),man?h("span",{class:"tag",text:nf(occ/man)+" habitaciones por mucama a la mañana"}):null),
+      h("p",{class:"lead",style:"margin-top:8px",text:"Turno mañana: según el tiempo, "+byT+"; según el tope, "+(tope?byC:"sin tope")+". Se toma el número mayor: el tiempo dice cuántas personas alcanzan para el trabajo, el convenio fija cuántas habitaciones puede tener cada una como máximo."})));
+    var st=[["Habitaciones ocupadas",nf(C.hab)+" × "+nf(C.oc)+" % = "+nf(occ)],["Salidas y repasos",nf(sal)+" salidas · "+nf(rep)+" repasos"],
+      ["Minutos de trabajo a la mañana",nf(sal)+" × "+nf(C.ms)+" + "+nf(rep)+" × "+nf(C.mr)+" = "+nf(minM)+" min"],["Minutos productivos por mucama",nf(C.jor)+" − "+nf(C.np)+" = "+nf(prod)+" min"],
+      ["Mucamas según el tiempo",nf(minM)+" ÷ "+nf(prod)+" = "+nf(minM/prod)+" → "+byT],["Mucamas según el convenio",tope?(nf(occ)+" ÷ "+tope+" = "+nf(occ/tope)+" → "+byC):"Sin tope"],
+      ["Turno mañana: el mayor de los dos",man+" mucamas"],["Turno tarde",nf(roomsT)+" × "+nf(C.mt)+" = "+nf(minT)+" min ÷ "+nf(prod)+" = "+nf(minT/prod)+" → "+tarF+(C.topeT&&tope?" (con tope)":" (sin tope)")],
+      ["Mucamas por día",man+" + "+tarF+" = "+dia],["Plantilla con francos",dia+" × 7 ÷ "+dias+(C.lic?" × "+nf(1+C.lic/100):"")+" = "+nf(pl)+" → "+plR+" mucamas"]];
+    out.appendChild(h("div",{class:"box",style:"margin-top:10px"},h("h4",{text:"La cuenta, paso a paso"}),h("ol",{class:"calc-steps"},st.map(function(x){return h("li",null,h("b",{text:x[0]}),h("code",{text:x[1]}));}))));
+  }
+  draw();
+  return h("div",null,wrap,out);
+}
+function vGob(){
+  var f=h("div");
+  f.appendChild(h("h2",{text:"Gestión de pisos: supervisión, reportes y control"}));
+  f.appendChild(h("p",{class:"lead",text:"El trabajo de la gobernanta: distribuir, revisar y controlar. Unidad 6, parte I."}));
+  f.appendChild(seg("gobernanta"));
+  if((S.mode.gobernanta||"estudiar")==="practicar"){ f.appendChild(h("h3",{text:"Preguntas de repaso"})); f.appendChild(quiz("gobernanta")); return f; }
+  f.appendChild(h("div",{class:"note",text:"En esta unidad, «gobernanta» es la supervisora de pisos, que depende del Ama de Llaves (uso argentino y de Simón). En Olmo Garre, «gobernanta» equivale al Ama de Llaves."}));
+
+  sec(f,"gobernanta-rol","La gobernanta","§ 6.1 · Olmo Garre y Simón");
+  f.appendChild(h("p",{text:"Su misión: hacer cumplir y controlar el trabajo de las mucamas, cuidando que tengan los recursos que necesitan. Si no hay capataz, también supervisa Áreas Públicas. En el CCT 389/04 es la categoría Gobernanta (nivel 6); la Gobernanta principal (nivel 7) equivale al Ama de Llaves."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Atención al cliente",["Pedidos, reclamos y objetos olvidados","Responde cuando el huésped pide algo que excede a la mucama o reclama por la limpieza"]),
+    box("Operativas de piso",["Distribuir, inspeccionar y coordinar con Recepción","Reparte las habitaciones entre las mucamas, revisa el resultado y avisa a Recepción cuáles están listas"]),
+    box("Recursos humanos",["Guiar, corregir y evaluar a su equipo","Forma a las mucamas nuevas, corrige errores en el momento y evalúa el desempeño de cada una"])));
+  f.appendChild(h("h4",{class:"sub-h",text:"A lo largo del turno"}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("1 · Antes: distribuye el trabajo",["Arma el reporte de cada mucama, con carga pareja","Reparte productos, amenities y papelería","La mucama retira reporte, llave y novedades"]),
+    box("2 · Durante: controla, coordina y atiende",["Inspecciona habitaciones, pasillos y blancos","Pedidos y ropa de huéspedes","Objetos olvidados","Bloqueos, cambios y discrepancias con Recepción","Avisos de averías","Habitaciones con No molestar"]),
+    box("3 · Al cierre: recibe todo de vuelta",["El reporte completo","Las llaves","Las novedades"]),
+    box("Al Ama de Llaves: informa y eleva",["Informa el resultado del turno","Eleva lo que la excede: un conflicto con un huésped, un objeto de valor, un accidente, el ingreso a una habitación"])));
+  f.appendChild(h("h4",{class:"sub-h",text:"Dotación de gobernantas y uso del tiempo"}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("¿Cuántas? (Simón)",["Una cada 80 a 100 habitaciones por turno (mañana y tarde), al 100 % de ocupación","Ajuste de Olmo Garre: según habitaciones, metros cuadrados, categoría (más estrellas, zonas más chicas) y turnos cubiertos"]),
+    box("Su tiempo (dato de clase)",["Operativo, 80 %: distribuir, revisar y controlar en los pisos","Recursos humanos, 15 %","Administrativo, 5 %","Lo operativo es sobre todo revisión: revisa cada habitación antes de liberarla a Recepción (por ejemplo, grifería seca)"])));
+  f.appendChild(h("h4",{class:"sub-h",text:"Planificación diaria: el plan se desvía todo el tiempo"}));
+  f.appendChild(h("p",{text:"Para organizar a otros, primero se organiza a sí misma: recorridos, despacho, contacto con otros departamentos, reuniones y control de los planes de limpieza (Olmo Garre, Cap. 3). Los imprevistos se resuelven con calma e ingenio."}));
+  f.appendChild((table(["Imprevisto","Solución"],[
+    ["Una mucama falta o se indispone con su turno ya asignado","Redistribuir sus habitaciones entre las demás, llamar a la turnante o pedir horas extra"],
+    ["La ocupación sube de golpe respecto de la noche anterior","Priorizar los check in del día, extender horarios o sumar personal part time"],
+    ["Falla el sistema y hay habitaciones fuera del listado","Pasar al reporte en papel de contingencia y cruzar estados con Recepción"],
+    ["Falta ropa o materiales: hay que volver a entrar a reponer","Usar el stock de reserva, priorizar las habitaciones a vender y avisar a Lavandería o al proveedor"]])));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Otros imprevistos: conflictos gremiales con servicios mínimos, avería de lavandería o del proveedor de ropa."}));
+  f.appendChild(h("h4",{class:"sub-h",text:"Exigencias del puesto y carrera (Olmo Garre)"}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Desgasta",["Pasa el día buscando errores en el trabajo de otros, lo que cansa y puede generar tensión con el equipo. La clave: buscar lo bien hecho, no la falla","Qué hacen los hoteles: check list estándar (se revisan criterios, no personas), rotar recorridos y zonas, reconocer en público el trabajo bien hecho"]),
+    box("Riesgos",["Suele venir del mismo grupo de mucamas: amiguismo con unas y pérdida de objetividad con otras. Tiene que ser justa con todas","Qué hacen los hoteles: check list ponderado con puntaje objetivo, revisiones cruzadas o aleatorias del Ama de Llaves, registro con foto en la app del PMS"]),
+    box("Escalón",["De mucama a gobernanta: es el primer puesto de mando. Las cadenas suelen promover en otro hotel, para no supervisar a quienes hasta ayer eran pares","Qué hacen los hoteles: promover en otro hotel, turno o piso; capacitación previa en liderazgo; el Ama de Llaves presenta el nuevo rol al equipo"])));
+
+  sec(f,"codigos","Estados y códigos de habitación","§ 6.2 · clase y Simón");
+  f.appendChild(h("p",{text:"¿Hay huésped? ¿Está limpia? Cruzando las dos respuestas salen los cuatro estados básicos. Cada hotel diseña su código, pero la lógica se repite en todos los PMS; las siglas en inglés pueden variar según el sistema y la cadena."}));
+  f.appendChild((table(["","Limpia","Sucia"],[["Ocupada","OC · Ocupada limpia: ya se hizo hoy (Occupied Clean)","OS · Ocupada sucia: pendiente de limpieza (Occupied Dirty)"],["Vacía","VL · Vacía limpia: disponible para vender (Vacant Clean)","VS · SNA · Vacía sucia: check out, limpieza a fondo (Vacant Dirty)"]],true)));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"IS, chequeada: limpia y revisada por la gobernanta. Recién ahí se da como disponible (Inspected; en algunos PMS, INS)."}));
+  CODES.forEach(function(g){ f.appendChild(h("h4",{class:"sub-h",text:g[0]})); f.appendChild(table(["Código","Significado","En inglés"],g[1],true)); });
+  f.appendChild(h("div",{class:"grid2",style:"margin-top:10px"},
+    box("Para no confundir: inventario",["B · Out of order (OOO): sale del inventario vendible hasta que se desbloquee","FS · Out of service (OOS): problema menor; no se asigna, pero sigue en el inventario","En la versión de clase, B = OOO y FS = OOS. En la lista de Simón (manual FEHGRA), FS «puede indicarse OOO»: conviene confirmar el código del hotel donde se trabaja"]),
+    box("Para no confundir: cartel y servicio",["NM · Do not disturb: el huésped colgó el cartel","RS · Rechazo de servicio: dijo que no expresamente; se registra","El procedimiento del cartel está en la pestaña Rutina"]),
+    box("Cómo se lee",["512 · OC 02 · Cx: ocupada por dos, con cama extra","Pax = adultos / menores: 01/01 es 1 adulto y 1 menor","Los códigos adicionales (PS, A, LT, VIP…) cambian la prioridad"])));
+  f.appendChild(h("h4",{class:"sub-h",text:"Práctica: cómo se lee cada habitación"}));
+  f.appendChild(h("p",{text:"Leé cada línea del reporte y decí qué significa antes de mostrar la lectura correcta."}));
+  var nh=h("div"), nb=h("button",{class:"btn",type:"button","aria-expanded":"false",onclick:function(){showNomen=!showNomen;dn();}});
+  function dn(){ nh.textContent=""; nb.textContent=showNomen?"Ocultar las lecturas":"Mostrar las lecturas"; nb.setAttribute("aria-expanded",String(showNomen));
+    nh.appendChild(showNomen?wide(560,table(["Hab.","Ocupación","Limpieza","Pax","Lectura correcta"],NOMEN,true)):(table(["Hab.","Ocupación","Limpieza","Pax"],NOMEN.map(function(r){return r.slice(0,4);}),true))); }
+  dn(); f.appendChild(nh); f.appendChild(h("div",{class:"row",style:"margin-top:8px"},nb));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Pax = adultos / menores. SA = sucia y asignada a una llegada."}));
+
+  sec(f,"prioridades","Prioridades de limpieza","§ 6.3 · Simón");
+  f.appendChild(h("div",{class:"grid2"},
+    box("Con alta ocupación: primero lo que se puede vender",["VL · Controlar las vacías limpias: inspeccionarlas para liberarlas","S · Vacías sucias por arrastre (de ayer)","SNA · Salidas de hoy, sin arreglar","VIP · Ocupadas con preferencia","OC · Ocupadas que continúan","OC · PS · Ocupadas con salida prevista: esperar a que salgan"],true),
+    box("Con baja ocupación: primero el huésped que está",["Controlar las VL","VIP","Ocupadas que continúan","Vacías sucias y salidas"],true),
+    box("Sin tarea",["IS · Vacía ya chequeada","OC · L · Ocupada con servicio hecho","B · Según Mantenimiento"])));
+  f.appendChild(h("div",{class:"note",text:"Cada hotel puede tener su propio orden. Si en tu trabajo te enseñan otro, ese es el que vale."}));
+
+  sec(f,"reporte-general","Reporte General de Habitaciones","§ 6.4 · Simón");
+  f.appendChild(h("p",{text:"El listado que Recepción le entrega a Housekeeping a primera hora con el estado de todo el hotel, según el cierre nocturno. Es administrativo: refleja lo que figura en los registros de Recepción, no lo que se verificó en la habitación."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Quién, a quién y cuándo",["Lo emite el recepcionista del turno mañana","Lo recibe el Ama de Llaves (en Olmo Garre, la gobernanta, jefa del departamento)","Una vez por día, a primera hora, después del cierre nocturno"]),
+    box("Qué contiene (modelo de Simón)",["Fecha y hora de emisión","Por habitación: número, estado (libre, ocupada, a limpiar), llegada, salida prevista, pasajero, tipo y pax","Al pie, un resumen: habitaciones y ocupadas por tipo, con y sin cargo, total de pasajeros y % de ocupación"]),
+    box("Para qué le sirve al Ama de Llaves",["Conocer los check out previstos del día","Planificar y priorizar los servicios","Anticipar lavandería y controlar provisiones (limpieza, tocador)","Distribuir el trabajo de las mucamas según el movimiento del día","Preparar antes las habitaciones con posible salida","Con ocupación alta: controlar primero las VL","Qué se hace con él: el Ama de Llaves lo fracciona en los reportes de piso, uno por mucama"])));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"En Opera: pantalla Housekeeping Management y reportes Rooms (todas las habitaciones), Housekeeping Status (actividad de cada una) y House Status (movimientos por tipo). Ninguno es idéntico al de Simón: se combinan."}));
+  f.appendChild(h("div",{class:"note",text:"Actualización: del papel al PMS. Antes, formularios a mano y el Reporte de Ama de Llaves por cuadruplicado (Recepción, Gerencia de habitaciones, Contaduría y archivo). Hoy el estado vive en el PMS: la mucama lo cambia y Recepción lo ve al instante; el Reporte General y los reportes de piso son vistas del sistema. El papel queda solo como contingencia. PMS actuales: Opera Cloud, Protel, Mews, Cloudbeds."}));
+
+  sec(f,"reporte-pisos","Reporte de Pisos y control de seguridad","§ 6.5 · Simón y Olmo Garre");
+  f.appendChild(h("p",{text:"La hoja de trabajo de cada mucama, una por piso o sector. Es el Reporte General partido por mucama: sale con el estado según Recepción y vuelve con el estado real. La arma la gobernanta (en Simón, el Ama de Llaves) y la completa la mucama: hora de entrada y salida, novedades y ropa retirada. Va en el carro, así la supervisora ve qué ya puede revisar. Olmo Garre la llama hoja de control: es de doble dirección y se archiva unos meses."}));
+  f.appendChild(h("div",{class:"sheet"},h("div",{class:"sh-top"},h("strong",{text:"Reporte de Pisos · Piso 6"}),h("span",{class:"tag",text:"Ejemplo de clase"})),
+    h("div",{class:"sh-meta"},h("span",{text:"Mucama: Ana"}),h("span",{text:"Fecha: 12/11"})),
+    (table(["Hab.","Estado","In","Out"],[["601","Salida · VIP","9:05","9:50"],["602","Ocupada · 02","9:55","10:20"],["603","Ocupada · NM","—","—"],["604","Llegada temprano","",""]],true)),
+    h("p",{class:"sh-foot",text:"Obs.: 602 canilla gotea · 2 toallas manchadas"})));
+  f.appendChild(h("h4",{class:"sub-h",text:"El circuito: un solo papel que va y vuelve"}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Paso a paso",["Retira el reporte y la llave maestra de su piso","Lo lleva en el carro y anota al terminar cada habitación: la supervisora ve cuáles ya están limpias (Olmo)","Si figura libre y está ocupada, lo asienta y avisa a la gobernanta (Simón)","Al terminar, devuelve reporte y llave. Lo entrega «la última mucama que atienda la plaza»"],true),
+    box("Cuándo vuelve completo",["15–16 h: turno mañana","23–24 h: turno tarde. Es el más importante: lo usa la auditoría nocturna","Con el Reporte General de la mañana, son los tres reportes diarios que menciona Simón"]),
+    box("Qué contiene",["Antes del turno, lo completa Housekeeping: fecha, turno, piso y nombre de la mucama; habitaciones asignadas; estado previsto (ocupada, salida, posible salida, reservada, bloqueada); requerimientos especiales (VIP, prioridad, cuna, cama extra)","Durante el turno, lo completa la mucama: hora de entrada y salida; confirmación del estado y estado final; cantidad de personas; supletorias o cunas instaladas; averías, objetos olvidados y ropa sucia retirada; observaciones en código (NM, RS, PE/SE, ND)"])));
+  f.appendChild(h("h4",{class:"sub-h",text:"Para qué sirve: Recepción detecta las discrepancias"}));
+  f.appendChild(h("p",{text:"Va de Pisos al Front: Recepción compara lo que recibe con lo que tiene registrado. Simón: transmite «una información realista», porque cada estado fue verificado."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Las cuatro discrepancias típicas",["Un cambio de habitación no informado: Recepción cree que el huésped sigue en la 512, pero ya está en la 708; la factura y los mensajes van mal","Una single ocupada por dos personas: diferencia en la tarifa y en la seguridad","Una cama extra no registrada: se armó y no se está cobrando","Una salida no registrada: la habitación está vacía, pero el sistema la muestra ocupada y no se puede vender"]),
+    box("En el PMS (Opera)",["Quick Change Room Status: la gobernanta carga Dirty, Clean o Inspected","Room Discrepancies: pone lo que verificó, HK Status (vacía u ocupada) y HK Persons (cuántas personas vio)","Reportes: Room Discrepancy y Housekeeping Discrepancy Report"])));
+  f.appendChild(sheetToggle("Abrir el ejemplo de discrepancias",function(){return showDisc;},function(v){showDisc=v;},function(){
+    var rows=[["501","OC 02","OC 02","—"],["502","VL","VL","—"],["503","IS","L","Revisada 22.10 hs"],["504","OC 02 Cx","OC 01","Discrepancia: 2 pax y cama extra"],["505","SNA","OC 01","Discrepancia: salida no registrada"],["506","NM","OC 01","Cartel desde 14 hs"],["507","B","B","Pérdida en baño → Mantenimiento"]];
+    return h("div",{class:"sheet"},h("div",{class:"sh-top"},h("strong",{text:"Hotel ejemplo · Housekeeping"}),h("span",{class:"tag",text:"Ejemplo de clase · datos ficticios"})),
+      h("div",{class:"sh-title",text:"Reporte de piso · Piso 5"}),h("div",{class:"sh-meta"},h("span",{text:"Fecha: 15/10"}),h("span",{text:"Turno: tarde · 23 hs"})),
+      wide(480,table(["Hab.","Pisos","Recepción","Observaciones"],rows,true)),
+      h("p",{class:"sh-foot",text:"Ocupadas: 4 · Vacías: 3 · Bloqueadas: 1 · Firma gobernanta: ____________"}),
+      h("p",{class:"lead",style:"margin-top:8px",text:"Pisos: lo que se verificó en persona en cada habitación. Recepción: lo que figura en el PMS. Las discrepancias se informan a Recepción para corregir antes de la auditoría nocturna. En la 503, L (lista) pasa a IS recién cuando la revisa la gobernanta."})); }));
+  f.appendChild(h("h4",{class:"sub-h",text:"El control de seguridad al cierre del turno (Olmo Garre)"}));
+  f.appendChild(h("p",{text:"Antes de irse, la mucama vuelve a abrir cada habitación de su reporte para confirmar que no se olvidó ninguna. Es como revisar que apagaste la hornalla antes de salir de casa. Cómo se hace: reporte en mano, abrir cada puerta, mirar cama y baño, firmar y devolver a la gobernanta."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Si una habitación quedó sin hacer…",["Si era una salida: en el sistema figura lista, pero está sucia. Con suerte, la descubre la gobernanta al revisar; si no, el próximo huésped","Si estaba ocupada: el huésped vuelve y encuentra la cama sin hacer. Es una de las quejas más graves: muestra descuido con alguien que ya está alojado"]),
+    box("Con sistema",["La mucama marca un código en la app al terminar cada habitación","Si no lo marcó, sigue figurando sucia: nadie la vende por error"])));
+  f.appendChild(wide(520,table(["","Reporte General (6.4)","Reporte de piso (6.5)"],[
+    ["Lo emite","El recepcionista del turno mañana","Lo arma la gobernanta; lo completa la mucama"],["Alcance","Todo el hotel","Las habitaciones de una mucama"],["Circula","Recepción → Ama de Llaves","Va a la mucama y vuelve a HK y al Front"],
+    ["Para qué","Planificar el día","Trabajar y devolver el estado real"],["Carácter","Administrativo","Realista: verificado"],["Cuántos","Uno por día, a primera hora","Uno por mucama y turno; vuelve 15–16 h y 23–24 h"]],true)));
+  f.appendChild(h("div",{class:"note",text:"Actualización: de la hoja de control a la app móvil. La app arma y reordena sola la lista (un early check in sube al primer lugar), los estados y novedades se cargan con foto y el control de seguridad ya viene incluido. La ropa retirada la cuenta lavandería o un chip RFID cosido en cada toalla o sábana, que un lector identifica a distancia sin sacarla del carro. Algunos hoteles chicos aún trabajan con planillas de papel."}));
+
+  sec(f,"organizacion","Organización del trabajo y cálculo de personal","§ 6.6 · Simón, Olmo Garre y convenios");
+  f.appendChild(h("div",{class:"grid2"},
+    box("Sistema centralizado: el «domicilio fijo»",["Cada mucama tiene siempre el mismo piso o las mismas habitaciones","Ventajas: evaluación precisa de rapidez, eficacia y prolijidad; sana competencia; control de su linen, dotaciones y limpieza; seguridad, porque detecta enseguida lo extraño; el huésped prefiere una cara conocida","Desventaja: el trabajo no se reparte parejo, porque en algunos pisos hay más ocupadas que en otros"]),
+    box("Sistema no centralizado: según el día",["El trabajo se asigna según la ocupación del día, sin piso fijo","Aparece con ausentismo, vacaciones, francos, suspensiones, muchos check in o check out, o cuando una mucama con trabajo liviano ayuda a otro piso","Ventaja: reparte la carga según el trabajo real y cubre ausencias","Desventaja: se pierde el control por piso; cuesta atribuir errores, controlar blancos y conocer a los huéspedes"])));
+  f.appendChild(h("div",{class:"note",text:"En la práctica se combinan: cada mucama tiene un piso base y la carga se equilibra con créditos (una salida vale más que un repaso). La app o la gobernanta mueven habitaciones sueltas hasta que todas queden parejas."}));
+  f.appendChild(h("h4",{class:"sub-h",text:"Máximo de habitaciones por mucama según convenio"}));
+  f.appendChild(h("p",{text:"Es un tope, no una sugerencia: a más estrellas, más tiempo por habitación y menos habitaciones por persona."}));
+  f.appendChild(wide(560,table(["","CCT 362/03 · Hoteles de turismo","CCT 389/04 · Convenio general"],[
+    ["Firmantes","UTHGRA y AHTRA","UTHGRA y FEHGRA"],["Se aplica a","Hoteles de 5 estrellas y una lista de 4","Alojamientos, restaurantes, bares y catering"],
+    ["Tope por mucama","5 estrellas: 10 · 4 estrellas: 12","Especial 10 · A 13 · B 15 · C 16 · D sin tope"],["Excepción horaria","El tope no rige de 14 a 6 h","No prevé excepción"],
+    ["Qué se cuenta","No lo aclara","Ocupadas o desocupadas, a criterio del empresario"],["Franco semanal","35 h, alternable en 24 h y 48 h","35 h, alternable en 24 h y 48 h; 12 h de descanso entre jornadas"]],true)));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Fuentes: CCT 362/03, arts. 1, 70 A y 83; CCT 389/04, arts. 5.1, 8 y 9.2.1. Los convenios zonales pueden fijar otras condiciones. Referencias de Simón: turno tarde, solo repasos, unas 50 por mucama; gobernanta, una cada 80 a 100 habitaciones por turno. Práctica habitual: una turnante cada 4 o 5 mucamas, para cubrir francos."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Factores del cálculo (Simón)",["Estacionalidad: el hotel de temporada calcula al 100 %, porque trabaja casi siempre lleno","Ocupación promedio: el hotel urbano calcula sobre el promedio anual, para no tener gente ociosa","Tipo de hotel: comercial, appart o resort; una kitchenette o una sala suman tareas","Calidad de servicio: turn down, triple sheeting o VIP obligan a recalcular","Simón advierte: exigir 21 habitaciones a una mucama no ahorra, impide trabajar bien","Para los picos: cambios de turno, extensión horaria, francos, horas extra o eventuales (la menos recomendada, porque hay que entrenarlos)"]),
+    box("Tres lecturas de la ocupación (Olmo Garre)",["Habitaciones: cuántas están ocupadas esta noche. Es la base del cálculo de mucamas","Plazas: se cuentan por camas (150 dobles = 300 plazas, más las supletorias). Un hotel puede estar lleno de habitaciones sin llenar plazas: menos ropa y amenities","Estancias: estadías cortas = más salidas, la limpieza más minuciosa","Hotel de aeropuerto lleno toda la semana y nadie duerme dos noches: todo se limpia a fondo todos los días. Hay que mirar las tres"]),
+    box("Tiempo improductivo e índice de arreglo",["8 mucamas con jornada de 8 h pueden hacer su trabajo en 7 h: 8 × 1 h = una jornada completa; el mismo trabajo lo hacen 7 personas","Si falta tiempo también es improductivo: se trabaja apurado y hay que repetir","Índice de arreglo: hotel A, 19 habitaciones por mucama (3 estrellas, sábanas no diarias, 18 m², carro en el pasillo); hotel B, 15 (4 estrellas, cambio diario, 24 m² con salita, ducha y bañera, carro prohibido en el pasillo). Sin el contexto, los números no dicen nada"]),
+    box("El sistema de créditos (Olmo Garre)",["Cada habitación vale según su dificultad","Un turno de 16 créditos: 14 estándar × 1 crédito + 1 suite con salón y 2 baños × 2 créditos","Créditos extra: suciedad excepcional, desbloqueo, supletorias","Así balancean cargas las apps de housekeeping hoy"]),
+    box("El schedule y la reunión con mucamas",["El schedule cubre toda la semana, se arma con 3 días de anticipación, se revisa a diario y se exhibe. Lo aprueba el responsable; francos y vacaciones se fijan con antelación","La reunión: antes de subir, todas juntas, en el office u oficina de Housekeeping. La gobernanta entrega reporte de pisos, check list y llaves (en Simón, el Ama de Llaves) y se informan ocupación, salidas, llegadas y pedidos"])));
+  sec(f,"calculo","¿Cuántas mucamas necesita el hotel?","§ 6.6 · cálculo de efectivos · ejemplo de clase");
+  f.appendChild(h("p",{text:"Cálculo según la ocupación real del día: tiempo de cada tarea, tope del convenio y francos. Arranca con los datos del ejemplo de clase; cambiá cualquier dato y la cuenta se actualiza paso a paso."}));
+  f.appendChild(calcEf());
+
+  sec(f,"chequeo","Chequeo de habitaciones","§ 6.7 · Olmo Garre y Simón");
+  f.appendChild(h("p",{text:"El chequeo es el control de calidad de las habitaciones. ¿Por qué se revisa a la mucama? El recepcionista o el mozo trabajan rodeados de compañeros y jefes: el error se corrige al instante. La mucama trabaja sola: si nadie revisa, la falla la encuentra el huésped. Lo hace la gobernanta con un check list, en las vacías limpias y las ocupadas limpias. La revisión no es desconfianza: es la garantía de calidad del producto. Simón: cada habitación es un «dibujo prediseñado»; al abrir la puerta, lo que falta se ve."}));
+  f.appendChild(h("div",{class:"note",text:"La regla: lo sucio se limpia, lo roto se repara, lo que falta se repone."}));
+  f.appendChild(h("div",{class:"grid2"},
+    box("Check list de clase: habitación",["Puerta y cartelería","Cama y frazada","Mesas de luz y lámparas","Ventanas y cortinas","Escritorio y directorio","Placard","Espejo","Pisos"],true),
+    box("Check list de clase: baño",["A · Ducha y mampara","B · Inodoro","C · Bacha y grifería","D · Espejo y luces","E · Toallas","F · Papel extra y dispenser"]),
+    box("Cómo se valora",["B = buen estado, M = mal estado, y observaciones","Se puede ponderar: vale más la bañera que la rejilla","Se revisa por zonas y en orden, para no dar pasos de más (Olmo Garre, figura 3.5)"]),
+    box("La libreta de la supervisora",["103: limpia","103 OK: limpia y revisada","103 (marcada): disponible para Recepción","100/: hay que volver","303 bl.: se bloquea","Cada supervisora usa sus propios símbolos"])));
+  f.appendChild(h("div",{class:"grid2",style:"margin-top:10px"},
+    box("Sistemas de revisión intermedios (Olmo Garre)",["Aleatorias: se revisa una muestra de habitaciones de cada mucama. No se controla todo, pero la mucama no sabe cuáles se revisarán y mantiene el estándar. En las otras puede quedar un papelito","Alternativas: revisan jefes de otras áreas y aportan la mirada del cliente; detectan lo que la costumbre ya no deja ver","Tour of the house: el director y los gerentes recorren periódicamente todo el edificio, incluso las áreas internas"]),
+    box("Hotelería hoy: inspección digital",["Foto obligatoria de cada punto observado","Puntaje por habitación, ponderado como el de Olmo Garre","Indicadores por mucama y por piso"])));
+  f.appendChild(h("div",{class:"row",style:"margin-top:8px"},h("button",{class:"btn",type:"button",text:"Probar el control S/R/D/F en la pestaña Control",onclick:function(){goTo(["control"]);}})));
+
+  sec(f,"lost-found","Objetos olvidados (Lost & Found)","§ 6.8");
+  f.appendChild(h("div",{class:"grid2"},
+    box("Procedimiento",["Quien lo encuentra completa el formulario y entrega el objeto, con el formulario, a la gobernanta","La gobernanta lo registra en su planilla y en el Libro de Actas","Se avisa al huésped por mail. Sus datos son confidenciales (Ley 25.326)","Se guarda en el depósito, con etiqueta. Si es de valor, en la caja de seguridad","Se devuelve siempre con registro: al huésped o a un tercero que él indique","Si nadie lo reclama, se dona o se entrega a quien lo halló"],true),
+    h("div",{class:"sheet",style:"margin-top:0"},h("div",{class:"sh-top"},h("strong",{text:"Objeto encontrado · N.º 077"}),h("span",{class:"tag",text:"Ejemplo de clase"})),
+      wide(260,table(["Campo","Dato"],[["Objeto","Anteojos de sol"],["Lugar / hab.","Mesa de luz · 512"],["Propietario","Sr. Pérez"],["Encontró","Ana (mucama)"],["Entregado a","Gobernanta · 12/11"]],true)),
+      h("p",{class:"sh-foot",text:"Doble registro: protege al huésped y al personal."}))));
+
+  sec(f,"formularios","Formularios del departamento","§ 6.9 · Simón");
+  f.appendChild((table(["Formulario","Para qué"],[
+    ["Pedido de reparación","A Mantenimiento, por duplicado. Una copia queda en Pisos como constancia de que el problema se informó y va a Trabajos Pendientes"],
+    ["Entrega de ropa","Piezas por tipo que manda cada piso: permite controlar que vuelva de Lavandería la misma cantidad que se envió"],
+    ["Requisición","Pedido de artículos a Depósito: insumos del almacén interno (productos, amenities) que ya están en stock"],
+    ["Solicitud de compra","A la Oficina de Compras, cuando algo no está en stock y hay que comprarlo a un proveedor"],
+    ["Bajas y pérdidas","Material roto o gastado: registra qué se da de baja y por qué, para que el inventario coincida con la realidad"],
+    ["Boleta de retiro","Por triplicado (Seguridad, Housekeeping y empleado), firmada por el Ama de Llaves. Autoriza a sacar un objeto del hotel, por ejemplo un regalo de un huésped; Seguridad la controla en la salida"]],true)));
+  f.appendChild(h("div",{class:"note",text:"Actualización: de los formularios en papel a los tickets digitales. La mucama fotografía el desperfecto y el ticket llega a Mantenimiento con prioridad, con trazabilidad: quién reportó, quién reparó, cuánto tardó. Sistemas: HotSOS, Flexkeeping, Alice o módulos del PMS. Lost & Found con foto y envío con tracking. El papel queda como respaldo."}));
+  f.appendChild(h("div",{class:"row"},h("button",{class:"btn",type:"button",text:"Emitir un parte de avería en Control",onclick:function(){goTo(["control"]);}})));
+
+  sec(f,"llaves","Las llaves","§ 6.10 · Simón");
+  f.appendChild((table(["Llave","Quién la tiene"],[["Emergencia","Gerencia. Abre incluso con el seguro puesto y las bloqueadas"],["Gran maestra","Ama de Llaves. No abre si el huésped puso el seguro"],["Maestra de sector","Gobernantas"],["Maestra de piso","Mucama: la retira en la oficina del Ama de Llaves y la devuelve a la gobernanta, con firma y hora"],["De habitación","Huésped. Tres juegos: el original en Gerencia y dos en Recepción"]],true)));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:8px",text:"Cuanto más arriba en la jerarquía, más puertas abre la llave y más controlado es su uso. Toda entrega se registra (firma, hora, interviniente); una llave faltante se informa al Ama de Llaves y a Seguridad."}));
+  f.appendChild(h("div",{class:"note",text:"Actualización: cerraduras electrónicas y llaves móviles. Antes, llaves metálicas y planilla manual: perder una maestra obligaba a cambiar cerraduras. Hoy, tarjetas RFID y llaves en el celular, que se anulan al instante y registran cada apertura (eso protege también al personal). La Digital Key de Hilton, lanzada en 2015, está en 5.400 hoteles, más del 80 % de la cadena."}));
+
+  f.appendChild(h("h3",{text:"Síntesis de la Unidad 6 (I)"}));
+  f.appendChild(box("Para llevarse",["La gobernanta distribuye, revisa y controla","OOO sale del inventario; OOS no","Sucio se limpia, roto se repara, falta se repone","Tres reportes diarios, en dos direcciones","El índice de arreglo se compara con contexto","Llaves y objetos olvidados: siempre con registro"]));
   return f;
 }
 
@@ -832,14 +1120,15 @@ var HOY={
    {t:"Preparar el carro completo en el office",s:"Antes de salir, la tríada: carro, Reporte de Pisos y llaves."},
    {t:"Contar las existencias del linen y anotar los faltantes en la planilla de la puerta."}]],
   ["Durante el turno",[
-   {t:"Entrar primero a las habitaciones que figuran V o VL",s:"Verificás que estén en condiciones; si una «libre» está ocupada, lo informás a la gobernanta."},
+   {t:"Entrar primero a las habitaciones que figuran V o VL",s:"Verificás que estén en condiciones; si una «libre» está ocupada, lo informás a la gobernanta.",go:["gobernanta",null,"codigos"],gl:"Ver códigos"},
    {t:"Limpiar según las prioridades que indicó la supervisora",s:"Las salidas, con los 8 pasos de FEHGRA.",go:["rutina","salida"],gl:"Ver la salida"},
    {t:"En las habitaciones ocupadas, los 10 pasos de FEHGRA",s:"Con el paso propio de la ocupada: ordenar las pertenencias del huésped sin tocar valores ni dinero.",go:["rutina","ocupada"],gl:"Ver los 10 pasos"},
    {t:"En cada habitación, el baño con su secuencia propia",go:["rutina","bano"],gl:"Ver los 7 pasos"},
-   {t:"Completar el reporte de piso al entrar y al salir de cada habitación",s:"Con hora de entrada y de salida, e informando cualquier avería."},
+   {t:"Completar el reporte de piso al entrar y al salir de cada habitación",s:"Con hora de entrada y de salida, e informando cualquier avería.",go:["gobernanta",null,"reporte-pisos"],gl:"Ver reporte"},
    {t:"Avisar a la gobernanta en el momento lo que requiere una acción",s:"Una avería, un objeto olvidado, un daño o un faltante: no se espera al fin del turno."},
-   {t:"13:00 · Reportar a la gobernanta las habitaciones que siguen con No molestar",s:"No se golpea ni se ingresa: la decisión de entrar nunca es de la mucama.",go:["rutina","salida"],gl:"Ver cartel"}]],
+   {t:"13:00 · Reportar a la gobernanta las habitaciones que siguen con No molestar",s:"No se golpea ni se ingresa: la decisión de entrar nunca es de la mucama.",go:["rutina","ocupada","nm"],gl:"Ver cartel"}]],
   ["Al cerrar el turno",[
+   {t:"Control de seguridad: volver a abrir cada habitación del reporte",s:"Mirar cama y baño para confirmar que no quedó ninguna sin hacer; firmar y devolver a la gobernanta.",go:["gobernanta",null,"reporte-pisos"],gl:"Ver"},
    {t:"Dejar el carro limpio y guardado en el office",s:"Nunca queda en el pasillo."},
    {t:"Entregar a la gobernanta el reporte, la llave maestra y las novedades."},
    {t:"Fichado y vestuario."}]]]},
@@ -861,16 +1150,18 @@ var HOY={
    {t:"Fregado profundo de pisos y trabajos a fondo",s:"De noche no circulan huéspedes por las zonas de alto tránsito."}]]]},
  gob:{n:"Gobernanta",sub:"Supervisora de pisos: confecciona los reportes, inspecciona las habitaciones y recibe el cierre del turno. Responde al Ama de Llaves.",groups:[
   ["Al empezar",[
-   {t:"Definir el orden de trabajo según la ocupación y el reporte de Recepción",go:["rutina","salida"],gl:"Ver prioridades"},
-   {t:"Confeccionar el reporte de piso de cada mucama",s:"Lo retiran en la oficina del Ama de Llaves, junto con la llave de piso y las novedades."}]],
+   {t:"Definir el orden de trabajo según la ocupación y el Reporte General de Recepción",go:["gobernanta",null,"prioridades"],gl:"Ver prioridades"},
+   {t:"Confeccionar el reporte de piso de cada mucama, con carga pareja",s:"Lo retiran en la oficina del Ama de Llaves, junto con la llave de piso y las novedades.",go:["gobernanta",null,"reporte-pisos"],gl:"Ver reporte"},
+   {t:"Reunión con las mucamas antes de subir",s:"Se entregan reporte, check list y llaves; se informan ocupación, salidas, llegadas y pedidos."}]],
   ["Durante el turno",[
    {t:"Recibir los avisos de las mucamas: averías, objetos olvidados y habitaciones con No molestar"},
    {t:"Derivar las averías a Mantenimiento",go:["control"],gl:"Emitir parte"},
-   {t:"Inspeccionar las habitaciones terminadas y avisar a Recepción cuáles están disponibles",s:"La habitación chequeada pasa a IS."},
+   {t:"Inspeccionar las habitaciones terminadas y avisar a Recepción cuáles están disponibles",s:"Con el check list: lo sucio se limpia, lo roto se repara, lo que falta se repone. La habitación chequeada pasa a IS.",go:["gobernanta",null,"chequeo"],gl:"Ver check list"},
    {t:"13:00 · Armar la lista de habitaciones con No molestar",s:"Avisás a Recepción cuando se cumple el plazo del hotel; el ingreso lo resuelve un jefe o el gerente de turno."}]],
   ["Al cerrar",[
    {t:"Recibir de cada mucama el reporte, las llaves de piso y las novedades",s:"Cada devolución queda registrada; antes del cierre se verifica que estén todas las llaves."},
-   {t:"Registrar y guardar los objetos olvidados",s:"Alhajas, dinero u objetos de mucho valor se reportan al Gerente de División Habitaciones para su guarda en caja de seguridad."},
+   {t:"Registrar y guardar los objetos olvidados",s:"Doble registro: tu planilla y el Libro de Actas. Si es de valor, va a la caja de seguridad.",go:["gobernanta",null,"lost-found"],gl:"Ver procedimiento"},
+   {t:"Comparar los reportes de piso con Recepción",s:"Las discrepancias se corrigen antes de la auditoría nocturna.",go:["gobernanta",null,"reporte-pisos"],gl:"Ver discrepancias"},
    {t:"Informar al Ama de Llaves el resultado del turno",s:"Y elevarle lo que excede tu decisión: un conflicto con un huésped, un objeto de valor, un accidente o el ingreso a una habitación."}]]]}
 };
 var FREQ_D={diaria:1,alternos:2,semanal:7,quincenal:14,mensual:30}, FREQ_L={diaria:"Todos los días",alternos:"Día por medio",semanal:"Una vez por semana",quincenal:"Cada 15 días",mensual:"Una vez por mes"};
@@ -884,7 +1175,8 @@ S.casa.forEach(function(t){ if(t.ej&&t.t.indexOf("Baño: desinfectante primero")
 if(!S.hoy) S.hoy={};
 function iso(d){ return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2); }
 function dueOn(task,d){ var p=task.d.split("-"), st=new Date(+p[0],+p[1]-1,+p[2]), n=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-st)/86400000); return n>=0 && n%FREQ_D[task.f]===0; }
-function goTo(g){ cur=g[0]; if(g[1]){ curRut=g[1]; } S.mode[g[0]]="estudiar"; selRoom=null; try{history.replaceState(null,"","#"+cur);}catch(e){} render(); window.scrollTo(0,0); }
+function goTo(g){ cur=g[0]; if(g[1]){ curRut=g[1]; } S.mode[g[0]]="estudiar"; selRoom=null; try{history.replaceState(null,"","#"+cur);}catch(e){} render(); window.scrollTo(0,0);
+  if(g[2]){ var el=document.getElementById(g[2]); if(el){ var nav=document.getElementById("tabs"); window.scrollTo(0,el.getBoundingClientRect().top+window.pageYOffset-(nav?nav.offsetHeight:0)-8); } } }
 function vHoy(){
   var f=h("div"), role=S.puesto||"mucama";
   if(!hoyDate){ hoyDate=new Date(); hoyDate.setHours(0,0,0,0); }
@@ -953,7 +1245,7 @@ function vHoy(){
 }
 
 /* ---------- navegación ---------- */
-var VIEWS={hoy:vHoy,rutina:vRutina,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="rutina";
+var VIEWS={hoy:vHoy,rutina:vRutina,gobernanta:vGob,fondo:vFondo,frecuencias:vFrec,control:vControl}, cur="rutina";
 function render(){
   var nav=document.getElementById("tabs"), main=document.getElementById("main");
   nav.textContent="";
