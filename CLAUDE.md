@@ -18,7 +18,7 @@ Nació como planner (modelo de referencia del proyecto de vibecoding de los alum
 - Única carga externa: Google Fonts (Bricolage Grotesque para títulos, Figtree para texto), con fuentes de respaldo.
 - El avance de cada alumno (pasos tildados, mejores marcas, partes de avería) se guarda en `localStorage`, clave `hkplanner.v1`, solo en su dispositivo. No hay nombres, cuentas ni seguimiento.
 - Todo el DOM se arma con la función `h(tag, attrs, ...hijos)`. El texto ingresado por el usuario se inserta siempre con `textContent`.
-- Navegación por hash: `#gestion` (pantalla inicial), `#operaciones`, `#repaso`. Los hash viejos `#rutina` y `#gobernanta` redirigen; los demás caen en la inicial. `goTo(pestaña, idDeSección)` abre una pestaña y baja hasta la sección; los ids son `s6-1` … `s6-19` (`sid("6.14")`).
+- Navegación por hash: `#gestion` (pantalla inicial), `#operaciones`, `#codigos`, `#repaso`. Los hash viejos `#rutina` y `#gobernanta` redirigen; los demás caen en la inicial. `goTo(pestaña, idDeSección)` abre una pestaña y baja hasta la sección; los ids son `s6-1` … `s6-19` (`sid("6.14")`).
 - Debe verse bien en celular (360–400 px) y no tener scroll horizontal de página. Solo las tablas anchas se deslizan dentro de su propio contenedor.
 
 ### Publicar un cambio
@@ -31,12 +31,13 @@ El artifact de Claude es el mismo contenido sin `<!DOCTYPE>`, `<html>`, `<head>`
 
 ## Estructura de la app
 
-Tres pestañas, una por clase más el repaso. Cada pestaña abre con la etiqueta de la clase, el título y la bibliografía de la portada de la PPT, y un índice de secciones. Cada sección es una banda oscura con su número (`secHead`) y debajo la línea de subtemas de su portada.
+Cuatro pestañas: una por clase, la práctica de códigos (pedido de la docente: «que tenga su propio acceso directo») y el repaso. Cada pestaña abre con la etiqueta de la clase, el título y la bibliografía de la portada de la PPT, y un índice de secciones. Cada sección es una banda oscura con su número (`secHead`) y debajo la línea de subtemas de su portada.
 
 | Pestaña | Contenido | Funciones en el código |
 | --- | --- | --- |
 | Gestión de pisos · Unidad 6 (I) | Clase 12, § 6.1 a 6.10: la gobernanta; estados y códigos (matriz, cuatro tablas con inglés, «para no confundir», práctica de lectura con lecturas ocultas); prioridades; Reporte General; Reporte de Pisos (modelo Piso 6, circuito, discrepancias con ejemplo Piso 5, control de seguridad, comparación); organización y cálculo de personal (sin calculadora: los alumnos ya la tienen); chequeo; Lost & Found; formularios; llaves; síntesis. | `vU1`, `U1`, datos en `CODES`, `NOMEN` |
 | Personal y operaciones · Unidad 6 (II) | Clase 13, § 6.11 a 6.19: la mucama; carro, productos y office; tarjetas y situaciones al ingresar, con parte de avería interactivo y trabajos pendientes; limpieza de la habitación (principio, ocupada / salida / turn down con casillas, cuadro comparativo); baño; no rentada y rotación de colchones con esquema; armado de la cama (sistemas, esquinas, calidad, prevención); dotación estándar; runner y valet; síntesis. | `vU2`, `U2`, `rutBlock`, `parteAveria`, `matSVG`, datos en `RUT`, `PROD`, `CMP`, `SYS`, `VIDS` |
+| Códigos de habitación · Práctica | Práctica de 6.2 y 6.3 en seis modos: ¿qué significa?, ¿qué código es?, en inglés, para no confundir (12 situaciones fijas), leé la habitación (líneas del reporte generadas al azar, leídas juntando el significado de cada código) y ¿cuál va primero? (ordenar habitaciones con alta o baja ocupación). Cada vuelta es nueva; mejor marca en `S.best["cod-…"]`. Debajo, las tablas de códigos plegables. | `vCod`, `MODES`, `ALLC`, `CONF`, `roomRand`, `roomRead`, `genLectura`, `prioGame`; `quiz(lista, clave, regenerar)` |
 | Repaso | Preguntas de repaso filtrables por parte (toda la unidad, 6 I, 6 II) o por sección, y «Ordená los pasos» (ocupada, salida, turn down, baño, cama). | `vRep`, `quiz(lista, clave)`, `orderGame`; `QUIZ` es una lista plana con `s:"6.x"` |
 
 `QUIZ` tiene 54 preguntas, cada una con su sección en `s`. La mejor marca se guarda por filtro (`S.best["parte-u1"]`, `S.best["sec-6.14"]`).

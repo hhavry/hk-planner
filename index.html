@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 header.top{padding-block:22px 12px}
 .brand{font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1.1;margin:0;letter-spacing:-.01em}
 .brand small{display:block;font-family:var(--body);font-weight:500;font-size:.9rem;color:var(--muted);letter-spacing:0;margin-top:6px}
-nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-bottom:2px solid var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:2px solid var(--ink)}
 nav.tabs button{font:700 .85rem/1.2 var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;text-align:center}
 nav.tabs button .tl{text-wrap:balance}
 nav.tabs button small{font:600 .7rem var(--body);opacity:.8}
@@ -163,6 +163,12 @@ nav.idx .chip b{color:var(--accent);font-variant-numeric:tabular-nums}
 label.lab{display:grid;gap:4px;font-weight:600;font-size:.88rem;margin:6px 0 4px;max-width:420px}
 .cin{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .form > strong{font:700 1rem var(--display)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:14px 0 4px}
+.mode{display:grid;gap:3px;text-align:left;font:500 .88rem/1.35 var(--body);color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer}
+.mode b{font:700 .98rem var(--body);color:var(--ink)}
+.mode small{font:600 .72rem var(--body);letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+.mode[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt .muted{color:var(--muted);font-weight:400}
 .lk{font:600 .92rem var(--body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
 </style>
 
@@ -205,6 +211,7 @@ function today(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth(
 var TABS=[
  {id:"gestion",label:"Gestión de pisos",sub:"Unidad 6 (I)",ic:'<circle cx="8" cy="15.5" r="4"/><path d="M11 12.5l8.5-8.5"/><path d="M16 7l2.5 2.5M13.5 9.5l2 2"/>'},
  {id:"operaciones",label:"Personal y operaciones",sub:"Unidad 6 (II)",ic:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 15h18"/><path d="M5 10V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M8 10V9h3v1"/><path d="M3 18v2M21 18v2"/>'},
+ {id:"codigos",label:"Códigos de habitación",sub:"Práctica",ic:'<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1.4 1.4 0 0 1 0 2l-6.2 6.2a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.6"/>'},
  {id:"repaso",label:"Repaso",sub:"Preguntas y pasos",ic:'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.5h6v1"/><path d="M8.5 12.5l2.3 2.3 4.7-4.8"/>'}
 ];
 var RUT={
@@ -380,25 +387,26 @@ function vidRow(keys){
 function box(title,items,ordered){
   return h("div",{class:"box"},h("h4",{text:title}),h(ordered?"ol":"ul",null,items.map(function(x){return h("li",{text:x});})));
 }
-function quiz(list,tab){
+function quiz(list,tab,regen){
   var qs=shuffle(list), i=0, score=0, root=h("div");
   function show(){
     root.textContent="";
     if(i>=qs.length){
       var best=Math.max(S.best[tab]||0,score); S.best[tab]=best; save();
       root.appendChild(h("div",{class:"q"},h("p",{class:"pq",text:"Resultado: "+score+" de "+qs.length}),
-        h("p",{class:"lead",text:"Tu mejor marca en esta sección: "+best+" de "+qs.length+"."}),
-        h("button",{class:"btn pri",type:"button",text:"Volver a intentar",onclick:function(){qs=shuffle(list);i=0;score=0;show();}})));
+        h("p",{class:"lead",text:"Tu mejor marca en esta práctica: "+best+" de "+qs.length+"."}),
+        h("button",{class:"btn pri",type:"button",text:regen?"Otra vuelta":"Volver a intentar",onclick:function(){qs=shuffle(regen?regen():list);i=0;score=0;show();}})));
       return;
     }
-    var q=qs[i], answered=false, fb=h("div"), opts=q.o.map(function(t,ix){
-      var b=h("button",{class:"opt",type:"button",text:t,onclick:function(){
+    var q=qs[i], answered=false, fb=h("div"), perm=shuffle(q.o.map(function(_,k){return k;})), btn={};
+    var opts=perm.map(function(ix){
+      var b=h("button",{class:"opt",type:"button",text:q.o[ix],onclick:function(){
         if(answered) return; answered=true;
-        if(ix===q.a){ b.classList.add("right"); score++; } else { b.classList.add("wrong"); opts[q.a].classList.add("right"); }
+        if(ix===q.a){ b.classList.add("right"); score++; } else { b.classList.add("wrong"); btn[q.a].classList.add("right"); }
         fb.appendChild(h("p",{class:"lead",text:q.e}));
         fb.appendChild(h("button",{class:"btn pri",type:"button",text:i+1<qs.length?"Siguiente":"Ver resultado",onclick:function(){i++;show();}}));
-      }}); return b; });
-    root.appendChild(h("div",{class:"q"},h("div",{class:"n",text:"Pregunta "+(i+1)+" de "+qs.length}),h("p",{class:"pq",text:q.q}),opts,fb));
+      }}); btn[ix]=b; return b; });
+    root.appendChild(h("div",{class:"q"},h("div",{class:"n",text:"Pregunta "+(i+1)+" de "+qs.length+" · aciertos: "+score}),h("p",{class:"pq",text:q.q}),opts,fb));
   }
   show(); return root;
 }
@@ -541,7 +549,7 @@ function vU1(){
   var nh=h("div"), nb=h("button",{class:"btn",type:"button","aria-expanded":"false",onclick:function(){showNomen=!showNomen;dn();}});
   function dn(){ nh.textContent=""; nb.textContent=showNomen?"Ocultar las lecturas":"Mostrar las lecturas"; nb.setAttribute("aria-expanded",String(showNomen));
     nh.appendChild(showNomen?wide(560,table(["Hab.","Ocupación","Limpieza","Pax","Lectura correcta"],NOMEN,true)):table(["Hab.","Ocupación","Limpieza","Pax"],NOMEN.map(function(r){return r.slice(0,4);}),true)); }
-  dn(); f.appendChild(nh); f.appendChild(h("div",{class:"row",style:"margin-top:8px"},nb));
+  dn(); f.appendChild(nh); f.appendChild(h("div",{class:"row",style:"margin-top:8px"},nb,linkBtn("Más práctica de códigos","codigos")));
 
   secHead(f,"6.3","Prioridades de limpieza",null,"Simón");
   f.appendChild(h("div",{class:"grid2"},
@@ -819,6 +827,116 @@ function vU2(){
   return f;
 }
 
+/* ---------- Códigos: práctica de 6.2 y 6.3 ---------- */
+var ALLC=[]; CODES.forEach(function(g,gi){ g[1].forEach(function(c){ ALLC.push({c:c[0],m:c[1],en:c[2],g:gi}); }); });
+var codMode="significa", codSeed=0;
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function optsFrom(right,pool,n){ var o=[right], p=shuffle(pool.filter(function(x){return x!==right;})); for(var i=0;o.length<n&&i<p.length;i++){ if(o.indexOf(p[i])<0) o.push(p[i]); } o=shuffle(o); return {o:o,a:o.indexOf(right)}; }
+/* Elige distractores del mismo grupo primero, para que la pregunta no sea obvia. */
+function poolFor(item,field){ var same=ALLC.filter(function(x){return x.g===item.g&&x!==item;}), other=shuffle(ALLC.filter(function(x){return x.g!==item.g;}));
+  return same.concat(other).map(function(x){return x[field];}); }
+function genSignifica(){ return shuffle(ALLC).slice(0,10).map(function(it){ var r=optsFrom(it.m,poolFor(it,"m").slice(0,5),4);
+  return {q:"¿Qué significa «"+it.c+"»?",o:r.o,a:r.a,e:it.c+": "+it.m+". En inglés: "+it.en+" (6.2)."}; }); }
+function genCodigo(){ return shuffle(ALLC).slice(0,10).map(function(it){ var r=optsFrom(it.c,poolFor(it,"c").slice(0,5),4);
+  return {q:"¿Qué código corresponde? "+it.m+".",o:r.o,a:r.a,e:"Es "+it.c+" ("+it.en+") (6.2)."}; }); }
+function genIngles(){ return shuffle(ALLC).slice(0,10).map(function(it){ var r=optsFrom(it.en,poolFor(it,"en").slice(0,5),4);
+  return {q:"«"+it.c+"» ("+it.m.split(":")[0].toLowerCase()+"). ¿Cómo figura en inglés?",o:r.o,a:r.a,e:it.c+" = "+it.en+". Las siglas en inglés pueden variar según el PMS y la cadena (6.2)."}; }); }
+var CONF=[
+ {q:"El huésped colgó el cartel en la puerta. ¿Qué se anota?",o:["NM","RS","ND","PS"],a:0,e:"NM · Do not disturb: colgó el cartel. RS es cuando dice que no expresamente (6.2)."},
+ {q:"El huésped le dijo a la mucama que hoy no quiere servicio. ¿Qué se anota?",o:["NM","RS","B","FS"],a:1,e:"RS · Refused Service: rechazo expreso; se registra para que no figure como un olvido (6.2 y 6.13)."},
+ {q:"La habitación tiene un problema menor: no se asigna, pero sigue en el inventario.",o:["B (OOO)","FS (OOS)","SNA","IS"],a:1,e:"FS · Out of service. La B (out of order) sale del inventario hasta que se desbloquee (6.2)."},
+ {q:"La habitación sale del inventario vendible hasta que se desbloquee.",o:["FS (OOS)","B (OOO)","R","LT"],a:1,e:"B · Out of order (6.2)."},
+ {q:"La mucama ya la preparó, pero la gobernanta todavía no la revisó.",o:["IS","L","V / VL","SNA"],a:1,e:"L: limpia, la mucama ya la preparó. Pasa a IS recién cuando la revisa la gobernanta (6.2)."},
+ {q:"Hizo check out hoy y todavía no se limpió.",o:["S","SNA","PS","V / VL"],a:1,e:"SNA · Salida no arreglada (Check Out · C/O). La S es la sucia por arrastre, que quedó así de ayer (6.2)."},
+ {q:"Quedó sucia de ayer: no es una salida del día.",o:["S","SNA","OS","ND"],a:0,e:"S · Sucia por arrastre (Vacant Dirty · VD) (6.2)."},
+ {q:"Vacía y limpia desde el día anterior: no tuvo salida hoy.",o:["L","IS","V / VL","R"],a:2,e:"V / VL · Vacant Clean · VC (6.2)."},
+ {q:"La cama no se usó: el huésped no durmió en la habitación.",o:["NM","ND","RS","PE / SE"],a:1,e:"ND · Sleep Out (SLO). Puede indicar una salida sin pago: se informa (6.2 y 6.13)."},
+ {q:"El huésped llegó con poco o ningún equipaje.",o:["PE / SE","PS","ND","LT"],a:0,e:"PE / SE · Light / No Baggage: alerta para Seguridad. Puede ser un skipper, un huésped que se va sin pagar (6.2)."},
+ {q:"El huésped llega antes: hay que limpiarla temprano.",o:["A","LT","R","PS"],a:1,e:"LT · Early Make-up · Priority (6.2)."},
+ {q:"Hay que poner una cama extra.",o:["Cu","Cx","OC 02","A"],a:1,e:"Cx · Rollaway Bed. Cu es la cuna (Crib) (6.2)."}];
+/* Habitaciones generadas: cada línea se lee juntando el significado de sus códigos. */
+var PAX={"01/00":"1 adulto","02/00":"2 adultos","01/01":"1 adulto y 1 menor","02/01":"2 adultos y 1 menor"};
+var RX={PS:"Posible salida: confirmar con Recepción.",NM:"Colgó el No molestar: no se golpea.",RS:"Rechazó el servicio: se registra.",ND:"No durmió en la habitación: se informa.","PE/SE":"Poco o sin equipaje: alerta para Seguridad.",Cx:"Con cama extra.",A:"Asignada a una llegada de hoy: tiene que estar lista antes del arribo.",LT:"Limpiar temprano: el huésped llega antes."};
+function roomRand(){
+  var t=pick(["OC","OC","OC","V","V","V","B"]), r={hab:String(pick([1,2,3])*100+pick([1,2,3,4,5,6,7,8])),oc:t};
+  if(t==="OC"){ r.pax=pick(Object.keys(PAX)); r.l=pick(["S","S","L"]); r.x=r.l==="S"?pick(["","PS","NM","RS","ND","PE/SE","Cx"]):pick(["","Cx"]); }
+  else if(t==="V"){ r.pax="—"; r.l=pick(["S","SNA","L","IS"]); r.x=pick(["","A","LT"]); if(r.l==="IS"&&r.x==="LT") r.x="A"; }
+  else { r.pax="—"; r.l="S"; r.x=""; }
+  return r;
+}
+function roomRead(r){
+  var t;
+  if(r.oc==="OC") t="Ocupada por "+PAX[r.pax]+", "+(r.l==="S"?"sucia: falta el servicio.":"con el servicio del día hecho.");
+  else if(r.oc==="V") t="Vacía, "+{S:"sucia por arrastre (de ayer).",SNA:"salida de hoy sin arreglar.",L:"limpia: la mucama ya la preparó; falta que la revise la gobernanta.",IS:"chequeada por la gobernanta: lista para vender."}[r.l];
+  else t="Bloqueada (OOO), fuera de inventario. Sucia.";
+  return r.x?t+" "+RX[r.x]:t;
+}
+function roomLine(r){ return "Hab. "+r.hab+" · "+r.oc+" · "+r.l+(r.x?" "+r.x:"")+" · "+r.pax; }
+function genLectura(){
+  var out=[], seen={};
+  while(out.length<10){ var r=roomRand(), k=roomLine(r).slice(9); if(seen[k]) continue; seen[k]=1;
+    var right=roomRead(r), alts=[], tries=0;
+    while(alts.length<3&&tries<60){ tries++; var m=JSON.parse(JSON.stringify(r)), f=tries>40?"oc":pick(r.oc==="OC"?["l","x","x","pax"]:["l","l","x"]);
+      if(f==="oc"){ var n=roomRand(); n.hab=r.hab; m=n; }
+      else if(f==="l"){ m.l=r.oc==="OC"?(r.l==="S"?"L":"S"):(r.oc==="V"?pick(["S","SNA","L","IS"]):"S"); if(m.oc==="OC"&&m.l==="L"&&["PS","NM","RS","ND","PE/SE"].indexOf(m.x)>=0) m.x=""; }
+      else if(f==="x"){ m.x=r.oc==="OC"?pick(["","PS","NM","RS","ND","PE/SE","Cx"]):(r.oc==="V"?pick(["","A","LT"]):""); }
+      else if(r.oc==="OC"){ m.pax=pick(Object.keys(PAX)); }
+      var txt=roomRead(m); if(txt!==right&&alts.indexOf(txt)<0) alts.push(txt); }
+    var o=shuffle([right].concat(alts));
+    out.push({q:roomLine(r),o:o,a:o.indexOf(right),e:"Ocupación, limpieza y códigos adicionales, en ese orden. Pax = adultos / menores (6.2)."}); }
+  return out;
+}
+var MODES=[["significa","¿Qué significa?","Te muestro el código; elegí su significado.",genSignifica],
+ ["codigo","¿Qué código es?","Te muestro el significado; elegí el código.",genCodigo],
+ ["ingles","En inglés","Cada código con su sigla del PMS.",genIngles],
+ ["confundir","Para no confundir","Situaciones con los códigos que suelen mezclarse.",function(){return CONF;}],
+ ["lectura","Leé la habitación","Líneas del reporte, siempre distintas: leelas completas.",genLectura],
+ ["prioridad","¿Cuál va primero?","Ordená las habitaciones según la ocupación (6.3).",null]];
+function prioGame(){
+  var alta=Math.random()<.5, root=h("div",{class:"q"}), placed=[], errors=0, rooms, pool;
+  var ALTA=[["VL","vacía limpia: controlarla para liberarla"],["S","vacía sucia por arrastre"],["SNA","salida de hoy, sin arreglar"],["VIP","ocupada con preferencia"],["OC","ocupada que continúa"],["OC · PS","ocupada con salida prevista"]];
+  var BAJA=[["VL","vacía limpia: controlarla"],["VIP","ocupada con preferencia"],["OC","ocupada que continúa"],[pick(["S","SNA"]),"vacía sucia o salida"]];
+  function start(){ alta=!alta; placed=[]; errors=0; var nums=shuffle(["101","102","104","106","203","205","207","302","304","308"]);
+    rooms=(alta?ALTA:BAJA).map(function(x,i){return {n:nums[i],c:x[0],d:x[1],i:i};}); pool=shuffle(rooms.slice()); draw(); }
+  function draw(){
+    root.textContent="";
+    root.appendChild(h("div",{class:"n",text:alta?"Hotel con alta ocupación":"Hotel con baja ocupación"}));
+    root.appendChild(h("p",{class:"pq",text:"Tocá las habitaciones en el orden en que se limpian."}));
+    root.appendChild(h("p",{class:"lead",text:"Colocadas "+placed.length+" de "+rooms.length+" · errores: "+errors}));
+    if(placed.length) root.appendChild(h("ol",{class:"placed"},placed.map(function(r){return h("li",null,h("b",{text:"Hab. "+r.n+" · "+r.c}),": "+r.d);})));
+    if(placed.length===rooms.length){
+      root.appendChild(h("div",{class:"msg ok",text:(errors===0?"Orden correcto sin errores. ":"Orden completo con "+errors+" error"+(errors===1?"":"es")+". ")+(alta?"Con alta ocupación, primero lo que se puede vender.":"Con baja ocupación, primero el huésped que está.")}));
+      root.appendChild(h("button",{class:"btn pri",type:"button",text:alta?"Probar con baja ocupación":"Probar con alta ocupación",onclick:start})); return; }
+    root.appendChild(h("div",{class:"pool"},pool.map(function(r){
+      var b=h("button",{class:"opt",type:"button"},h("b",{text:"Hab. "+r.n+" · "+r.c}));
+      b.addEventListener("click",function(){
+        if(r.i===placed.length){ placed.push(r); pool=pool.filter(function(x){return x!==r;}); draw(); }
+        else { errors++; b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake","wrong"); root.querySelector(".lead").textContent="Colocadas "+placed.length+" de "+rooms.length+" · errores: "+errors; } });
+      return b; })));
+  }
+  start(); return root;
+}
+function vCod(){
+  var f=h("div");
+  f.appendChild(h("p",{class:"eyebrow",text:"Unidad 6 · 6.2 y 6.3 · Práctica"}));
+  f.appendChild(h("h2",{text:"Códigos de habitación"}));
+  f.appendChild(h("p",{class:"lead",text:"Para leer el reporte de un vistazo. Cada práctica arma una vuelta nueva cada vez que la empezás."}));
+  var mc=h("div",{class:"modes"});
+  MODES.forEach(function(m){ var best=S.best["cod-"+m[0]];
+    mc.appendChild(h("button",{type:"button",class:"mode","aria-pressed":String(codMode===m[0]),onclick:function(){codMode=m[0];render();jump("cod-play");}},
+      h("b",{text:m[1]}),h("span",{text:m[2]}),best!=null&&m[3]?h("small",{text:"Mejor marca: "+best}):null)); });
+  f.appendChild(mc);
+  var M=MODES.filter(function(m){return m[0]===codMode;})[0];
+  f.appendChild(h("h3",{id:"cod-play",text:M[1]}));
+  if(M[3]) f.appendChild(quiz(M[3](),"cod-"+M[0],M[3]));
+  else f.appendChild(prioGame());
+  f.appendChild(h("h3",{text:"Los códigos, de un vistazo"}));
+  f.appendChild(h("p",{class:"lead",text:"Cada hotel diseña su código, pero la lógica se repite en todos los PMS. Las siglas en inglés pueden variar según el sistema y la cadena."}));
+  CODES.forEach(function(g){ f.appendChild(h("details",null,h("summary",{text:g[0]}),table(["Código","Significado","En inglés"],g[1],true))); });
+  f.appendChild(h("div",{class:"row",style:"margin-top:10px"},linkBtn("Ver 6.2 en la Unidad 6 (I)","gestion",sid("6.2")),linkBtn("Ver 6.3 · Prioridades","gestion",sid("6.3"))));
+  return f;
+}
+
 /* ---------- Repaso ---------- */
 var repPart="todo", repSec="", curOrd="ocupada";
 function vRep(){
@@ -843,12 +961,12 @@ function vRep(){
   GK.forEach(function(k){ pick.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(k[0]===curOrd),text:k[1],onclick:function(){curOrd=k[0];
     Array.prototype.forEach.call(pick.children,function(b,i){b.setAttribute("aria-pressed",String(GK[i][0]===curOrd));}); holder.textContent=""; holder.appendChild(orderGame(curOrd));}})); });
   holder.appendChild(orderGame(curOrd)); f.appendChild(pick); f.appendChild(holder);
-  f.appendChild(h("p",{class:"lead",style:"margin-top:10px"},"Para practicar la lectura de códigos, andá a ",h("button",{class:"lk",type:"button",text:"6.2 · Estados y códigos",onclick:function(){goTo("gestion",sid("6.2"));}}),"."));
+  f.appendChild(h("p",{class:"lead",style:"margin-top:10px"},"Para practicar los códigos de habitación, andá a la pestaña ",h("button",{class:"lk",type:"button",text:"Códigos de habitación",onclick:function(){goTo("codigos");}}),"."));
   return f;
 }
 
 /* ---------- navegación ---------- */
-var VIEWS={gestion:vU1,operaciones:vU2,repaso:vRep}, OLD={rutina:"operaciones",gobernanta:"gestion"}, cur="gestion";
+var VIEWS={gestion:vU1,operaciones:vU2,codigos:vCod,repaso:vRep}, OLD={rutina:"operaciones",gobernanta:"gestion"}, cur="gestion";
 function render(){
   var nav=document.getElementById("tabs"), main=document.getElementById("main");
   nav.textContent="";
