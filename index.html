@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16p
 header.top{padding-block:22px 12px}
 .brand{font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1.1;margin:0;letter-spacing:-.01em}
 .brand small{display:block;font-family:var(--body);font-weight:500;font-size:.9rem;color:var(--muted);letter-spacing:0;margin-top:6px}
-nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:2px solid var(--ink)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-bottom:2px solid var(--ink)}
 nav.tabs button{font:700 .85rem/1.2 var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;text-align:center}
 nav.tabs button .tl{text-wrap:balance}
 nav.tabs button small{font:600 .7rem var(--body);opacity:.8}
@@ -211,7 +211,6 @@ function today(){ var d=new Date(); return d.getFullYear()+"-"+("0"+(d.getMonth(
 var TABS=[
  {id:"gestion",label:"Gestión de pisos",sub:"Unidad 6 (I)",ic:'<circle cx="8" cy="15.5" r="4"/><path d="M11 12.5l8.5-8.5"/><path d="M16 7l2.5 2.5M13.5 9.5l2 2"/>'},
  {id:"operaciones",label:"Personal y operaciones",sub:"Unidad 6 (II)",ic:'<path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 15h18"/><path d="M5 10V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M8 10V9h3v1"/><path d="M3 18v2M21 18v2"/>'},
- {id:"codigos",label:"Códigos de habitación",sub:"Práctica",ic:'<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1.4 1.4 0 0 1 0 2l-6.2 6.2a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.6"/>'},
  {id:"repaso",label:"Repaso",sub:"Preguntas y pasos",ic:'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.5h6v1"/><path d="M8.5 12.5l2.3 2.3 4.7-4.8"/>'}
 ];
 var RUT={
@@ -549,7 +548,7 @@ function vU1(){
   var nh=h("div"), nb=h("button",{class:"btn",type:"button","aria-expanded":"false",onclick:function(){showNomen=!showNomen;dn();}});
   function dn(){ nh.textContent=""; nb.textContent=showNomen?"Ocultar las lecturas":"Mostrar las lecturas"; nb.setAttribute("aria-expanded",String(showNomen));
     nh.appendChild(showNomen?wide(560,table(["Hab.","Ocupación","Limpieza","Pax","Lectura correcta"],NOMEN,true)):table(["Hab.","Ocupación","Limpieza","Pax"],NOMEN.map(function(r){return r.slice(0,4);}),true)); }
-  dn(); f.appendChild(nh); f.appendChild(h("div",{class:"row",style:"margin-top:8px"},nb,linkBtn("Más práctica de códigos","codigos")));
+  dn(); f.appendChild(nh); f.appendChild(h("div",{class:"row",style:"margin-top:8px"},nb,h("button",{class:"btn",type:"button",text:"Más práctica de códigos",onclick:function(){repPart="cod";repSec="";goTo("repaso","rep-q");}})));
 
   secHead(f,"6.3","Prioridades de limpieza",null,"Simón");
   f.appendChild(h("div",{class:"grid2"},
@@ -916,27 +915,20 @@ function prioGame(){
   }
   start(); return root;
 }
-function vCod(){
-  var f=h("div");
-  f.appendChild(h("p",{class:"eyebrow",text:"Unidad 6 · 6.2 y 6.3 · Práctica"}));
-  f.appendChild(h("h2",{text:"Códigos de habitación"}));
-  f.appendChild(h("p",{class:"lead",text:"Para leer el reporte de un vistazo. Cada práctica arma una vuelta nueva cada vez que la empezás."}));
+function codPractice(f){
+  f.appendChild(h("p",{class:"lead",text:"Códigos de habitación (6.2) y prioridades (6.3). Elegí una práctica: cada vuelta es nueva."}));
   var mc=h("div",{class:"modes"});
   MODES.forEach(function(m){ var best=S.best["cod-"+m[0]];
     mc.appendChild(h("button",{type:"button",class:"mode","aria-pressed":String(codMode===m[0]),onclick:function(){codMode=m[0];render();jump("cod-play");}},
       h("b",{text:m[1]}),h("span",{text:m[2]}),best!=null&&m[3]?h("small",{text:"Mejor marca: "+best}):null)); });
   f.appendChild(mc);
   var M=MODES.filter(function(m){return m[0]===codMode;})[0];
-  f.appendChild(h("h3",{id:"cod-play",text:M[1]}));
-  if(M[3]) f.appendChild(quiz(M[3](),"cod-"+M[0],M[3]));
-  else f.appendChild(prioGame());
-  f.appendChild(h("h3",{text:"Los códigos, de un vistazo"}));
-  f.appendChild(h("p",{class:"lead",text:"Cada hotel diseña su código, pero la lógica se repite en todos los PMS. Las siglas en inglés pueden variar según el sistema y la cadena."}));
-  CODES.forEach(function(g){ f.appendChild(h("details",null,h("summary",{text:g[0]}),table(["Código","Significado","En inglés"],g[1],true))); });
-  f.appendChild(h("div",{class:"row",style:"margin-top:10px"},linkBtn("Ver 6.2 en la Unidad 6 (I)","gestion",sid("6.2")),linkBtn("Ver 6.3 · Prioridades","gestion",sid("6.3"))));
-  return f;
+  f.appendChild(h("h4",{class:"sub-h",id:"cod-play",text:M[1]}));
+  f.appendChild(M[3]?quiz(M[3](),"cod-"+M[0],M[3]):prioGame());
+  var tb=h("div",{style:"margin-top:12px"});
+  CODES.forEach(function(g){ tb.appendChild(h("details",null,h("summary",{text:"Ver los códigos: "+g[0].charAt(0).toLowerCase()+g[0].slice(1)}),table(["Código","Significado","En inglés"],g[1],true))); });
+  f.appendChild(tb);
 }
-
 /* ---------- Repaso ---------- */
 var repPart="todo", repSec="", curOrd="ocupada";
 function vRep(){
@@ -945,28 +937,30 @@ function vRep(){
   f.appendChild(h("p",{class:"lead",text:"Preguntas de repaso con su explicación y la secuencia de los procedimientos. Tu mejor marca queda guardada en este dispositivo."}));
   f.appendChild(h("h3",{text:"Preguntas de repaso"}));
   var secs=U1.concat(U2), pc=h("div",{class:"chips"});
-  [["todo","Toda la unidad"],["u1","Unidad 6 (I)"],["u2","Unidad 6 (II)"]].forEach(function(o){
+  [["todo","Toda la unidad"],["u1","Unidad 6 (I)"],["u2","Unidad 6 (II)"],["cod","Códigos"]].forEach(function(o){
     pc.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(repPart===o[0]&&!repSec),text:o[1],onclick:function(){repPart=o[0];repSec="";render();jump("rep-q");}})); });
   f.appendChild(pc);
+  if(repPart==="cod"&&!repSec){ var cw=h("div",{id:"rep-q"}); codPractice(cw); f.appendChild(cw); }
+  else {
   var sel=h("select",{id:"rep-sec"},[h("option",{value:"",text:"Elegir una sección…"})].concat(secs.filter(function(s){return QUIZ.some(function(q){return q.s===s[0];});}).map(function(s){
     return h("option",{value:s[0],text:s[0]+" · "+s[1],selected:repSec===s[0]}); })));
-  sel.addEventListener("change",function(){ repSec=sel.value; render(); jump("rep-q"); });
+  sel.addEventListener("change",function(){ repSec=sel.value; if(repPart==="cod") repPart="todo"; render(); jump("rep-q"); });
   f.appendChild(h("label",{class:"lab",for:"rep-sec"},"O una sola sección",sel));
   var inU1=function(s){ return U1.some(function(x){return x[0]===s;}); };
   var list=QUIZ.filter(function(q){ if(repSec) return q.s===repSec; if(repPart==="u1") return inU1(q.s); if(repPart==="u2") return !inU1(q.s); return true; });
   var key=repSec?("sec-"+repSec):("parte-"+repPart);
   f.appendChild(h("div",{id:"rep-q"},quiz(list,key)));
+  }
   f.appendChild(h("h3",{text:"Ordená los pasos"}));
   var GK=[["ocupada","Habitación ocupada"],["salida","Habitación de salida"],["apertura","Turn down"],["bano","Baño"],["cama","Armado de cama"]], pick=h("div",{class:"chips"}), holder=h("div");
   GK.forEach(function(k){ pick.appendChild(h("button",{class:"chip",type:"button","aria-pressed":String(k[0]===curOrd),text:k[1],onclick:function(){curOrd=k[0];
     Array.prototype.forEach.call(pick.children,function(b,i){b.setAttribute("aria-pressed",String(GK[i][0]===curOrd));}); holder.textContent=""; holder.appendChild(orderGame(curOrd));}})); });
   holder.appendChild(orderGame(curOrd)); f.appendChild(pick); f.appendChild(holder);
-  f.appendChild(h("p",{class:"lead",style:"margin-top:10px"},"Para practicar los códigos de habitación, andá a la pestaña ",h("button",{class:"lk",type:"button",text:"Códigos de habitación",onclick:function(){goTo("codigos");}}),"."));
   return f;
 }
 
 /* ---------- navegación ---------- */
-var VIEWS={gestion:vU1,operaciones:vU2,codigos:vCod,repaso:vRep}, OLD={rutina:"operaciones",gobernanta:"gestion"}, cur="gestion";
+var VIEWS={gestion:vU1,operaciones:vU2,repaso:vRep}, OLD={rutina:"operaciones",gobernanta:"gestion"}, cur="gestion";
 function render(){
   var nav=document.getElementById("tabs"), main=document.getElementById("main");
   nav.textContent="";
@@ -977,7 +971,7 @@ function render(){
   });
   main.textContent=""; main.appendChild(VIEWS[cur]());
 }
-var hsh=(location.hash||"").replace("#",""); if(OLD[hsh]) hsh=OLD[hsh]; if(VIEWS[hsh]) cur=hsh;
+var hsh=(location.hash||"").replace("#",""); if(hsh==="codigos"){ hsh="repaso"; repPart="cod"; } if(OLD[hsh]) hsh=OLD[hsh]; if(VIEWS[hsh]) cur=hsh;
 render();
 })();
 </script>
